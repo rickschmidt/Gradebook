@@ -31,6 +31,7 @@ term="http://schemas.google.com/docs/2007#spreadsheet"/>
 </entry>
 EOF
            @doc_feed=@doc_client.post('http://docs.google.com/feeds/documents/private/full',body) 
+           puts @doc_feed
            
         end
         
@@ -77,9 +78,38 @@ EOF
             return @id
         end
        
-   
-   
-   
+=begin rdoc
+    Gets the general document feed for consumption with an authorized header.
+=end
+        def get_doc_feed(doc_client)
+            @doc_feed=doc_client.get("https://documents.google.com/feeds/documents/private/full?prettyprint=true").to_xml
+            #@doc_feed=doc_client
+            return @doc_feed
+        end   
+        
+=begin rdoc
+    Gets the general spreadsheet feed for consumption with an authorized header.
+=end
+        def get_sps_feed(sps_client)
+            @sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/spreadsheets/private/full?prettyprint=true").to_xml
+            return @sps_feed
+        end
+=begin rdoc
+    Deletes spreadsheet ie. course by id.
+=end
+        def delete_course_with_id(id)
+            doc_feed=get_doc_feed(@doc_client)
+            doc_feed.elements.each('entry') do |entry|
+                if entry.elements['id'].text=="https://documents.google.com/feeds/documents/private/full/spreadsheet%3A#{id}"
+                    @doc_client.headers['If-Match']=entry.attribute('etag').value
+                    response=@doc_client.delete("https://documents.google.com/feeds/documents/private/full/document%3A#{id}") 
+                end
+           end
+        end
+        
+        
+        
+        
        def import_roster(doc_client,spreadsheet_client,roster)
             body=<<-EOF
 <?xml version='1.0' encoding='UTF-8'?>

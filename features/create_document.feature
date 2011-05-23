@@ -8,6 +8,7 @@ Feature: a document is created on google docs
         Given an authenticated doc_client 
         When I send the create command with a course name create a spreadsheet on gdocs
         Then return the id of the newly created document
+        Then delete that newly created test document
         
     Scenario: create a new spreadsheet without a course name
         Given an authenticated doc_client and no course name

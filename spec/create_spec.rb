@@ -5,7 +5,7 @@ require 'gradebook'
 
 describe "Book" do
     
-   before(:all) do
+   before(:each) do
        @client=Gradebook::Client.new
        @client.setup("","")
        @doc_client=@client.doc_client
@@ -18,10 +18,31 @@ describe "Book" do
          @book.doc_client.should_not eql(nil)
          @book.sps_client.should_not eql(nil)
      end
+    
+    it "should be able to create a spreadsheet with a title " do
+        @book.create(@doc_client,"rspec2")
+    end
      
      it "should be able to retrieve the gradebook for a course by searching for its title" do
-        @id=@book.get_course("xml")
+        @id=@book.get_course("rspec2")
         @id.should_not eql(nil)
+    end
+        
+    it "should be able to get a course id and then delete the course" do
+        puts "Delete"
+        sleep(5)
+        id=@book.get_course("rspec2")
+        @book.delete_course_with_id(id)
+    end
+    
+    it "should be able to get a document feed" do
+        xml=@book.get_doc_feed(@doc_client)
+        xml.class.should eql(REXML::Element)
+    end
+    
+    it "should be able to get a spreadsheet feed" do
+       xml=@book.get_sps_feed(@sps_client)
+       xml.class.should eql(REXML::Element)
     end
 
 
