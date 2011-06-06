@@ -50,6 +50,21 @@ module Gradebook
 
             return doc_id
         end
+=begin rdoc
+    Returns the etag for authorization headers for the course that is searched for as a param.  Returns nil if no course is found.
+=end
+        def sps_get_etag(course,id)
+
+            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full").to_xml
+
+
+
+                @sps_feed.elements.each('entry') do |entry|
+                    @etag=entry.attribute('etag').value
+                end
+
+            return @etag
+        end
 
 =begin rdoc
     Extracts the ID of a document entry and returns it. The entry would come from iterating through a feed.

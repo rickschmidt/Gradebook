@@ -11,15 +11,15 @@ end
 When /^I send the create command with a course name create a spreadsheet on gdocs$/ do
     @book=Gradebook::Book.new(@client.doc_client,@client.sps_client)
     @course="Cucumber"
-    @response=@book.create(@client.doc_client,@course)
+    @book.create(@client.doc_client,"Cucumber")
 end
 
 Then /^return the id of the newly created document$/ do
-    @book.get_course(@course)
+    @book.get_course("Cucumber")
 end
 
 Then /^delete that newly created test document$/ do
-  id=@book.get_course(@course)
+  id=@book.get_course("Cucumber")
   @book.delete_course_with_id(id)
 end
 

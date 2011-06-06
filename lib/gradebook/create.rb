@@ -102,6 +102,7 @@ EOF
             doc_feed.elements.each('entry') do |entry|
                 if entry.elements['id'].text=="https://documents.google.com/feeds/documents/private/full/spreadsheet%3A#{id}"
                     @doc_client.headers['If-Match']=entry.attribute('etag').value
+                    puts "Deletehere"
                     response=@doc_client.delete("https://documents.google.com/feeds/documents/private/full/document%3A#{id}") 
                 end
            end
@@ -152,4 +153,6 @@ EOF
                         @doc_client.post("https://docs.google.com/feeds/documents/private/full",bodyarray1)
        end 
    end
+   
+   
 end

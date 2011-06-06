@@ -30,7 +30,6 @@ describe "Book" do
         
     it "should be able to get a course id and then delete the course" do
         puts "Delete"
-        sleep(5)
         id=@book.get_course("rspec2")
         @book.delete_course_with_id(id)
     end
@@ -45,5 +44,10 @@ describe "Book" do
        xml.class.should eql(REXML::Element)
     end
 
+    it "should also use googlecl" do
+        system('google documents ')
+        
+        
+    end
 
 end
