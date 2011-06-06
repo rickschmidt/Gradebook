@@ -17,5 +17,10 @@ describe "Client" do
      
      
      
+     it "should be able to get an etag given a doc id" do
+         sps_id=@client.sps_get_course("Roster")
+         tag=@client.sps_get_etag('',sps_id)
+         tag.should_not eql(nil)
+     end
      
  end

@@ -1,5 +1,14 @@
+$LOAD_PATH.unshift File.expand_path('../../../lib', __FILE__)
+require 'gradebook'
+
 Given /^a gradebook$/ do
-  pending # express the regexp above with the code you wish you had
+
+  @client=Gradebook::Client.new
+  @client.setup('','')
+  sps_id=@client.get_course("XML")
+  etag=@client.sps_get_etag("",sps_id)
+  puts etag
+  
 end
 
 When /^I send the grade all command$/ do

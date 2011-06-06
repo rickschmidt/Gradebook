@@ -50,13 +50,34 @@ module Gradebook
 
             return doc_id
         end
+
+=begin rdoc
+    Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
+=end
+        def sps_get_course(course)
+            @sps_feed=@doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
+
+            if @sps_feed.elements['openSearch:totalResults'].text!="0"
+                @sps_feed.elements.each('entry') do |entry|
+                    if entry.elements['title'].text!=""
+                        puts 'Title Match:' + entry.elements['title'].text
+                        @sps_id=extract_document_id_from_feed("documents",entry)
+                        puts "ID for Match: " + @sps_id.to_s
+                    end
+                end
+            else
+                puts "No Spreadsheet found with that course name"
+                @sps_id=nil
+            end
+
+            return @sps_id
+        end
 =begin rdoc
     Returns the etag for authorization headers for the course that is searched for as a param.  Returns nil if no course is found.
 =end
         def sps_get_etag(course,id)
 
-            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full").to_xml
-
+                @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full").to_xml
 
 
                 @sps_feed.elements.each('entry') do |entry|
