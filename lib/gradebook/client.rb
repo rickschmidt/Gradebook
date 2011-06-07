@@ -50,7 +50,30 @@ module Gradebook
 
             return doc_id
         end
-
+=begin rdoc
+    Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
+=end
+        def get_colCount 
+            colCount=0
+            sps_id=self.sps_get_course("Roster")
+            sheet=self.sps_get_sheet(sps_id)
+            sheet.elements.each('entry') do |entry|
+                colCount=entry.elements['gs:colCount'].text
+            end 
+           return colCount
+        end
+=begin rdoc
+    Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
+=end
+        def get_rowCount
+           rowCount=0
+           sps_id=self.sps_get_course("Roster")
+           sheet=self.sps_get_sheet(sps_id)
+           sheet.elements.each('entry') do |entry|
+               rowCount=entry.elements['gs:rowCount'].text
+           end 
+           return rowCount
+        end
 =begin rdoc
     Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
 =end
@@ -71,6 +94,17 @@ module Gradebook
             end
 
             return @sps_id
+        end
+        
+=begin rdoc
+    Returns the spreadsheet that is located by its id.
+=end
+        def sps_get_sheet(id)
+            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
+
+            
+
+            return @sps_feed
         end
 =begin rdoc
     Returns the etag for authorization headers for the course that is searched for as a param.  Returns nil if no course is found.
@@ -193,4 +227,11 @@ EOF
            
     
     end
+    
+    def add_category(category_name)
+        
+    end
+    
+
+        
 end

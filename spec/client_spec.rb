@@ -17,10 +17,20 @@ describe "Client" do
      
      
      
-     it "should be able to get an etag given a doc id" do
+     it "should be able to get an etag given a course name" do
          sps_id=@client.sps_get_course("Roster")
          tag=@client.sps_get_etag('',sps_id)
          tag.should_not eql(nil)
+     end
+     
+     it "shold be able to calculate how many columns are in the spreadsheet for the purpose of knowing where to put a new category column" do
+        colCount=@client.get_colCount
+        puts "Number of columns #{colCount}"
+     end
+     
+     it "should be able to calculate how many rows are in the spreadsheet" do
+        rowCount=@client.get_rowCount
+        puts "Number of rows #{rowCount}" 
      end
      
  end

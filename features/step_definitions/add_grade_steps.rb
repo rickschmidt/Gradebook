@@ -5,18 +5,22 @@ Given /^a gradebook$/ do
 
   @client=Gradebook::Client.new
   @client.setup('','')
-  sps_id=@client.get_course("XML")
+  sps_id=@client.sps_get_course("Roster")
   etag=@client.sps_get_etag("",sps_id)
-  puts etag
+
   
 end
 
 When /^I send the grade all command$/ do
-  pending # express the regexp above with the code you wish you had
+#  pending # express the regexp above with the code you wish you had
+  @client.grade_all
+  
 end
 
 Then /^ask what category this grade should be filed under$/ do
-  pending # express the regexp above with the code you wish you had
+
+  puts "What category do you want to create"
+  
 end
 
 Then /^add a column for the category to the gradebook$/ do
