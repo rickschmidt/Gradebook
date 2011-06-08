@@ -33,4 +33,9 @@ describe "Client" do
         puts "Number of rows #{rowCount}" 
      end
      
+     it "should be able to add a category" do
+#         @client.add_category("Q4")
+         @client.get_row("1")
+     end
+     
  end

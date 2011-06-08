@@ -60,7 +60,7 @@ module Gradebook
             sheet.elements.each('entry') do |entry|
                 colCount=entry.elements['gs:colCount'].text
             end 
-           return colCount
+           return colCount.to_i
         end
 =begin rdoc
     Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
@@ -72,7 +72,7 @@ module Gradebook
            sheet.elements.each('entry') do |entry|
                rowCount=entry.elements['gs:rowCount'].text
            end 
-           return rowCount
+           return rowCount.to_i
         end
 =begin rdoc
     Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
@@ -110,15 +110,15 @@ module Gradebook
     Returns the etag for authorization headers for the course that is searched for as a param.  Returns nil if no course is found.
 =end
         def sps_get_etag(course,id)
-
+                etag=nil
                 @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full").to_xml
 
 
                 @sps_feed.elements.each('entry') do |entry|
-                    @etag=entry.attribute('etag').value
+                    etag=entry.attribute('etag').value
                 end
 
-            return @etag
+            return etag
         end
 
 =begin rdoc
@@ -224,14 +224,36 @@ EOF
            feed=@sps_client.put("https://spreadsheets.google.com/feeds/cells/tlwYl5YarxIHmZRL0sxvUlw/od6/#{@headers['Authorization']}/private/full/R2C4",body)
                 
         end
+       
+        def add_category(category_name)
+            colCount=self.get_colCount
+            sps_id=self.sps_get_course("Roster")
+            body=<<-EOF
+<entry xmlns="http://www.w3.org/2005/Atom"
+xmlns:gs="http://schemas.google.com/spreadsheets/2006">
+<gs:cell row="1" col="#{colCount+1}" inputValue="#{category_name}"/>
+</entry>
+EOF
+            tag=self.sps_get_etag("course",sps_id)
+#            puts "tag #{tag}"
+            @sps_client.headers['If-None-Match']=tag
+                        response=@sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{colCount+1}",body)
+                        
+        end
            
-    
-    end
-    
-    def add_category(category_name)
-        
-    end
-    
+        def get_row(row)
+                        sps_id=self.sps_get_course("Roster")
+            #testsheet=@spreadsheet_client.get("https://spreadsheets.google.com/feeds/worksheets/#{@id}/private/full")
+           rows=@sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
+           rows.elements.each('entry[1]')  do |header| 
+               header.elements.each('gsx') do |h|
+                   puts h
+               end
+           end
+               
 
-        
+
+        end
+    
+    end 
 end
