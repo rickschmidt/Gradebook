@@ -79,7 +79,7 @@ module Gradebook
 =end
         def sps_get_course(course)
             @sps_feed=@doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
-
+#            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
             if @sps_feed.elements['openSearch:totalResults'].text!="0"
                 @sps_feed.elements.each('entry') do |entry|
                     if entry.elements['title'].text!=""
@@ -121,6 +121,20 @@ module Gradebook
             return etag
         end
 
+=begin rdoc
+    Returns the version of a worksheet extracted from its meta feed.
+=end
+        def sps_get_version(id)
+            version=nil
+            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
+            
+            @sps_feed.elements.each('entry') do |entry|
+                version=entry.attribute('version').value
+            end
+
+        return version
+    end
+    
 =begin rdoc
     Extracts the ID of a document entry and returns it. The entry would come from iterating through a feed.
 =end
@@ -225,34 +239,116 @@ EOF
                 
         end
        
+=begin rdoc
+    Adds  a category to the gradebook.  First the number of categories already present should be calculated using *get_number_of_used_columns*
+=end
         def add_category(category_name)
-            colCount=self.get_colCount
+            used_col_count=self.get_number_of_used_columns
+            total_col_count=self.get_col_count
+            if used_col_count >=total_col_count
+               # self.add_column(1)
+            end
             sps_id=self.sps_get_course("Roster")
             body=<<-EOF
 <entry xmlns="http://www.w3.org/2005/Atom"
 xmlns:gs="http://schemas.google.com/spreadsheets/2006">
-<gs:cell row="1" col="#{colCount+1}" inputValue="#{category_name}"/>
+<gs:cell row="1" col="#{used_col_count+1}" inputValue="#{category_name}"/>
 </entry>
 EOF
             tag=self.sps_get_etag("course",sps_id)
-#            puts "tag #{tag}"
             @sps_client.headers['If-None-Match']=tag
-                        response=@sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{colCount+1}",body)
-                        
+            response=@sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}",body)             
         end
+        
+        
+=begin rdoc
+    Adds another column to the spreadsheet by upating the sheets meta data. 
+=end
+    def add_column(num_of_columns)
+
+        sps_id=self.sps_get_course("Roster")
+        sheet=self.sps_get_sheet(sps_id)
+        col_count=0
+        puts "sheet #{sheet}"
+        puts "end of sheet"
+        sheet.elements.each('entry') do |entry|
+            col_count=entry.elements['gs:colCount'].text.to_i
+        end
+        total_columns=col_count+num_of_columns
+
+             body=<<-EOF
+<entry xmlns="http://www.w3.org/2005/Atom"
+xmlns:gs="http://schemas.google.com/spreadsheets/2006">
+<id>https://spreadsheets.google.com/feeds/worksheets/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6<</id>
+<link rel="edit" type="application/atom+xml"
+href="https://spreadsheets.google.com/feeds/worksheets/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/private/full/od6"/>
+<gs:colCount>12</gs:colCount>
+</entry>
+EOF
+
+                body2=<<-EOF
+<entry xmlns="http://www.w3.org/2005/Atom"
+xmlns:gs="http://schemas.google.com/spreadsheets/2006"
+xmlns:gd='http://schemas.google.com/g/2005'>
+</entry>
+EOF
+        puts "sheet #{sheet}"
+        puts "end of sheet"
+        entry = sheet.elements['entry'] # first <atom:entry>
+              
+
+        puts "colcount in entry #{entry.elements['gs:colCount'].text}"
+
+        entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
+        puts "colcount in entry #{entry.elements['gs:colCount'].text}"
+        edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
+             
+             tag=self.sps_get_etag("Roster",sps_id)
+            
+            
+#             tag=tag.gsub! /"/, ''
+            
+
+            
+
+             
+            
+#              entry['xmlns$gs'] = " 
+# http://schemas.google.com/spreadsheets/2006
+
+#            puts "etag value #{@sps_client.headers['If-Match']=entry.attribute('etag').value}"
+#            feed xmlns:gs='http://schemas.google.com/spreadsheets/2006' gd:etag='W/&quot;A0AMQHg9fyp7ImA9WhZUFUg.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'
+             puts "entry #{entry.to_s}"
+             #    response=@sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
+             puts "edit uri #{edit_uri}"
+             #################
+             
+
+                entry.add_namespace('http://www.w3.org/2005/Atom')
+                entry.add_namespace('gd','http://schemas.google.com/g/2005')
+                entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+                puts "e attr #{entry.attributes.inspect}"
+
+#                xmlns:gd='http://schemas.google.com/g/2005'
+
+             puts response=@sps_client.put("https://spreadsheets.google.com/feeds/worksheets/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/private/full/od6",entry.to_s)
+             
+         
+    end
+=begin rdoc
+    Returns the number of columns in the first row that have are not blank from left to right.  Blank columns should not be used in the middle of the sheet.  
+    The number of columns that are not blanked is needed to calculate where to put a new category.
+=end
            
-        def get_row(row)
-                        sps_id=self.sps_get_course("Roster")
-            #testsheet=@spreadsheet_client.get("https://spreadsheets.google.com/feeds/worksheets/#{@id}/private/full")
-           rows=@sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
-           rows.elements.each('entry[1]')  do |header| 
-               header.elements.each('gsx') do |h|
-                   puts h
-               end
-           end
-               
-
-
+        def get_number_of_used_columns
+            sps_id=self.sps_get_course("Roster")
+            rows=@sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
+            column_headers=[]
+            rows.elements.each('entry[1]//gsx:*')  do |header| 
+                column_headers<<header
+            end
+            puts "Number of headers used #{column_headers.size}"
+            return column_headers.size
         end
     
     end 
