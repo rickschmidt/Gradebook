@@ -244,11 +244,17 @@ EOF
 =end
         def add_category(category_name)
             used_col_count=self.get_number_of_used_columns
-            total_col_count=self.get_col_count
+            total_col_count=self.get_colCount
             if used_col_count >=total_col_count
-               # self.add_column(1)
+                self.add_column(1)
             end
             sps_id=self.sps_get_course("Roster")
+            sheet=self.sps_get_sheet(sps_id)
+            entry = sheet.elements['entry'] # first <atom:entry>
+            entry.add_namespace('http://www.w3.org/2005/Atom')
+            entry.add_namespace('gd','http://schemas.google.com/g/2005')
+            entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+
             body=<<-EOF
 <entry xmlns="http://www.w3.org/2005/Atom"
 xmlns:gs="http://schemas.google.com/spreadsheets/2006">
@@ -271,67 +277,28 @@ EOF
         col_count=0
         puts "sheet #{sheet}"
         puts "end of sheet"
+        
         sheet.elements.each('entry') do |entry|
             col_count=entry.elements['gs:colCount'].text.to_i
         end
+        
         total_columns=col_count+num_of_columns
-
-             body=<<-EOF
-<entry xmlns="http://www.w3.org/2005/Atom"
-xmlns:gs="http://schemas.google.com/spreadsheets/2006">
-<id>https://spreadsheets.google.com/feeds/worksheets/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6<</id>
-<link rel="edit" type="application/atom+xml"
-href="https://spreadsheets.google.com/feeds/worksheets/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/private/full/od6"/>
-<gs:colCount>12</gs:colCount>
-</entry>
-EOF
-
-                body2=<<-EOF
-<entry xmlns="http://www.w3.org/2005/Atom"
-xmlns:gs="http://schemas.google.com/spreadsheets/2006"
-xmlns:gd='http://schemas.google.com/g/2005'>
-</entry>
-EOF
         puts "sheet #{sheet}"
         puts "end of sheet"
         entry = sheet.elements['entry'] # first <atom:entry>
-              
-
         puts "colcount in entry #{entry.elements['gs:colCount'].text}"
-
         entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
         puts "colcount in entry #{entry.elements['gs:colCount'].text}"
         edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
-             
-             tag=self.sps_get_etag("Roster",sps_id)
-            
-            
-#             tag=tag.gsub! /"/, ''
-            
-
-            
-
-             
-            
-#              entry['xmlns$gs'] = " 
-# http://schemas.google.com/spreadsheets/2006
-
-#            puts "etag value #{@sps_client.headers['If-Match']=entry.attribute('etag').value}"
-#            feed xmlns:gs='http://schemas.google.com/spreadsheets/2006' gd:etag='W/&quot;A0AMQHg9fyp7ImA9WhZUFUg.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'
-             puts "entry #{entry.to_s}"
-             #    response=@sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
-             puts "edit uri #{edit_uri}"
-             #################
-             
-
-                entry.add_namespace('http://www.w3.org/2005/Atom')
-                entry.add_namespace('gd','http://schemas.google.com/g/2005')
-                entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-                puts "e attr #{entry.attributes.inspect}"
-
-#                xmlns:gd='http://schemas.google.com/g/2005'
-
-             puts response=@sps_client.put("https://spreadsheets.google.com/feeds/worksheets/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/private/full/od6",entry.to_s)
+        tag=self.sps_get_etag("Roster",sps_id)
+#               tag=tag.gsub! /"/, ''
+        puts "entry #{entry.to_s}"
+        puts "edit uri #{edit_uri}"
+        entry.add_namespace('http://www.w3.org/2005/Atom')
+        entry.add_namespace('gd','http://schemas.google.com/g/2005')
+        entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+        puts "e attr #{entry.attributes.inspect}"
+        puts response=@sps_client.put("https://spreadsheets.google.com/feeds/worksheets/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/private/full/od6",entry.to_s)
              
          
     end
@@ -351,5 +318,25 @@ EOF
             return column_headers.size
         end
     
+=begin rdoc
+    Search for a student by name and returns an id number to be used in other commands
+=end
+        def search_for_sid(search)
+            sps_id=self.sps_get_course("Roster")
+            rows=@sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}").to_xml
+            row=Hash.new
+            rows.elements.each('//gsx:*') do |header|
+
+                row[header.name]=header.text
+            end
+            puts row.inspect
+            puts "Searching for Student ID...#{search}"
+            puts "Grades for #{row['name']}"
+            row.each do |key,value|
+                puts "#{key} :#{value} "
+            end
+            
+            
+        end
     end 
 end

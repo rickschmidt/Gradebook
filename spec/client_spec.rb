@@ -34,13 +34,17 @@ describe "Client" do
      end
      
      it "should be able to add a category" do
-#         @client.add_category("Q4")
-#         used_columns=@client.get_number_of_used_columns
+         @client.add_category("Q4")
+         used_columns=@client.get_number_of_used_columns
          
      end
      
      it "should be able to add a column to the spreadsheet by changing the sheets metadata when no more columns are API accessible" do
         @client.add_column(1)
+     end
+     
+     it "should be able to search for a row by the student id column" do
+        @client.search_for_sid("2222") 
      end
      
      it "should be able to get the version number of the worksheet in a spreadsheet feed " do
