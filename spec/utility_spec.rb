@@ -18,7 +18,7 @@ describe "Utility" do
      end
      
     it "should be able to add a category" do
-                 sps_id=Gradebook::Search.sps_get_course(@client.doc_client,"Roster")
+         sps_id=Gradebook::Search.sps_get_course(@client.doc_client,"Roster")
          sheet=Gradebook::Search.sps_get_sheet(@client.sps_client,sps_id)
         Gradebook::Utility.add_category(@client.sps_client,sps_id,"Test 3",sheet)
      end
@@ -45,7 +45,9 @@ describe "Utility" do
      end
      
      it "should be able to get the row count" do
-         should fail
+         sps_id=Gradebook::Search.sps_get_course(@client.doc_client,"Roster")
+        sheet=Gradebook::Search.sps_get_sheet(@client.sps_client,sps_id)
+         Gradebook::Utility.get_number_of_rows(sps_id,sheet)
      end
      
      it "should be able to get the spreadsheet by course name" do
@@ -53,7 +55,9 @@ describe "Utility" do
      end
      
      it "should be able to get the etag of spreadsheet" do
-         should fail
+         sps_id=Gradebook::Search.sps_get_course(@client.doc_client,"Roster")
+        sheet=Gradebook::Search.sps_get_sheet(@client.sps_client,sps_id)
+         Gradebook::Utility.sps_get_etag(@client.sps_client,sps_id)
      end
      
      it "should be able to get a specific sheet from a spreadsheet" do

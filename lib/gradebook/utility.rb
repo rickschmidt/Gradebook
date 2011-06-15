@@ -116,6 +116,44 @@ EOF
            return colCount.to_i
         end
         
+=begin rdoc
+    Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
+=end
+        def self.get_number_of_rows(sps_id,sheet)
+           rowCount=0
+           sheet.elements.each('entry') do |entry|
+               rowCount=entry.elements['gs:rowCount'].text
+           end 
+           return rowCount.to_i
+        end
+        
+=begin rdoc
+    Returns the etag for authorization headers for the course that is searched for as a param.  Returns nil if no course is found.
+=end
+        def self.sps_get_etag(sps_client,id)
+                etag=nil
+                @sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full").to_xml
+                @sps_feed.elements.each('entry') do |entry|
+                    etag=entry.attribute('etag').value
+                end
+
+            return etag
+        end
+
+=begin rdoc
+    Returns the version of a worksheet extracted from its meta feed.
+=end
+        def self.sps_get_version(id)
+            version=nil
+            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
+            
+            @sps_feed.elements.each('entry') do |entry|
+                version=entry.attribute('version').value
+            end
+
+        return version
+    end
+        
     end
 end
 
