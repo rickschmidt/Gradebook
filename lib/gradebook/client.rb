@@ -335,8 +335,6 @@ EOF
             row.each do |key,value|
                 puts "#{key} :#{value} "
             end
-            
-            
         end
     end 
 end

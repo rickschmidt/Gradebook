@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>upload_roster (Gradebook::CreateGoogleCL)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/create_googlecl.rb, line 14</span>
+       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">upload_roster</span>(<span class="ruby-identifier">path_to_file</span>)
+           <span class="ruby-identifier">googlecl</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">GoogleCL</span>.<span class="ruby-identifier">new</span>
+          <span class="ruby-ivar">@upload_url</span>=<span class="ruby-identifier">googlecl</span>.<span class="ruby-identifier">upload</span>(<span class="ruby-identifier">path_to_file</span>)
+       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
