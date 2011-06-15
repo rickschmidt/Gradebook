@@ -1,0 +1,122 @@
+require 'gdata'
+require 'gradebook/search'
+=begin rdoc
+    A class for gathering basic stats 
+=end
+module Gradebook
+    class Utility
+        
+
+=begin rdoc
+    Adds  a category to the gradebook.  First the number of categories already present should be calculated using *get_number_of_used_columns*
+=end
+        def self.add_category(sps_client,sps_id,category_name,sheet)
+            used_col_count=self.get_number_of_used_columns(sheet)
+            total_col_count=self.get_number_of_columns(sheet)
+            if used_col_count >=total_col_count
+                self.add_column(1)
+            end
+
+
+            entry = sheet.elements['entry'] # first <atom:entry>
+            entry.add_namespace('http://www.w3.org/2005/Atom')
+            entry.add_namespace('gd','http://schemas.google.com/g/2005')
+            entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+
+            body=<<-EOF
+<entry xmlns="http://www.w3.org/2005/Atom"
+xmlns:gs="http://schemas.google.com/spreadsheets/2006">
+<gs:cell row="1" col="#{used_col_count+1}" inputValue="#{category_name}"/>
+</entry>
+EOF
+            tag=self.sps_get_etag("course",sps_id)
+            @sps_client.headers['If-None-Match']=tag
+            response=@sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}",body)             
+        end
+        
+        
+=begin rdoc
+    Adds another column to the spreadsheet by upating the sheets meta data. 
+=end
+    def self.add_column(num_of_columns)
+
+        sps_id=Gradebook::Search.sps_get_course(doc_client,"Roster")
+        sheet=Gradebook::Search.sps_get_sheet(sps_client,sps_id)
+        col_count=0
+        puts "sheet #{sheet}"
+        puts "end of sheet"
+        
+        sheet.elements.each('entry') do |entry|
+            col_count=entry.elements['gs:colCount'].text.to_i
+        end
+        
+        total_columns=col_count+num_of_columns
+        puts "sheet #{sheet}"
+        puts "end of sheet"
+        entry = sheet.elements['entry'] # first <atom:entry>
+        puts "colcount in entry #{entry.elements['gs:colCount'].text}"
+        entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
+        puts "colcount in entry #{entry.elements['gs:colCount'].text}"
+        edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
+        tag=self.sps_get_etag("Roster",sps_id)
+#               tag=tag.gsub! /"/, ''
+        puts "entry #{entry.to_s}"
+        puts "edit uri #{edit_uri}"
+        entry.add_namespace('http://www.w3.org/2005/Atom')
+        entry.add_namespace('gd','http://schemas.google.com/g/2005')
+        entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+        puts "e attr #{entry.attributes.inspect}"
+        puts response=@sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
+             
+         
+    end
+=begin rdoc
+    Returns the number of columns in the first row that have are not blank from left to right.  Blank columns should not be used in the middle of the sheet.  
+    The number of columns that are not blanked is needed to calculate where to put a new category.
+=end
+           
+        def self.get_number_of_used_columns(sheet)
+            column_headers=[]
+            sheet.elements.each('entry[1]//gsx:*')  do |header| 
+                column_headers<<header
+            end
+            puts "Number of headers used #{column_headers.size}"
+            return column_headers.size
+        end
+    
+=begin rdoc
+    Search for a student by name and returns an id number to be used in other commands
+=end
+        def self.search_for_sid(search)
+            sps_id=self.sps_get_course("Roster")
+            rows=@sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}").to_xml
+            row=Hash.new
+            rows.elements.each('//gsx:*') do |header|
+
+                row[header.name]=header.text
+            end
+            puts row.inspect
+            puts "Searching for Student ID...#{search}"
+            puts "Grades for #{row['name']}"
+            row.each do |key,value|
+                puts "#{key} :#{value} "
+            end
+        end
+        
+
+        
+=begin rdoc
+    Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
+=end
+        def self.get_number_of_columns(sheet)
+            colCount=0
+            sheet.elements.each('entry') do |entry|
+                colCount=entry.elements['gs:colCount'].text
+            end 
+           return colCount.to_i
+        end
+        
+    end
+end
+
+

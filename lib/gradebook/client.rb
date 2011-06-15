@@ -102,7 +102,6 @@ module Gradebook
         def sps_get_sheet(id)
             @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
 
-            
 
             return @sps_feed
         end

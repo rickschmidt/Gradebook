@@ -5,12 +5,12 @@
 
 <html>
 <head>
-  <title>get_course (Gradebook::Client)</title>
+  <title>get_course (Gradebook::Utility)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 35</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 112</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_course</span>(<span class="ruby-identifier">course</span>)
             <span class="ruby-ivar">@doc_feed</span>=<span class="ruby-ivar">@doc_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://documents.google.com/feeds/documents/private/full?q=#{course}&amp;prettyprint=true&quot;</span>).<span class="ruby-identifier">to_xml</span>
 
