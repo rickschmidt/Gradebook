@@ -29,9 +29,9 @@ xmlns:gs="http://schemas.google.com/spreadsheets/2006">
 <gs:cell row="1" col="#{used_col_count+1}" inputValue="#{category_name}"/>
 </entry>
 EOF
-            tag=self.sps_get_etag("course",sps_id)
-            @sps_client.headers['If-None-Match']=tag
-            response=@sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}",body)             
+            tag=self.sps_get_etag(sps_client,sps_id)
+            sps_client.headers['If-None-Match']=tag
+            response=sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}",body)             
         end
         
         
@@ -143,12 +143,12 @@ EOF
 =begin rdoc
     Returns the version of a worksheet extracted from its meta feed.
 =end
-        def self.sps_get_version(id)
+        def self.sps_get_version(sps_client,id)
             version=nil
-            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
+            sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
             
-            @sps_feed.elements.each('entry') do |entry|
-                version=entry.attribute('version').value
+            sps_feed.elements.each('entry') do |entry|
+                version=entry.attribute('version')
             end
 
         return version
