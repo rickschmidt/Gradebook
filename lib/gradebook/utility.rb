@@ -10,38 +10,35 @@ module Gradebook
 =begin rdoc
     Adds  a category to the gradebook.  First the number of categories already present should be calculated using *get_number_of_used_columns*
 =end
-        def self.add_category(sps_client,sps_id,category_name,sheet)
-            used_col_count=self.get_number_of_used_columns(sheet)
+        def self.add_category(sps_client,sps_id,category_name,rows,sheet)
+            used_col_count=self.get_number_of_used_columns(rows)
             total_col_count=self.get_number_of_columns(sheet)
             if used_col_count >=total_col_count
-                self.add_column(1)
+                self.add_column(1,sps_client,sheet,sps_id)
             end
 
 
-            entry = sheet.elements['entry'] # first <atom:entry>
+            entry = rows.elements['entry'] # first <atom:entry>
             entry.add_namespace('http://www.w3.org/2005/Atom')
             entry.add_namespace('gd','http://schemas.google.com/g/2005')
             entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-
-            body=<<-EOF
-<entry xmlns="http://www.w3.org/2005/Atom"
-xmlns:gs="http://schemas.google.com/spreadsheets/2006">
-<gs:cell row="1" col="#{used_col_count+1}" inputValue="#{category_name}"/>
-</entry>
-EOF
+            entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
+ #           entry.elements['gs:cell'].add_attributes({"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"})
+#            el = doc.add_element 'my-tag', {'attr1'=>'val1', 'attr2'=>'val2'}
+            entry.add_element 'gs:cell',{"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"}            
             tag=self.sps_get_etag(sps_client,sps_id)
             sps_client.headers['If-None-Match']=tag
-            response=sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}",body)             
+            response=sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}",entry)             
         end
         
         
 =begin rdoc
     Adds another column to the spreadsheet by upating the sheets meta data. 
 =end
-    def self.add_column(num_of_columns)
+    def self.add_column(num_of_columns,sps_client,sheet,sps_id)
 
-        sps_id=Gradebook::Search.sps_get_course(doc_client,"Roster")
-        sheet=Gradebook::Search.sps_get_sheet(sps_client,sps_id)
+
+
         col_count=0
         puts "sheet #{sheet}"
         puts "end of sheet"
@@ -58,7 +55,7 @@ EOF
         entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
         puts "colcount in entry #{entry.elements['gs:colCount'].text}"
         edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
-        tag=self.sps_get_etag("Roster",sps_id)
+        tag=self.sps_get_etag(sps_client,sps_id)
 #               tag=tag.gsub! /"/, ''
         puts "entry #{entry.to_s}"
         puts "edit uri #{edit_uri}"
@@ -66,7 +63,7 @@ EOF
         entry.add_namespace('gd','http://schemas.google.com/g/2005')
         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
         puts "e attr #{entry.attributes.inspect}"
-        puts response=@sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
+        puts response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
              
          
     end
@@ -75,9 +72,9 @@ EOF
     The number of columns that are not blanked is needed to calculate where to put a new category.
 =end
            
-        def self.get_number_of_used_columns(sheet)
+        def self.get_number_of_used_columns(rows)
             column_headers=[]
-            sheet.elements.each('entry[1]//gsx:*')  do |header| 
+            rows.elements.each('entry[1]//gsx:*')  do |header| 
                 column_headers<<header
             end
             puts "Number of headers used #{column_headers.size}"
@@ -121,6 +118,7 @@ EOF
 =end
         def self.get_number_of_rows(sps_id,sheet)
            rowCount=0
+           puts "rows #{sheet}"
            sheet.elements.each('entry') do |entry|
                rowCount=entry.elements['gs:rowCount'].text
            end 

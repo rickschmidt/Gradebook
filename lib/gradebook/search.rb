@@ -72,12 +72,21 @@ module Gradebook
 =begin rdoc
     Returns the spreadsheet that is located by its id.
 =end
-        def self.sps_get_sheet(sps_client,id)
-            sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
+        def self.sps_get_sheet(sps_client,sps_id)
+            sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true").to_xml
 
             return sps_feed
         end
-        
+
+=begin rdoc
+    Returns the spreadsheet located by its ID as a list feed.
+=end        
+
+        def self.sps_get_rows(sps_client,sps_id)
+            rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
+                        
+            return rows
+        end
 =begin rdoc
     Search for a student by name and returns an id number to be used in other commands
 =end
