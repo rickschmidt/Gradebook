@@ -11,7 +11,7 @@ module Gradebook
        
        
         def initialize
-            puts "Authenticate with Google using ClientLogin(username and password)"
+           
         end
     
         

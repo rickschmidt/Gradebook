@@ -35,9 +35,7 @@ module Gradebook
             if @sps_feed.elements['openSearch:totalResults'].text!="0"
                 @sps_feed.elements.each('entry') do |entry|
                     if entry.elements['title'].text!=""
-                        puts 'Title Match:' + entry.elements['title'].text
                         @sps_id=self.extract_document_id_from_feed("documents",entry)
-                        puts "ID for Match: " + @sps_id.to_s
                     end
                 end
             else

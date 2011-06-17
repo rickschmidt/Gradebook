@@ -40,31 +40,62 @@ module Gradebook
 
 
         col_count=0
-        puts "sheet #{sheet}"
-        puts "end of sheet"
+        
+        
         
         sheet.elements.each('entry') do |entry|
             col_count=entry.elements['gs:colCount'].text.to_i
         end
         
         total_columns=col_count+num_of_columns
-        puts "sheet #{sheet}"
-        puts "end of sheet"
+        
         entry = sheet.elements['entry'] # first <atom:entry>
-        puts "colcount in entry #{entry.elements['gs:colCount'].text}"
+        
         entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
-        puts "colcount in entry #{entry.elements['gs:colCount'].text}"
+        
         edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
         tag=self.sps_get_etag(sps_client,sps_id)
 #               tag=tag.gsub! /"/, ''
-        puts "entry #{entry.to_s}"
-        puts "edit uri #{edit_uri}"
+        
         entry.add_namespace('http://www.w3.org/2005/Atom')
         entry.add_namespace('gd','http://schemas.google.com/g/2005')
         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-        puts "e attr #{entry.attributes.inspect}"
-        puts response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
+        
+        response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
              
+         
+    end
+    
+=begin rdoc
+    Remove a given number of columns from the spreadsheet by upating the sheets meta data. 
+=end
+    def self.remove_columns(num_of_columns,sps_client,sheet,sps_id)
+
+
+
+        col_count=0
+        
+        
+        sheet.elements.each('entry') do |entry|
+            col_count=entry.elements['gs:colCount'].text.to_i
+        end
+        
+        total_columns=col_count-num_of_columns
+        
+        entry = sheet.elements['entry'] # first <atom:entry>
+        
+        entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
+        
+        edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
+        tag=self.sps_get_etag(sps_client,sps_id)
+#               tag=tag.gsub! /"/, ''
+        
+        entry.add_namespace('http://www.w3.org/2005/Atom')
+        entry.add_namespace('gd','http://schemas.google.com/g/2005')
+        entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+        
+        response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
+     
          
     end
 =begin rdoc
@@ -77,7 +108,7 @@ module Gradebook
             rows.elements.each('entry[1]//gsx:*')  do |header| 
                 column_headers<<header
             end
-            puts "Number of headers used #{column_headers.size}"
+            
             return column_headers.size
         end
     
@@ -92,7 +123,7 @@ module Gradebook
 
                 row[header.name]=header.text
             end
-            puts row.inspect
+            
             puts "Searching for Student ID...#{search}"
             puts "Grades for #{row['name']}"
             row.each do |key,value|
@@ -118,7 +149,6 @@ module Gradebook
 =end
         def self.get_number_of_rows(sps_id,sheet)
            rowCount=0
-           puts "rows #{sheet}"
            sheet.elements.each('entry') do |entry|
                rowCount=entry.elements['gs:rowCount'].text
            end 
