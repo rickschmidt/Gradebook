@@ -14,7 +14,7 @@ module Gradebook
             used_col_count=self.get_number_of_used_columns(rows)
             total_col_count=self.get_number_of_columns(sheet)
             if used_col_count >=total_col_count
-                self.add_column(1,sps_client,sheet,sps_id)
+                self.add_columns(1,sps_client,sheet,sps_id)
             end
 
 
@@ -35,7 +35,7 @@ module Gradebook
 =begin rdoc
     Adds another column to the spreadsheet by upating the sheets meta data. 
 =end
-    def self.add_column(num_of_columns,sps_client,sheet,sps_id)
+    def self.add_columns(num_of_columns,sps_client,sheet,sps_id)
 
 
 
@@ -98,6 +98,18 @@ module Gradebook
      
          
     end
+    
+=begin rdoc
+    Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
+=end
+        def self.get_number_of_columns(sheet)
+            colCount=0
+            sheet.elements.each('entry') do |entry|
+                colCount=entry.elements['gs:colCount'].text
+            end 
+           return colCount.to_i
+        end
+        
 =begin rdoc
     Returns the number of columns in the first row that have are not blank from left to right.  Blank columns should not be used in the middle of the sheet.  
     The number of columns that are not blanked is needed to calculate where to put a new category.
@@ -111,39 +123,7 @@ module Gradebook
             
             return column_headers.size
         end
-    
-=begin rdoc
-    Search for a student by name and returns an id number to be used in other commands
-=end
-        def self.search_for_sid(search)
-            sps_id=self.sps_get_course("Roster")
-            rows=@sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}").to_xml
-            row=Hash.new
-            rows.elements.each('//gsx:*') do |header|
-
-                row[header.name]=header.text
-            end
             
-            puts "Searching for Student ID...#{search}"
-            puts "Grades for #{row['name']}"
-            row.each do |key,value|
-                puts "#{key} :#{value} "
-            end
-        end
-        
-
-        
-=begin rdoc
-    Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
-=end
-        def self.get_number_of_columns(sheet)
-            colCount=0
-            sheet.elements.each('entry') do |entry|
-                colCount=entry.elements['gs:colCount'].text
-            end 
-           return colCount.to_i
-        end
-        
 =begin rdoc
     Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
 =end

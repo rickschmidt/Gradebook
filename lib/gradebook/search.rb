@@ -77,7 +77,7 @@ module Gradebook
         end
 
 =begin rdoc
-    Returns the spreadsheet located by its ID as a list feed.
+    Returns the rows located by its ID as a list feed.
 =end        
 
         def self.sps_get_rows(sps_client,sps_id)
@@ -85,6 +85,24 @@ module Gradebook
                         
             return rows
         end
+        
+=begin rdoc
+    Returns the first row of a spreadsheet ie its column headers
+=end
+
+        def self.get_columns_headers(sps_client,sps_id)
+           rows=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full?prettyprint=true&max-row=1").to_xml
+           puts rows
+           row=Array.new
+           rows.elements.each('entry')do |entry|
+               entry.elements.each('gs:cell').attribute('inputValue') do |header|
+                   row<<header
+               end
+           end
+           
+           return row
+        end
+        
 =begin rdoc
     Search for a student by name and returns an id number to be used in other commands
 =end

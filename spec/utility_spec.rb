@@ -19,7 +19,7 @@ describe "Utility" do
      
          it "should be able to add a column" do
              before_num_of_cols= Utility.get_number_of_columns(@sheet)
-              Utility.add_column(1,@client.sps_client,@sheet,@sps_id)
+              Utility.add_columns(1,@client.sps_client,@sheet,@sps_id)
              after_num_of_cols= Utility.get_number_of_columns(@sheet)
              
                 after_num_of_cols.should eql(before_num_of_cols+1)
@@ -108,7 +108,7 @@ describe "Utility" do
         end
             
         it "should then add another column to the spreadsheet by updating the metadata" do
-            Utility.add_column(1,@client.sps_client,@sheet,@sps_id)
+            Utility.add_columns(1,@client.sps_client,@sheet,@sps_id)
         end
     end
 end
