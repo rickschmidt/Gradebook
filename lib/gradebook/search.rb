@@ -92,15 +92,15 @@ module Gradebook
 
         def self.get_columns_headers(sps_client,sps_id)
            rows=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full?prettyprint=true&max-row=1").to_xml
-           puts rows
-           row=Array.new
+           header_row=Hash.new
            rows.elements.each('entry')do |entry|
-               entry.elements.each('gs:cell').attribute('inputValue') do |header|
-                   row<<header
+               entry.elements.each('gs:cell') do |header|
+                   header_row[header.attribute('inputValue').value]=header.attribute('col').value
                end
            end
+
            
-           return row
+           return header_row
         end
         
 =begin rdoc
@@ -121,5 +121,14 @@ module Gradebook
                 puts "#{key} :#{value} "
             end
         end
+        
+=begin rdoc
+  Search for a column id based on a search phrase and a header row
+=end
+      def self.search_for_column_id(search,headers)
+        column_id=headers.values_at(search)
+        puts column_id
+        return column_id
+      end
     end
 end

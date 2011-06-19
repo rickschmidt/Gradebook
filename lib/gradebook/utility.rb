@@ -159,8 +159,16 @@ module Gradebook
                 version=entry.attribute('version')
             end
 
-        return version
-    end
+            return version
+        end
+        
+=begin rdoc
+  Return the list feed ie row by row entries
+=end
+      def self.get_list_feed(sps_client,id)
+        sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{id}/od6/private/full?prettyprint=true").to_xml
+        return sps_feed
+      end
         
     end
 end

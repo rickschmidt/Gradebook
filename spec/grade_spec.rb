@@ -13,8 +13,22 @@ describe "Grade" do
    
        it "should be able to get the first row ie. headers" do
           headers=Search.get_columns_headers(@client.sps_client,@sps_id)
-          puts headers
+          headers.should_not eql(nil)
        end
+       
+       it "should be able to search for a category in a header row and extract the column ID ie the key of the header row hash" do
+         headers=Search.get_columns_headers(@client.sps_client,@sps_id)
+         category_id=Search.search_for_column_id("Participation",headers)
+       end
+       
+       it "should ask for the category_id when the grade command is issued" do
+         headers=Search.get_columns_headers(@client.sps_client,@sps_id)
+         column_id=Search.search_for_column_id('Participation',headers)
+         list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
+         Grade.grade_each_student(list_feed,column_id)
+       end
+       
+       
    end
 end
    

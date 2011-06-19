@@ -80,7 +80,10 @@ describe "Utility" do
          it "should be able to get the version of a spreadsheet" do
              should fail
              Utility.sps_get_version(@client.sps_client,@sps_id).should_not eql(nil)
-        
+         end
+         
+         it "should be able to get the list feed of a spreadsheet" do
+           Utility.get_list_feed(@client.sps_client,@sps_id)
          end
     end
     
