@@ -88,7 +88,11 @@
       <div class="name-list">
       <a href="#M000001">extract_document_id_from_feed</a>&nbsp;&nbsp;
       <a href="#M000003">extract_document_id_from_feed</a>&nbsp;&nbsp;
+      <a href="#M000006">get_columns_headers</a>&nbsp;&nbsp;
+      <a href="#M000008">search_for_column_id</a>&nbsp;&nbsp;
+      <a href="#M000007">search_for_sid</a>&nbsp;&nbsp;
       <a href="#M000002">sps_get_course</a>&nbsp;&nbsp;
+      <a href="#M000005">sps_get_rows</a>&nbsp;&nbsp;
       <a href="#M000004">sps_get_sheet</a>&nbsp;&nbsp;
       </div>
     </div>
@@ -129,6 +133,59 @@ from iterating through a feed.
         </div>
       </div>
 
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="Search.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('Search.src/M000006.html');return false;">
+          <span class="method-name">get_columns_headers</span><span class="method-args">(sps_client,sps_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the first row of a spreadsheet ie its column headers
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="Search.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('Search.src/M000008.html');return false;">
+          <span class="method-name">search_for_column_id</span><span class="method-args">(search,headers)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Search.html">Search</a> for a column id based on a search phrase
+and a header row
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="Search.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('Search.src/M000007.html');return false;">
+          <span class="method-name">search_for_sid</span><span class="method-args">(search)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Search.html">Search</a> for a student by name and returns an id
+number to be used in other commands
+</p>
+        </div>
+      </div>
+
       <div id="method-M000002" class="method-detail">
         <a name="M000002"></a>
 
@@ -147,13 +204,30 @@ Returns nil if no course is found.
         </div>
       </div>
 
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="Search.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('Search.src/M000005.html');return false;">
+          <span class="method-name">sps_get_rows</span><span class="method-args">(sps_client,sps_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the rows located by its ID as a list feed.
+</p>
+        </div>
+      </div>
+
       <div id="method-M000004" class="method-detail">
         <a name="M000004"></a>
 
         <div class="method-heading">
           <a href="Search.src/M000004.html" target="Code" class="method-signature"
             onclick="popupCode('Search.src/M000004.html');return false;">
-          <span class="method-name">sps_get_sheet</span><span class="method-args">(sps_client,id)</span>
+          <span class="method-name">sps_get_sheet</span><span class="method-args">(sps_client,sps_id)</span>
           </a>
         </div>
       

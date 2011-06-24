@@ -27,6 +27,7 @@ describe "Grade" do
          column_id=Search.search_for_column_id('Q1',headers)
          list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
          Grade.grade_each_student(@client.sps_client,@sps_id,list_feed,column_id)
+         Grade.enter_grade(sps_client,sps_id,entry,column_id)
        end
        
        

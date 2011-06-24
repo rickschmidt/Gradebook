@@ -127,7 +127,6 @@ module Gradebook
 =end
       def self.search_for_column_id(search,headers)
         column_id=headers.values_at(search)
-        puts column_id
         return column_id
       end
     end

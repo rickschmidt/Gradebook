@@ -5,43 +5,51 @@
 
 <html>
 <head>
-  <title>add_column (Gradebook::Client)</title>
+  <title>get (Gradebook::Client)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 276</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_column</span>(<span class="ruby-identifier">num_of_columns</span>)
-
-        <span class="ruby-identifier">sps_id</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_course</span>(<span class="ruby-value str">&quot;Roster&quot;</span>)
-        <span class="ruby-identifier">sheet</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_sheet</span>(<span class="ruby-identifier">sps_id</span>)
-        <span class="ruby-identifier">col_count</span>=<span class="ruby-value">0</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;sheet #{sheet}&quot;</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;end of sheet&quot;</span>
-        
-        <span class="ruby-identifier">sheet</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
-            <span class="ruby-identifier">col_count</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'gs:colCount'</span>].<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_i</span>
-        <span class="ruby-keyword kw">end</span>
-        
-        <span class="ruby-identifier">total_columns</span>=<span class="ruby-identifier">col_count</span><span class="ruby-operator">+</span><span class="ruby-identifier">num_of_columns</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;sheet #{sheet}&quot;</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;end of sheet&quot;</span>
-        <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">sheet</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'entry'</span>] <span class="ruby-comment cmt"># first &lt;atom:entry&gt;</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;colcount in entry #{entry.elements['gs:colCount'].text}&quot;</span>
-        <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'gs:colCount'</span>].<span class="ruby-identifier">text</span> = <span class="ruby-node">&quot;#{total_columns.to_i}&quot;</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;colcount in entry #{entry.elements['gs:colCount'].text}&quot;</span>
-        <span class="ruby-identifier">edit_uri</span> = <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;link[@rel='edit']&quot;</span>].<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'href'</span>]
-        <span class="ruby-identifier">tag</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_etag</span>(<span class="ruby-value str">&quot;Roster&quot;</span>,<span class="ruby-identifier">sps_id</span>)
-<span class="ruby-comment cmt">#               tag=tag.gsub! /&quot;/, ''</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;entry #{entry.to_s}&quot;</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;edit uri #{edit_uri}&quot;</span>
-        <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'http://www.w3.org/2005/Atom'</span>)
-        <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gd'</span>,<span class="ruby-value str">'http://schemas.google.com/g/2005'</span>)
-        <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gs'</span>,<span class="ruby-value str">'http://schemas.google.com/spreadsheets/2006'</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;e attr #{entry.attributes.inspect}&quot;</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">response</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">put</span>(<span class="ruby-value str">&quot;https://spreadsheets.google.com/feeds/worksheets/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/private/full/od6&quot;</span>,<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">to_s</span>)
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 161</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get</span>
+           <span class="ruby-ivar">@sps_feed</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-value str">'https://spreadsheets.google.com/feeds/spreadsheets/private/full'</span>).<span class="ruby-identifier">to_xml</span>
+            <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;HEADERS BELOW&quot;</span>
+            <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">headers</span>
+            <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;HEADERS ABOVE&quot;</span>
+            <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+                
              
-         
-    <span class="ruby-keyword kw">end</span></pre>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text</span><span class="ruby-operator">==</span><span class="ruby-value str">'XML'</span>
+
+                <span class="ruby-identifier">puts</span> <span class="ruby-value str">'title: '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text</span>
+              <span class="ruby-comment cmt"># Extract the href value from each &lt;atom:link&gt; </span>
+              <span class="ruby-identifier">links</span> = {}
+              <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'link'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">links</span>[<span class="ruby-identifier">link</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-value str">'rel'</span>).<span class="ruby-identifier">value</span>] = <span class="ruby-identifier">link</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-value str">'href'</span>).<span class="ruby-identifier">value</span>
+              <span class="ruby-keyword kw">end</span>
+              <span class="ruby-ivar">@courseurl</span>=<span class="ruby-identifier">links</span>[<span class="ruby-value str">'alternate'</span>].<span class="ruby-identifier">to_s</span>
+              <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@courseurl</span>
+              <span class="ruby-ivar">@id</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">text</span>[<span class="ruby-regexp re">/.com\/feeds\/spreadsheets\/(.*)/</span>, <span class="ruby-value">1</span>]
+              <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@id</span>
+              
+
+<span class="ruby-comment cmt">#              text[/full\/(.*%3[aA].*)$/, 1]</span>
+
+                <span class="ruby-comment cmt">#puts @spreadsheet_client.get(@courseurl)</span>
+               
+                <span class="ruby-identifier">testsheet</span>=<span class="ruby-ivar">@spreadsheet_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{@id}/private/full&quot;</span>)
+
+          <span class="ruby-identifier">body</span>=<span class="ruby-value str">&quot;&lt;entry xmlns=\&quot;http://www.w3.org/2005/Atom\&quot;\nxmlns:gs=\&quot;http://schemas.google.com/spreadsheets/2006\&quot;&gt;\n&lt;id&gt;https://spreadsheets.google.com/feeds/cells/\#{@id}/od6/private/full/R2C4&lt;/id&gt;\n&lt;link rel=\&quot;edit\&quot; type=\&quot;application/atom+xml\&quot;\nhref=\&quot;https://spreadsheets.google.com/feeds/cells/\#{@id}/od6/private/full/R2C4\&quot;/&gt;\n&lt;gs:rowCount&gt;50&lt;/gs:rowCount&gt;\n&lt;gs:colCount&gt;10&lt;/gs:colCount&gt;\n&lt;gs:cell row=\&quot;2\&quot; col=\&quot;4\&quot; inputValue=\&quot;370\&quot;/&gt;\n&lt;/entry&gt;\n&quot;</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">'If-None-Match'</span>]=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-value str">'etag'</span>).<span class="ruby-identifier">value</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">headers</span>.<span class="ruby-identifier">inspect</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">inspect</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">inspect</span>
+                <span class="ruby-identifier">response</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">put</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/cells/#{@id}/od6/private/full/R2C4&quot;</span>,<span class="ruby-identifier">body</span>)
+<span class="ruby-comment cmt">#                puts response.body</span>
+            <span class="ruby-keyword kw">end</span> 
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

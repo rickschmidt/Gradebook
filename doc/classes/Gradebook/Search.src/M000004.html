@@ -10,11 +10,11 @@
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/search.rb, line 75</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_sheet</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">id</span>)
-            <span class="ruby-ivar">@sps_feed</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true&quot;</span>).<span class="ruby-identifier">to_xml</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/search.rb, line 73</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_sheet</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>)
+            <span class="ruby-identifier">sps_feed</span>=<span class="ruby-identifier">sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true&quot;</span>).<span class="ruby-identifier">to_xml</span>
 
-            <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@sps_feed</span>
+            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sps_feed</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

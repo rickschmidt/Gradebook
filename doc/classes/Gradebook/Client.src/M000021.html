@@ -5,26 +5,18 @@
 
 <html>
 <head>
-  <title>search_for_sid (Gradebook::Client)</title>
+  <title>put (Gradebook::Client)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 327</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search_for_sid</span>(<span class="ruby-identifier">search</span>)
-            <span class="ruby-identifier">sps_id</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_course</span>(<span class="ruby-value str">&quot;Roster&quot;</span>)
-            <span class="ruby-identifier">rows</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&amp;sq=id=#{search}&quot;</span>).<span class="ruby-identifier">to_xml</span>
-            <span class="ruby-identifier">row</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-            <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'//gsx:*'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">header</span><span class="ruby-operator">|</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 230</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">put</span>
+              
+                <span class="ruby-identifier">body</span>=<span class="ruby-value str">&quot;&lt;entry xmlns=\&quot;http://www.w3.org/2005/Atom\&quot;\nxmlns:gs=\&quot;http://schemas.google.com/spreadsheets/2006\&quot;&gt;\n&lt;gs:cell row=\&quot;2\&quot; col=\&quot;4\&quot; inputValue=\&quot;300\&quot;/&gt;\n&lt;/entry&gt;\n&quot;</span>
 
-                <span class="ruby-identifier">row</span>[<span class="ruby-identifier">header</span>.<span class="ruby-identifier">name</span>]=<span class="ruby-identifier">header</span>.<span class="ruby-identifier">text</span>
-            <span class="ruby-keyword kw">end</span>
-            <span class="ruby-identifier">puts</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">inspect</span>
-            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Searching for Student ID...#{search}&quot;</span>
-            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Grades for #{row['name']}&quot;</span>
-            <span class="ruby-identifier">row</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{key} :#{value} &quot;</span>
-            <span class="ruby-keyword kw">end</span>
+           <span class="ruby-identifier">feed</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">put</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/cells/tlwYl5YarxIHmZRL0sxvUlw/od6/#{@headers['Authorization']}/private/full/R2C4&quot;</span>,<span class="ruby-identifier">body</span>)
+                
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

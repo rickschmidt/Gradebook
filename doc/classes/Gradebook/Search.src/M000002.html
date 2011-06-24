@@ -16,9 +16,7 @@
             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'openSearch:totalResults'</span>].<span class="ruby-identifier">text!</span>=<span class="ruby-value str">&quot;0&quot;</span>
                 <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
                     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text!</span>=<span class="ruby-value str">&quot;&quot;</span>
-                        <span class="ruby-identifier">puts</span> <span class="ruby-value str">'Title Match:'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text</span>
                         <span class="ruby-ivar">@sps_id</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">extract_document_id_from_feed</span>(<span class="ruby-value str">&quot;documents&quot;</span>,<span class="ruby-identifier">entry</span>)
-                        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;ID for Match: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@sps_id</span>.<span class="ruby-identifier">to_s</span>
                     <span class="ruby-keyword kw">end</span>
                 <span class="ruby-keyword kw">end</span>
             <span class="ruby-keyword kw">else</span>

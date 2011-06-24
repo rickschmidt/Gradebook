@@ -108,6 +108,10 @@ when "getcourse"
     client=Gradebook::Client.new
     client.setup("","")
     client.get_course(options[:course])
+    
+when "grade"
+    user_grades=Gradebook::Usergrades.new
+    user_grades.grade
 else
   puts opt_parser
 end
