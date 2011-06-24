@@ -14,7 +14,7 @@ module Gradebook
         end
         
         def grade
-            puts "Enter search term for grade categry"
+            puts "Enter search term for grade category"
             category=STDIN.gets.chomp
             column_id=Gradebook::Search.search_for_column_id(category,@headers)
             list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
@@ -22,14 +22,16 @@ module Gradebook
 
             list_feed.elements.each('entry') do |entry| 
                   student_name=''
-                  grade=''
+                  score=''
                   entry.elements.each('gsx:name') do |name|
                       student_name=name
                       puts "Enter grade for student: #{student_name.text}"
-                      grade=STDIN.gets.chomp
+                      score=STDIN.gets.chomp
                       
                   end
-                 Grade.enter_grade(@client.sps_client,@sps_id,entry,column_id,grade)
+                     
+                grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
+                grade.enter_grade(entry,score)
             end
                      
         end
