@@ -42,15 +42,17 @@ opt_parser = OptionParser.new do |opt|
   opt.on("--course COURSE") do |course|
       options[:course]=course
   end
+  
+  opt.on("--all ALL") do |all|
+      options[:all]=all
+  end
+  
+
 end
 
 opt_parser.parse!
 
 case ARGV[0]
-when "start"
-  puts "call start on options #{options.inspect}"
-when "stop"
-  puts "call stop on options #{options.inspect}"
 when "authenticate"
   puts "Authenticate with #{options.inspect}"
   client=Gradebook::Client.new
@@ -98,9 +100,7 @@ when "uploadroster"
     @spradesheet_client=@clients[1]
     
     book=Gradebook::Book.new
-
     roster=File.open(options[:roster])
-     
     book.create(@doc_client,"testupload")
     book.import_roster(@doc_client,@spradesheet_client,roster)
     
@@ -111,7 +111,14 @@ when "getcourse"
     
 when "grade"
     user_grades=Gradebook::Usergrades.new
-    user_grades.grade
+    range=options[:all]
+    if range=='all'
+        user_grades.grade
+    elsif
+        user_grades.grade_each
+    end
+#when "grade --each"
+    
 else
   puts opt_parser
 end
