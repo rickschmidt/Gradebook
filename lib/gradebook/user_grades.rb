@@ -13,7 +13,7 @@ module Gradebook
            @headers=Search.get_columns_headers(@client.sps_client,@sps_id)
         end
         
-        def grade
+        def grade_all
             puts "Enter search term for grade category"
             category=STDIN.gets.chomp
             column_id=Gradebook::Search.search_for_column_id(category,@headers)
@@ -36,16 +36,12 @@ module Gradebook
                      
         end
         
-        def grade_each
+        def grade_by_sid(sid)
             puts "Enter search term for grade category"
             category=STDIN.gets.chomp
             column_id=Gradebook::Search.search_for_column_id(category,@headers)
-            list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
-            
-            puts "What is the students name?"
-            name=STDIN.gets.chomp
-            Search.search_for_sid(name,@sps_id,@client.sps_client)
-   
+            list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
+            Search.search_with_sid(sid,@sps_id,@client.sps_client)
         end
         
     end

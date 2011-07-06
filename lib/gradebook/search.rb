@@ -108,9 +108,7 @@ module Gradebook
 =end
         def self.search_for_sid(search,sps_id,sps_client)
 #            sps_id=self.sps_get_course("Roster")
-            rows1=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
             rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}").to_xml
-            puts rows
             row=Hash.new
             rows.elements.each('//gsx:id') do |header|
 #            rows.elements.each do |header|
@@ -125,24 +123,22 @@ module Gradebook
         end
         
 =begin rdoc
-    Search for a student by name and returns an id number to be used in other commands
+    Search for a student by id and returns the grades for that student
 =end
         def self.search_with_sid(search,sps_id,sps_client)
-#            sps_id=self.sps_get_course("Roster")
-            rows1=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
-            rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}").to_xml
-            puts rows
+            puts "in search"
+            rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}").to_xml
             row=Hash.new
             rows.elements.each('//gsx:*') do |header|
-#            rows.elements.each do |header|
+                puts "in rows"
                 row[header.name]=header.text
             end
-            puts "row below"
-
             puts "Searching for Student ID...#{search}"
             puts "Grades for #{row['name']}"
             row.each do |key,value|
-                puts "#{key} :#{value} "
+                if value.class==String
+                    puts "#{key} :#{value}"
+                end
             end
         end
         

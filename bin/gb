@@ -43,8 +43,8 @@ opt_parser = OptionParser.new do |opt|
       options[:course]=course
   end
   
-  opt.on("--all ALL") do |all|
-      options[:all]=all
+  opt.on("--range RANGE") do |range|
+      options[:range]=range
   end
   
 
@@ -108,16 +108,17 @@ when "getcourse"
     client=Gradebook::Client.new
     client.setup("","")
     client.get_course(options[:course])
-    
+
+# ./bin/gb grade --range A/all or --range SID     
 when "grade"
     user_grades=Gradebook::Usergrades.new
-    range=options[:all]
-    if range=='all'
-        user_grades.grade
-    elsif
-        user_grades.grade_each
+    option=options[:range]
+    if option=='all' || option=='A'
+        user_grades.grade_all
+    else
+        user_grades.grade_by_sid(option)
     end
-#when "grade --each"
+
     
 else
   puts opt_parser
