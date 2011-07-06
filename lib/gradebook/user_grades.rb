@@ -31,6 +31,7 @@ module Gradebook
                   end
                      
                 grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
+                puts "entry #{entry.class}, score: #{score}"
                 grade.enter_grade(entry,score)
             end
                      
@@ -40,8 +41,15 @@ module Gradebook
             puts "Enter search term for grade category"
             category=STDIN.gets.chomp
             column_id=Gradebook::Search.search_for_column_id(category,@headers)
-            list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
-            Search.search_with_sid(sid,@sps_id,@client.sps_client)
+            #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
+            list_feed=Search.search_with_sid(sid,@sps_id,@client.sps_client)
+            list_feed.elements.each('entry') do |entry| 
+                puts "Enter grade for student #{}"
+                score=STDIN.gets.chomp
+                grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
+                puts "entry #{entry.class}, score: #{score}"
+                grade.enter_grade(entry,score)
+            end
         end
         
     end

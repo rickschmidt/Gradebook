@@ -140,6 +140,7 @@ module Gradebook
                     puts "#{key} :#{value}"
                 end
             end
+            return rows
         end
         
 =begin rdoc
