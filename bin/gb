@@ -47,6 +47,10 @@ opt_parser = OptionParser.new do |opt|
       options[:range]=range
   end
   
+  opt.on("--sid SID") do |sid|
+      options[:sid]=sid
+  end
+  
 
 end
 
@@ -119,6 +123,10 @@ when "grade"
         user_grades.grade_by_sid(option)
     end
 
+when "report"
+    user_grades=Gradebook::Usergrades.new
+    sid=options[:sid]
+    user_grades.grade_report(sid)
     
 else
   puts opt_parser

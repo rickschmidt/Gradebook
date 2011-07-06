@@ -126,20 +126,20 @@ module Gradebook
     Search for a student by id and returns the grades for that student
 =end
         def self.search_with_sid(search,sps_id,sps_client)
-            puts "in search"
+            puts "Searching for Student ID...#{search}"
             rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}").to_xml
             row=Hash.new
             rows.elements.each('//gsx:*') do |header|
-                puts "in rows"
                 row[header.name]=header.text
             end
-            puts "Searching for Student ID...#{search}"
-            puts "Grades for #{row['name']}"
-            row.each do |key,value|
-                if value.class==String
-                    puts "#{key} :#{value}"
-                end
-            end
+            # row.each do |key,value|
+            #                 if value.class==String
+            #                     puts "#{key} :#{value}"
+            #                 end
+            #             end
+
+            puts "Student ID #{row['id']}"
+            
             return rows
         end
         
