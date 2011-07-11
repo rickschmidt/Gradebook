@@ -108,7 +108,9 @@ module Gradebook
 =end
         def self.search_for_sid(search,sps_id,sps_client)
 #            sps_id=self.sps_get_course("Roster")
+            puts sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}").inspect
             rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}").to_xml
+
             row=Hash.new
             rows.elements.each('//gsx:id') do |header|
 #            rows.elements.each do |header|
@@ -120,6 +122,7 @@ module Gradebook
             row.each do |key,value|
                 puts "#{key} :#{value} "
             end
+            return rows
         end
         
 =begin rdoc

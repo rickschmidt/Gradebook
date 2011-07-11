@@ -25,7 +25,6 @@ module Gradebook
    
         def enter_grade(entry,grade)
             edit_uri=''
-            puts "#{entry}"
             entry.add_namespace('http://www.w3.org/2005/Atom')
             entry.add_namespace('gd','http://schemas.google.com/g/2005')
             entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')

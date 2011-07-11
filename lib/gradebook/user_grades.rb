@@ -18,10 +18,11 @@ module Gradebook
     waits for a grade to be entered for that student.
 =end
         def grade_all
-            puts "Enter search term for grade category"
-            category=STDIN.gets.chomp
-            puts "Searching for category... #{category}"
-            column_id=Gradebook::Search.search_for_column_id(category,@headers)
+  #          puts "Enter search term for grade category"
+ #           category=STDIN.gets.chomp
+#            puts "Searching for category... #{category}"
+   #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            column_id=self.create_or_search_for_category
             list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
             
 
@@ -47,10 +48,11 @@ module Gradebook
 =end
         
         def grade_by_sid(sid)
-            puts "Enter search term for grade category"
-            category=STDIN.gets.chomp
-            puts "Searching for category... #{category}"
-            column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            #puts "Enter search term for grade category"
+            #category=STDIN.gets.chomp
+            #puts "Searching for category... #{category}"
+            #column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            column_id=self.create_or_search_for_category
             #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
             list_feed=Search.search_with_sid(sid,@sps_id,@client.sps_client)
             list_feed.elements.each('entry') do |entry| 
@@ -75,11 +77,57 @@ module Gradebook
                     if value.class==String
                         puts "#{key}:#{value}"
                     end
-                end
-                
+                end  
             end
-            
         end
         
+=begin rdoc
+    Returns a grade report for a student by searching for their row in the spreadsheet using their Name as a paramater. 
+=end
+        def grade_report_by_name(name)
+            puts "Name #{name}"
+            list_feed=Search.search_for_sid(name,@sps_id,@client.sps_client)
+            row=Hash.new
+            list_feed.elements.each('entry') do |entry|
+                entry.elements.each('gsx:*') do |col|
+                    row[col.name]=col.text
+                end
+                row.each do |key,value|
+                    if value.class==String
+                        puts "#{key}:#{value}"
+                    end
+                end  
+            end 
+        end
+        
+=begin rdoc
+    This method runs while grading.  It prompts the user for the category (column name) that is to be graded.  If the category exists it is returned by searching. 
+    If it does not exist 'new_category(category) is run which will create the new category and the search will be repeated by getting the new list of categories.
+=end
+        def create_or_search_for_category
+            puts "Enter a category name, if it does not match a current category one will be created"
+            category=STDIN.gets.chomp
+            puts "Searching for category... #{category}"
+            column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            if column_id.first.class!=String
+                puts "Category does not exist and is being created."
+                self.new_category(category)
+                @headers=Search.get_columns_headers(@client.sps_client,@sps_id)
+                column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            else
+                puts "Category exists."
+            end
+            puts "Column id: #{column_id}, isa #{column_id.class} contains #{column_id.inspect}"
+            return column_id
+        end
+        
+=begin rdoc
+    Wraps Utility functions to create a new category.
+=end
+        def new_category(category)
+            sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
+            rows=Search.sps_get_rows(@client.sps_client,@sps_id)
+            Utility.add_category(@client.sps_client,@sps_id,category,rows,sheet)
+        end
     end
 end
