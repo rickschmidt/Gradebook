@@ -169,6 +169,45 @@ module Gradebook
         sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{id}/od6/private/full?prettyprint=true").to_xml
         return sps_feed
       end
+      
+=begin rdoc
+    Average a category
+=end
+    def self.category_average(sps_client,sps_id,column_id)
+        #sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true&range=R2C#{column_id}:R25C#{column_id}").to_xml
+        sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true&min-col=#{column_id}&max-col=#{column_id}&min-row=2").to_xml
+        sps_feed.elements.each('entry') do |entry|
+            entry.elements.each('gs:cell') do |cell|
+                puts cell.text
+            end
+        end
+        stats_sheet=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/1/private/full?prettyprint=true").to_xml
+
+        #entry=stats_sheet.elements['entry']
+            entry=REXML::Element.new(arg='entry')
+            edit_uri=''
+            entry.add_namespace('http://www.w3.org/2005/Atom')
+            entry.add_namespace('gd','http://schemas.google.com/g/2005')
+            entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+            entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
+            #entry.elements.each('link') do |link|
+             #   edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
+            #end
+#            entry.add_element 'gsx:hw1',{"inputValue"=>"=AVERAGE(R3C#{column_id}:R25C#{column_id})"}            
+ #                       puts "entry #{entry}"
+            puts "---"
+            # entry.elements.each("gsx:hw1") do |col|
+            #                 col.text="=AVERAGE(R3C#{column_id}:R25C#{column_id})"
+            #             end
+            entry.add_element 'gs:cell',{"row"=>"26","col"=>"#{column_id}","inputValue"=>"=AVERAGE(R3C#{column_id}:R25C#{column_id})"}            
+            puts "entry inspect #{entry.inspect}"
+            tag=self.sps_get_etag(sps_client,sps_id)
+            sps_client.headers['If-None-Match']=tag
+#            @sps_client.put(edit_uri,entry.to_s)
+            response=sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R26C#{3}",entry.to_s)
+            puts response.inspect
+ 
+    end
         
     end
 end

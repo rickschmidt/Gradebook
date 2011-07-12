@@ -85,6 +85,10 @@ describe "Utility" do
          it "should be able to get the list feed of a spreadsheet" do
            Utility.get_list_feed(@client.sps_client,@sps_id)
          end
+         
+         it "should be able to get the average of a category" do
+            Utility.category_average(@client.sps_client,@sps_id,'3') 
+         end
     end
     
     context "a professor wants to add a new grade category to a sheet that does not have enough columns" do

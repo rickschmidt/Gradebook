@@ -11,17 +11,17 @@ module Gradebook
            @column_id=column_id
         end
      
-        def grade_each_student(list_feed)
-            list_feed.elements.each('entry') do |entry| 
-                student_name=''
-                entry.elements.each('gsx:name') do |name|
-                    student_name=name 
-                end
-                puts "Students Name: #{student_name.text}"
-                puts "Enter Grade for #{student_name.text}:"
-                self.enter_grade(entry)
-            end
-        end
+#        def grade_each_student(list_feed)
+#             list_feed.elements.each('entry') do |entry| 
+#                 student_name=''
+#                 entry.elements.each('gsx:name') do |name|
+#                     student_name=name 
+#                 end
+#                 puts "Students Name: #{student_name.text}"
+#                 puts "Enter Grade for #{student_name.text}:"
+#                 self.enter_grade(entry)
+#             end
+#         end
    
         def enter_grade(entry,grade)
             edit_uri=''

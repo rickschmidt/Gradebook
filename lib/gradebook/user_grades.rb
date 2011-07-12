@@ -129,5 +129,16 @@ module Gradebook
             rows=Search.sps_get_rows(@client.sps_client,@sps_id)
             Utility.add_category(@client.sps_client,@sps_id,category,rows,sheet)
         end
+
+=begin rdoc
+    Average a category(column)
+=end
+        def category_average
+            puts "Enter a category name."
+            category=STDIN.gets.chomp
+            puts "Searching for category... #{category}"
+            column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            Utility.category_average(@client.sps_client,@sps_id,column_id)
+        end
     end
 end
