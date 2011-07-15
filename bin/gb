@@ -137,7 +137,14 @@ when "reportname"
     name=options[:name]
     user_grades.grade_report_by_name(name)
 
+when "sid"
+    name=options[:name]
+    @client=Gradebook::Client.new
+    @client.setup("","") 
+    @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
+    Gradebook::Search.search_for_sid(name,@sps_id,@client.sps_client)
 
+    
 else
   puts opt_parser
 end

@@ -122,6 +122,44 @@ module Gradebook
         end
         
 =begin rdoc
+    Add Average forumula to a column
+=end
+        def add_average
+            
+        end
+             
+=begin rdoc
+    Add a new student to list feed
+=end
+        def add_student
+            #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
+           #  list_feed.elements.each do |entry|
+                # puts entry
+          #   end
+            entry=Utility.new_entry
+            #entry.add_element 'gs:cell',{"row"=>"#{row_num}","col"=>"#{column_num}","inputValue"=>"=AVERAGE(R2C#{column_num}:R#{last_row}C#{column_num})"}            
+            # entry.elements.each("gsx:*[#{@column_id}]") do |col|
+            #     col.text=grade
+            # end
+#            entry.add_element "gsx:id"
+            tag=Utility.sps_get_etag(@client.sps_client,@sps_id)
+            @client.sps_client.headers['If-None-Match']=tag
+    #            @sps_client.put(edit_uri,entry.to_s)
+#                                                https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true
+            #used_rows=Utility.get_number_of_used_rows(@client.sps_client,@sps_id)
+                body=<<-EOF
+<entry xmlns="http://www.w3.org/2005/Atom"
+xmlns:gsx="http://schemas.google.com/spreadsheets/2006/extended">
+</entry>
+EOF
+            puts body
+
+            response=@client.sps_client.post("https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full",entry.to_s)
+            puts response.inspect
+            
+        end
+        
+=begin rdoc
     Wraps Utility functions to create a new category.
 =end
         def new_category(category)

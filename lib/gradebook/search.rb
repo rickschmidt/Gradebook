@@ -108,7 +108,6 @@ module Gradebook
 =end
         def self.search_for_sid(search,sps_id,sps_client)
 #            sps_id=self.sps_get_course("Roster")
-            puts sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}").inspect
             rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}").to_xml
 
             row=Hash.new
@@ -153,5 +152,7 @@ module Gradebook
         column_id=headers.values_at(search)
         return column_id
       end
+      
+
     end
 end

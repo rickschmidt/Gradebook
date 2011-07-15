@@ -64,6 +64,10 @@ describe "Utility" do
          it "should be able to get the row count" do
               Utility.get_number_of_rows(@sps_id,@sheet).should_not eql(nil)
          end
+         
+         it "should be able to get the number of used rows" do
+            Utility.get_number_of_used_rows(@client.sps_client,@sps_id).should_not eql(nil) 
+         end
 
          it "should be able to get a course" do
              should fail
@@ -88,6 +92,10 @@ describe "Utility" do
          
          it "should be able to get the average of a category" do
             Utility.category_average(@client.sps_client,@sps_id,'3') 
+         end
+         
+         it "should be able to create a new entry" do
+            Utility.new_entry.should_not eql(nil) 
          end
     end
     

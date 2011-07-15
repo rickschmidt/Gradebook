@@ -19,5 +19,10 @@ describe "Usergrades" do
          it "should be able to grade an individual student with the students SID as a paramter" do
              should fail
          end
+         
+         it "should be able to add a student" do
+            ug=Usergrades.new 
+            ug.add_student
+         end
      end
  end
