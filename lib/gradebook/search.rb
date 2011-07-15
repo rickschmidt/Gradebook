@@ -39,7 +39,7 @@ module Gradebook
                     end
                 end
             else
-                puts "No Spreadsheet found with that course name"
+                #puts "No Spreadsheet found with that course name"
                 @sps_id=nil
             end
 
@@ -60,7 +60,7 @@ module Gradebook
             elsif feed=="spreadsheets"
                 id=entry.elements['id'].text[/.com\/feeds\/spreadsheets\/(.*)/, 1]
             else
-                puts "Invalid Feed: Must be 'documents' or 'spreadsheets'."
+                #puts "Invalid Feed: Must be 'documents' or 'spreadsheets'."
                 id=nil
             end
             
@@ -116,10 +116,10 @@ module Gradebook
                 row[header.name]=header.text
             end
 
-            puts "Searching for Student ID...#{search}"
-            puts "ID for #{row['name']}"
+            #puts "Searching for Student ID...#{search}"
+            #puts "ID for #{row['name']}"
             row.each do |key,value|
-                puts "#{key} :#{value} "
+                #puts "#{key} :#{value} "
             end
             return rows
         end
@@ -128,7 +128,7 @@ module Gradebook
     Search for a student by id and returns the grades for that student
 =end
         def self.search_with_sid(search,sps_id,sps_client)
-            puts "Searching for Student ID...#{search}"
+            #puts "Searching for Student ID...#{search}"
             rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}").to_xml
             row=Hash.new
             rows.elements.each('//gsx:*') do |header|
@@ -140,7 +140,7 @@ module Gradebook
             #                 end
             #             end
 
-            puts "Student ID #{row['id']}"
+           # puts "Student ID #{row['id']}"
             
             return rows
         end

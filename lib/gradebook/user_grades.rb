@@ -64,7 +64,7 @@ module Gradebook
         end
         
 =begin rdoc
-    Returns a grade report for a student by searching for their row in the spreadshet using their SID (student ID) as a parameter
+    Returns a grade report for a student by searching for their row in the spreadshet using their SID (student ID) as a parameter.
 =end
         def grade_report(sid)
             list_feed=Search.search_with_sid(sid,@sps_id,@client.sps_client)
@@ -73,12 +73,41 @@ module Gradebook
                 entry.elements.each('gsx:*') do |col|
                     row[col.name]=col.text
                 end
+                puts "\e[4;1;36mReport\e[0m"
                 row.each do |key,value|
                     if value.class==String
-                        puts "#{key}:#{value}"
+                        puts "\e[4;1;36m#{key}\e[0m"+'::'+"\e[4;1;34m#{value}\e[0m"
                     end
                 end  
             end
+        end
+        
+=begin rdoc
+    Returns an XML Grade report for a student by searching for their row in the spreadsheet using their SID (student ID) as a parameter.
+    TODO Separate name to first name and last name.
+=end
+        def grade_report_xml(sid)
+            list_feed=Search.search_with_sid(sid,@sps_id,@client.sps_client)
+            xmlDoc=REXML::Document.new
+            xmlDoc.add_element 'Grade Report' #root
+            root=xmlDoc.root
+            student=root.add_element('student', {'firstname'=>"#{list_feed.elements['entry/gsx:name'].text}",
+                                            'lastname'=>"#{list_feed.elements['entry/gsx:name'].text}",
+                                            'id'=>"#{list_feed.elements['entry/gsx:id'].text}"})
+            list_feed.elements.each('entry') do |entry|
+                entry.elements.each('gsx:*') do |col|
+                    if col.name!='name' && col.name!='id'
+                        category=student.add_element("#{col.name}")
+                        category.text="#{col.text}"
+                    end
+                end
+            end
+            out=""
+            xmlDoc.write(out, 1)
+
+            puts out
+
+                      
         end
         
 =begin rdoc
@@ -94,10 +123,35 @@ module Gradebook
                 end
                 row.each do |key,value|
                     if value.class==String
-                        puts "#{key}:#{value}"
+                        puts "\e[4;1;36m#{key}\e[0m"+'::'+"\e[4;1;34m#{value}\e[0m"
                     end
                 end  
             end 
+        end
+        
+=begin rdoc
+     Returns an XML Grade report for a student by searching for their row in the spreadsheet using their name as a parameter.
+    TODO Separate name to first name and last name.
+=end
+         def grade_report_by_name_xml(name)
+            list_feed=Search.search_for_sid(name,@sps_id,@client.sps_client)
+            xmlDoc=REXML::Document.new
+            xmlDoc.add_element 'Grade Report' #root
+            root=xmlDoc.root
+            student=root.add_element('student', {'firstname'=>"#{list_feed.elements['entry/gsx:name'].text}",
+                                            'lastname'=>"#{list_feed.elements['entry/gsx:name'].text}",
+                                            'id'=>"#{list_feed.elements['entry/gsx:id'].text}"})
+            list_feed.elements.each('entry') do |entry|
+                entry.elements.each('gsx:*') do |col|
+                    if col.name!='name' && col.name!='id'
+                        category=student.add_element("#{col.name}")
+                        category.text="#{col.text}"
+                    end
+                end
+            end
+            out=""
+            xmlDoc.write(out, 1)
+            puts out           
         end
         
 =begin rdoc
@@ -130,6 +184,7 @@ module Gradebook
              
 =begin rdoc
     Add a new student to list feed
+    ##Under Development  TODO
 =end
         def add_student
             #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)

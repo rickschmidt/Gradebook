@@ -9,14 +9,16 @@ require 'gradebook'
 options = {}
 
 opt_parser = OptionParser.new do |opt|
+    opt.program_name="Gradebook App"
+    
   opt.banner = "Usage: opt_parser COMMAND [OPTIONS]"
   opt.separator ""
   opt.separator "Commands"
-  opt.separator " start: start server"
-  opt.separator " stop: stop server"
-  opt.separator " restart: restart server"
-  opt.separator ""
-  opt.separator "Options"
+  opt.separator " search --name babbage"
+  opt.separator " grade all"
+  opt.separator " grade --sid 1010"
+  opt.separator "report --sid 1010"
+  opt.separator "report --name babbage"
   
   
   opt.on("-c CREATE","--create CREATE ") do |course|
@@ -55,6 +57,9 @@ opt_parser = OptionParser.new do |opt|
       options[:name]=name
   end
   
+  opt.on("--out OUT") do |out|
+      options[:out]=out
+  end
 
 end
 
@@ -119,32 +124,61 @@ when "getcourse"
 
 # ./bin/gb grade --range A/all or --range SID     
 when "grade"
-    user_grades=Gradebook::Usergrades.new
-    option=options[:range]
-    if option=='all' || option=='A'
-        user_grades.grade_all
-    else
+    if ARGV[1]!="all" 
+        puts "grade single"
+        user_grades=Gradebook::Usergrades.new
+        option=options[:sid]
         user_grades.grade_by_sid(option)
+    else
+        puts "grade all"
+        user_grades=Gradebook::Usergrades.new
+        user_grades.grade_all
     end
+    
 
 when "report"
-    user_grades=Gradebook::Usergrades.new
-    sid=options[:sid]
-    user_grades.grade_report(sid)
     
-when "reportname"
     user_grades=Gradebook::Usergrades.new
-    name=options[:name]
-    user_grades.grade_report_by_name(name)
+    if options[:sid]
+        sid=options[:sid]
+        if options[:out]=="xml"
+            user_grades.grade_report_xml(sid)
+        else
+            user_grades.grade_report(sid)
+        end
+    elsif options[:name]
+        name=options[:name]
+        if options[:out]=="xml"
+           user_grades.grade_report_by_name_xml(name) 
+        else
+            user_grades.grade_report_by_name(name)
+        end
+    end
+    
 
-when "sid"
+
+when "search"
     name=options[:name]
     @client=Gradebook::Client.new
     @client.setup("","") 
     @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
     Gradebook::Search.search_for_sid(name,@sps_id,@client.sps_client)
 
-    
+when "test"
+    puts options
+    puts "---"
+    puts options.inspect
+
+when "grade all"
+    puts "graded all"
+
 else
   puts opt_parser
+end
+
+case ARGV[1]
+when "all"
+    
+    puts ARGC
+
 end

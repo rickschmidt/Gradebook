@@ -16,6 +16,16 @@ describe "Usergrades" do
             should fail
          end
          
+         it "should be able to generate an xml report for an individiual student by SID" do
+            ug=Usergrades.new
+            ug.grade_report_xml(7777) 
+         end
+         
+        it "should be able to generate an xml report for an individiual student their name" do
+            ug=Usergrades.new
+            ug.grade_report_by_name_xml("mary") 
+         end
+         
          it "should be able to grade an individual student with the students SID as a paramter" do
              should fail
          end
