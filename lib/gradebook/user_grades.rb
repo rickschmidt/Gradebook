@@ -42,6 +42,30 @@ module Gradebook
             end         
         end
         
+        def grade_all2
+  #          puts "Enter search term for grade category"
+ #           category=STDIN.gets.chomp
+#            puts "Searching for category... #{category}"
+   #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            column_id=self.create_or_search_for_category
+            list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
+            
+
+            list_feed.elements.each('entry') do |entry| 
+                  student_name=''
+                  score=''
+                  entry.elements.each('gsx:name') do |name|
+                      student_name=name
+                      puts "Enter grade for student: #{student_name.text}"
+                      score=STDIN.gets.chomp
+                      
+                  end
+                     
+                grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
+                grade.enter_grade(entry,score)
+            end         
+        end
+        
 =begin rdoc
     Grades a single student for a single category.  After a category is identified the student is looked up by searhching for the SID (student ID) that is passed as a parameter.
     The name of the student that is found is revealed and the user then enters a grade for that student in the category provided.
@@ -226,7 +250,12 @@ EOF
     Wraps Utility functions to remove a category.
 =end
         def remove_category(category)
-           Utility.remove_category(@client.sps_client,@sps_id,category) 
+           response=Utility.remove_category(@client.sps_client,@sps_id,category) 
+           if response==nil
+               puts "\e[1;37mCategory does not exist.\e[0m"
+           else
+               puts "\e[1;34mCategory removed.\e[0m"
+           end
         end
         
 =begin rdoc
