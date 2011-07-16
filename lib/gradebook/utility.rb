@@ -257,46 +257,31 @@ module Gradebook
     TODO: Will need to change columns headers after refactoring in Search
 =end
         def self.remove_category(sps_client,sps_id,category_name)
-            list_feed=self.get_list_feed(sps_client,sps_id)
             headers=Search.get_columns_headers(sps_client,sps_id)
             column_id=Search.search_for_column_id(category_name,headers)
             
             cells=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true").to_xml
-            cells.elements['id'].text=cells.elements["link[@rel='http://schemas.google.com/g/2005#batch']"].attributes['href'] #converts ID element to the post batch rel
-            
-            count=0
-#            list_feed.elements.each('entry') do |row|
-            cells.elements.each('entry') do |cell|
-                if cell.elements['gs:cell'].attributes['col']==column_id.first
-                    entry=REXML::Element.new(arg='entry')
-                    batch_id=entry.add_element 'batch:id'
-                        batch_id.add_text(cell.elements['title'].text)
+            batch_post_url=cells.elements['id'].text=cells.elements["link[@rel='http://schemas.google.com/g/2005#batch']"].attributes['href'] #converts ID element to the post batch rel
+            new_cells_feed=REXML::Document.new
+            root=new_cells_feed.add_element 'feed'
+            root.add_namespace('http://www.w3.org/2005/Atom')
+            root.add_namespace('batch','http://schemas.google.com/gdata/batch')
+            root.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
                         
+            cells.elements.each('entry') do |cell|
+                if cell.elements['gs:cell'].attributes['col']==column_id.first  #column_id is an array so we remove the first element
+                    entry=REXML::Element.new(arg='entry')
+                    (entry.add_element 'batch:id').add_text(cell.elements['title'].text)
                     entry.add_element 'batch:operation', {"type"=>"update"}
-                    id=entry.add_element 'id'
-                        id.add_text(cell.elements['id'].text)
-                    link=entry.add_element 'link', {"rel"=>"edit","type"=>"application/xml","href"=>"#{cell.elements['id'].text}"}
-                    gscell=entry.add_element "gs:cell", {"row"=>"#{cell.elements['gs:cell'].attributes['row']}", "col"=>"#{cell.elements['gs:cell'].attributes['col']}", "inputValue"=>""}
-                    cells.add_element entry    
+                    (entry.add_element 'id').add_text(cell.elements['id'].text)
+                    entry.add_element 'link', {"rel"=>"edit","type"=>"application/xml","href"=>"#{cell.elements['id'].text}"}
+                    entry.add_element "gs:cell", {"row"=>"#{cell.elements['gs:cell'].attributes['row']}", "col"=>"#{cell.elements['gs:cell'].attributes['col']}", "inputValue"=>""}
+                    root.add_element entry    
                 end
-
             end
-            puts cells
-                
-               # 
-               # <id>https://spreadsheets.google.com/feeds/cells/key/worksheetId/private/full/R2C4</id>
-               #     <link rel="edit" type="application/atom+xml"
-               #       href="https://spreadsheets.google.com/feeds/cells/key/worksheetId/private/full/R2C4/version"/>
-               #     <gs:cell row="2" col="4" inputValue="newData"/>
-               #                 cells.add_element entry
-               #                 
-               #                 count=count+1
-               #                 
-               #             end
-               #             puts cells
-
-            
-            
+            tag=self.sps_get_etag(sps_client,sps_id)
+            sps_client.headers['If-None-Match']=tag
+            sps_client.post(batch_post_url,new_cells_feed)
         end
 
     end

@@ -223,6 +223,13 @@ EOF
         end
 
 =begin rdoc
+    Wraps Utility functions to remove a category.
+=end
+        def remove_category(category)
+           Utility.remove_category(@client.sps_client,@sps_id,category) 
+        end
+        
+=begin rdoc
     Average a category(column)
 =end
         def category_average

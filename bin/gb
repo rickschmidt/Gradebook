@@ -173,6 +173,14 @@ when "category"
         else
             puts "No name for a new category given \n \e[1;37mcategory new --name CategoryName\e[0m"
         end
+    elsif ARGV[1]=="remove"
+        if options[:name]!=nil
+            category_name=options[:name]
+            user_grades=Gradebook::Usergrades.new
+            user_grades.remove_category(category_name)
+        else
+            puts "No name for a new category given \n \e[1;37mcategory remove --name CategoryName\e[0m"
+        end
     end
          
 
