@@ -88,6 +88,8 @@ module Gradebook
         
 =begin rdoc
     Returns the first row of a spreadsheet ie its column headers
+    TODO: rows should be refactored to cells
+    TODO: rename to columN (singular) 
 =end
 
         def self.get_columns_headers(sps_client,sps_id)

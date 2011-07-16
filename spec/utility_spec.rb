@@ -97,6 +97,10 @@ describe "Utility" do
          it "should be able to create a new entry" do
             Utility.new_entry.should_not eql(nil) 
          end
+         
+         it "should be able to remove a category by searching for one" do
+            Utility.remove_category(@client.sps_client,@sps_id,"Final") 
+         end
     end
     
     context "a professor wants to add a new grade category to a sheet that does not have enough columns" do

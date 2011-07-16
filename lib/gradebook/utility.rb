@@ -223,15 +223,82 @@ module Gradebook
 =begin rdoc
     Creates a new xml entry for the list feed and adds the equired namespaces
 =end
-    def self.new_entry
-        entry=REXML::Element.new(arg='entry')
-        entry.add_namespace('http://www.w3.org/2005/Atom')
-        entry.add_namespace('gd','http://schemas.google.com/g/2005')
-        entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-        entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
-        return entry
-    end
+        def self.new_entry
+            entry=REXML::Element.new(arg='entry')
+            entry.add_namespace('http://www.w3.org/2005/Atom')
+            entry.add_namespace('gd','http://schemas.google.com/g/2005')
+            entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+            entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
+            return entry
+        end
         
+=begin rdoc
+    Creates a new xml entry for the cell feed batch update
+=end
+        def self.new_batch_entry()
+           entry=REXML::Element.new(arg='entry')
+           entry.add_element( )
+           
+       
+           
+           
+  #          <entry>
+  #   <batch:id>A1</batch:id>
+  #   <batch:operation type="update"/>
+  #   <id>https://spreadsheets.google.com/feeds/cells/key/worksheetId/private/full/R2C4</id>
+  #   <link rel="edit" type="application/atom+xml"
+  #     href="https://spreadsheets.google.com/feeds/cells/key/worksheetId/private/full/R2C4/version"/>
+  #   <gs:cell row="2" col="4" inputValue="newData"/>
+  # </entry>
+        end
+=begin rdoc
+    Removes a specific category from the spreadsheet.
+    Uses a batch request to remove every entry in a column.
+    TODO: Will need to change columns headers after refactoring in Search
+=end
+        def self.remove_category(sps_client,sps_id,category_name)
+            list_feed=self.get_list_feed(sps_client,sps_id)
+            headers=Search.get_columns_headers(sps_client,sps_id)
+            column_id=Search.search_for_column_id(category_name,headers)
+            
+            cells=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true").to_xml
+            cells.elements['id'].text=cells.elements["link[@rel='http://schemas.google.com/g/2005#batch']"].attributes['href'] #converts ID element to the post batch rel
+            
+            count=0
+#            list_feed.elements.each('entry') do |row|
+            cells.elements.each('entry') do |cell|
+                if cell.elements['gs:cell'].attributes['col']==column_id.first
+                    entry=REXML::Element.new(arg='entry')
+                    batch_id=entry.add_element 'batch:id'
+                        batch_id.add_text(cell.elements['title'].text)
+                        
+                    entry.add_element 'batch:operation', {"type"=>"update"}
+                    id=entry.add_element 'id'
+                        id.add_text(cell.elements['id'].text)
+                    link=entry.add_element 'link', {"rel"=>"edit","type"=>"application/xml","href"=>"#{cell.elements['id'].text}"}
+                    gscell=entry.add_element "gs:cell", {"row"=>"#{cell.elements['gs:cell'].attributes['row']}", "col"=>"#{cell.elements['gs:cell'].attributes['col']}", "inputValue"=>""}
+                    cells.add_element entry    
+                end
+
+            end
+            puts cells
+                
+               # 
+               # <id>https://spreadsheets.google.com/feeds/cells/key/worksheetId/private/full/R2C4</id>
+               #     <link rel="edit" type="application/atom+xml"
+               #       href="https://spreadsheets.google.com/feeds/cells/key/worksheetId/private/full/R2C4/version"/>
+               #     <gs:cell row="2" col="4" inputValue="newData"/>
+               #                 cells.add_element entry
+               #                 
+               #                 count=count+1
+               #                 
+               #             end
+               #             puts cells
+
+            
+            
+        end
+
     end
 end
 
