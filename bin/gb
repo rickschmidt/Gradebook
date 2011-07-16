@@ -164,13 +164,19 @@ when "search"
     @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
     Gradebook::Search.search_for_sid(name,@sps_id,@client.sps_client)
 
-when "test"
-    puts options
-    puts "---"
-    puts options.inspect
+when "category"
+    if ARGV[1]=="new"
+        if options[:name]!=nil
+            category_name=options[:name]
+            user_grades=Gradebook::Usergrades.new
+            user_grades.new_category(category_name)
+        else
+            puts "No name for a new category given \n \e[1;37mcategory new --name CategoryName\e[0m"
+        end
+    end
+         
 
-when "grade all"
-    puts "graded all"
+
 
 else
   puts opt_parser

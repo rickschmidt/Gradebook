@@ -68,6 +68,7 @@ module Gradebook
     
 =begin rdoc
     Remove a given number of columns from the spreadsheet by upating the sheets meta data. 
+    This method does not remove a specific column.  It removes columns from right to left.
 =end
     def self.remove_columns(num_of_columns,sps_client,sheet,sps_id)
 

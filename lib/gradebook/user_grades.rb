@@ -171,7 +171,6 @@ module Gradebook
             else
                 puts "Category exists."
             end
-            puts "Column id: #{column_id}, isa #{column_id.class} contains #{column_id.inspect}"
             return column_id
         end
         
