@@ -37,7 +37,7 @@ describe "Usergrades" do
          
          it "should extract the category weight" do
             ug=Usergrades.new
-            ug.extract_category_weight 
+            ug.extract_category_weight_from_header 
          end
      end
  end

@@ -176,10 +176,15 @@ module Gradebook
         end
         
 =begin rdoc
-  Return the list feed ie row by row entries
+  Return the list feed ie row by row entries.
+  @params sps_client,
+    sps_id,
+    params:url params:defaults to blank ie '',
+    worksheet_id defaults to 1
+  
 =end
-      def self.get_list_feed(sps_client,sps_id,params='')
-        sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true#{params}").to_xml
+      def self.get_list_feed(sps_client,sps_id,params='',worksheet_id=1)
+        sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
         return sps_feed
       end
       
@@ -304,6 +309,18 @@ module Gradebook
         def self.get_cell_feed(sps_client,sps_id,params='')
             sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true#{params}").to_xml
         end
+        
+=begin rdoc
+    Get column weights
+=end
+        def self.get_category_weights(sps_client,sps_id,worksheetid)
+            weights={}
+            list_feed=self.get_list_feed(sps_client,sps_id,'&sq=weights%3E0',2)
+            list_feed.elements.each('entry') do |w|
+                weights["#{w.elements['title'].text}"]="#{w.elements['gsx:weights'].text}"
+            end
+            return weights
+        end 
     end
 end
 

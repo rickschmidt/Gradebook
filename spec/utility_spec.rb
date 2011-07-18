@@ -105,6 +105,10 @@ describe "Utility" do
          it "should be able to get the number of rows from the cell feed" do
             Utility.num_of_rows_cell_feed(@client.sps_client,@sps_id)
         end
+        
+        it "should be able to get the category weights from sheet two using a sq on the list feed" do
+           Utility.extact_category_weights(@client.sps_client,@sps_id,2) 
+        end
     end
     
     context "a professor wants to add a new grade category to a sheet that does not have enough columns" do

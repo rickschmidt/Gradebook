@@ -273,13 +273,19 @@ module Gradebook
 =begin rdoc
     Extract category weight code.
 =end
-        def extract_category_weight
-           cell=Utility.get_cell_feed(@client.sps_client,@sps_id,params='&max-row=1')
-           cell.elements.each('entry') do |entry|
-               entry.elements.each('gs:cell') do |cell|
-                    puts weight_code=cell.text.gsub!(/[-]\w*/,'') #removes column name and hyphen ie. HW-Homework1 becomes HW, Q-Quiz3 becomes Q
-               end
-           end
+        def extract_category_weight_from_header
+            weights=Utility.get_category_weights(@client.sps_client,@sps_id,2) 
+            cell=Utility.get_cell_feed(@client.sps_client,@sps_id,params='&max-row=1')
+            cell.elements.each('entry') do |entry|
+                entry.elements.each('gs:cell') do |cell|
+                     weight_code=cell.text.gsub!(/[-]\w*/,'') #removes column name and hyphen ie. HW-Homework1 becomes HW, Q-Quiz3 becomes Q
+                     if weights.has_key?(weight_code)
+                         puts "Value: #{weights[weight_code]}, Weight_code:#{weight_code}"
+                     end
+                end
+            end
+           
+           
            
         end
     end
