@@ -178,8 +178,8 @@ module Gradebook
 =begin rdoc
   Return the list feed ie row by row entries
 =end
-      def self.get_list_feed(sps_client,sps_id)
-        sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
+      def self.get_list_feed(sps_client,sps_id,params='')
+        sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true#{params}").to_xml
         return sps_feed
       end
       
@@ -290,7 +290,20 @@ module Gradebook
         end
         
       
-
+=begin rdoc
+    Number of rows according to cell feed
+=end
+        def self.num_of_rows_cell_feed(sps_client,sps_id)
+            response=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true").to_xml
+            puts response
+        end
+        
+=begin rdoc
+    Get cell feed
+=end
+        def self.get_cell_feed(sps_client,sps_id,params='')
+            sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true#{params}").to_xml
+        end
     end
 end
 

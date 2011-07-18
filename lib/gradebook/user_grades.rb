@@ -215,24 +215,25 @@ module Gradebook
                 # puts entry
           #   end
             entry=Utility.new_entry
+            id=entry.add_element 'gsx:id'
+            hw1=entry.add_element 'gsx:hw1'
+            id.text="TestNew"
+            hw1.text="94"
+            puts entry
             #entry.add_element 'gs:cell',{"row"=>"#{row_num}","col"=>"#{column_num}","inputValue"=>"=AVERAGE(R2C#{column_num}:R#{last_row}C#{column_num})"}            
             # entry.elements.each("gsx:*[#{@column_id}]") do |col|
             #     col.text=grade
             # end
 #            entry.add_element "gsx:id"
-            tag=Utility.sps_get_etag(@client.sps_client,@sps_id)
-            @client.sps_client.headers['If-None-Match']=tag
+            #tag=Utility.sps_get_etag(@client.sps_client,@sps_id)
+            #@client.sps_client.headers['If-None-Match']=tag
     #            @sps_client.put(edit_uri,entry.to_s)
 #                                                https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true
-            #used_rows=Utility.get_number_of_used_rows(@client.sps_client,@sps_id)
-                body=<<-EOF
-<entry xmlns="http://www.w3.org/2005/Atom"
-xmlns:gsx="http://schemas.google.com/spreadsheets/2006/extended">
-</entry>
-EOF
-            puts body
+            used_rows=Utility.get_number_of_used_rows(@client.sps_client,@sps_id)
+            puts "used_rows #{used_rows}"
 
-            response=@client.sps_client.post("https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full",entry.to_s)
+
+            response=@client.sps_client.post("https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full",entry.to_s)
             puts response.inspect
             
         end
@@ -267,6 +268,19 @@ EOF
             puts "Searching for category... #{category}"
             column_id=Gradebook::Search.search_for_column_id(category,@headers)
             Utility.category_average(@client.sps_client,@sps_id,column_id)
+        end
+        
+=begin rdoc
+    Extract category weight code.
+=end
+        def extract_category_weight
+           cell=Utility.get_cell_feed(@client.sps_client,@sps_id,params='&max-row=1')
+           cell.elements.each('entry') do |entry|
+               entry.elements.each('gs:cell') do |cell|
+                    puts weight_code=cell.text.gsub!(/[-]\w*/,'') #removes column name and hyphen ie. HW-Homework1 becomes HW, Q-Quiz3 becomes Q
+               end
+           end
+           
         end
     end
 end

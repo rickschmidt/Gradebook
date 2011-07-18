@@ -101,6 +101,10 @@ describe "Utility" do
          it "should be able to remove a category by searching for one" do
             Utility.remove_category(@client.sps_client,@sps_id,"Final") 
          end
+         
+         it "should be able to get the number of rows from the cell feed" do
+            Utility.num_of_rows_cell_feed(@client.sps_client,@sps_id)
+        end
     end
     
     context "a professor wants to add a new grade category to a sheet that does not have enough columns" do

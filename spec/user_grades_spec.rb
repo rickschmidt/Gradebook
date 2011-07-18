@@ -34,5 +34,10 @@ describe "Usergrades" do
             ug=Usergrades.new 
             ug.add_student
          end
+         
+         it "should extract the category weight" do
+            ug=Usergrades.new
+            ug.extract_category_weight 
+         end
      end
  end

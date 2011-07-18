@@ -23,11 +23,12 @@ module Gradebook
             #The Spreadsheets Client is used for everything except creation.
             @sps_client=GData::Client::Spreadsheets.new
             @sps_client.clientlogin("gradebookluc","gradebookluc2011")
-
+#            puts "Token #{@sps_client.auth_handler.token}"
    
             return @doc_client, @sps_client
         
         end 
+        
         
 =begin rdoc
     Returns the document id for the course that is searched for as a param.  Returns nil if no course is found.
