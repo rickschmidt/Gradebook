@@ -39,5 +39,11 @@ describe "Usergrades" do
             ug=Usergrades.new
             ug.extract_category_weight_from_header 
          end
+         
+         it "should be able to average a category type per student" do
+             ug=Usergrades.new
+            ug.category_average_for_each_studnet
+        end
+
      end
  end

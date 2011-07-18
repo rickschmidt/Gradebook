@@ -107,7 +107,11 @@ describe "Utility" do
         end
         
         it "should be able to get the category weights from sheet two using a sq on the list feed" do
-           Utility.extact_category_weights(@client.sps_client,@sps_id,2) 
+           Utility.get_category_weights(@client.sps_client,@sps_id,2) 
+        end
+        
+        it "should be able to return a weight code for a category" do
+           Utility.get_weight_code_for_category("Q-Q3")            
         end
     end
     

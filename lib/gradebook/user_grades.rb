@@ -4,6 +4,7 @@ include Gradebook
     A class that encapsulates the grading classes
 =end
 module Gradebook
+               class Array; def sum; inject( nil ) { |sum,x| sum ? sum+x : x }; end; end  
     class Usergrades
         
         def initialize
@@ -274,19 +275,46 @@ module Gradebook
     Extract category weight code.
 =end
         def extract_category_weight_from_header
+
             weights=Utility.get_category_weights(@client.sps_client,@sps_id,2) 
-            cell=Utility.get_cell_feed(@client.sps_client,@sps_id,params='&max-row=1')
-            cell.elements.each('entry') do |entry|
+            cells=Utility.get_cell_feed(@client.sps_client,@sps_id,params='&max-row=1')
+            cells.elements.each('entry') do |entry|
                 entry.elements.each('gs:cell') do |cell|
                      weight_code=cell.text.gsub!(/[-]\w*/,'') #removes column name and hyphen ie. HW-Homework1 becomes HW, Q-Quiz3 becomes Q
                      if weights.has_key?(weight_code)
                          puts "Value: #{weights[weight_code]}, Weight_code:#{weight_code}"
                      end
                 end
+            end                          
+        end
+        
+=begin rdoc
+    Averages a row (student) score for a particular category ie. HW
+=end
+        def category_average_for_each_studnet
+            #puts "Enter a category"
+           #category=STDIN.gets.chomp
+           category="q-Q1"  #remove after testing, replace with above
+           prefix=Utility.get_weight_code_for_category(category) 
+           weights=Utility.get_category_weights(@client.sps_client,@sps_id,2)
+           weight=weights.values_at(prefix)
+           
+           list_feed=Utility.get_list_feed(@client.sps_client,@sps_id,nil,1)
+
+           list_feed.elements.each('entry') do |row|
+               weighted_average=[]
+               row.elements.each('gsx:*') do |ele|
+                   code=Utility.get_weight_code_for_category(ele.name).to_s
+                   if (code<=>prefix)==0
+                       puts "Matched Element #{ele.name}"
+                       weighted_average<<ele.text.to_f*weight.first.to_f
+                   end                       
+               end
+               puts "Weighted Average Size: #{weighted_average.size}"
+               puts "Weighted Average: #{weighted_average.inspect}"
+               puts "Weighted Average Sum:#{weighted_average.inject{|sum,x| sum + x }} "
+               puts ""     
             end
-           
-           
-           
         end
     end
 end

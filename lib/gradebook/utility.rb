@@ -320,7 +320,13 @@ module Gradebook
                 weights["#{w.elements['title'].text}"]="#{w.elements['gsx:weights'].text}"
             end
             return weights
-        end 
+        end
+=begin rdoc
+    Get weiht code for category.  Example param=="HW-HW1", "HW" is returned.  Another example param=="Q-Q3", "Q" is returned
+=end 
+        def self.get_weight_code_for_category(category)
+           return category.gsub(/[-]\w*/,'').downcase
+        end
     end
 end
 
