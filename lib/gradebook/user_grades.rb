@@ -294,7 +294,7 @@ module Gradebook
         def category_average_for_each_studnet
             #puts "Enter a category"
            #category=STDIN.gets.chomp
-           category="q-Q1"  #remove after testing, replace with above
+           category="hw"  #remove after testing, replace with above
            prefix=Utility.get_weight_code_for_category(category) 
            weights=Utility.get_category_weights(@client.sps_client,@sps_id,2)
            weight=weights.values_at(prefix)
@@ -307,7 +307,9 @@ module Gradebook
                    code=Utility.get_weight_code_for_category(ele.name).to_s
                    if (code<=>prefix)==0
                        puts "Matched Element #{ele.name}"
-                       weighted_average<<ele.text.to_f*weight.first.to_f
+                       pts_possible=Utility.get_possible_points_for_category(@client.sps_client,@sps_id,ele.name)
+                       puts "pts#{pts_possible}"
+                       weighted_average<<(ele.text.to_f/pts_possible.values_at(ele.name).first.to_f)*weight.first.to_f
                    end                       
                end
                puts "Weighted Average Size: #{weighted_average.size}"

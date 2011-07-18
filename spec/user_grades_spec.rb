@@ -44,6 +44,8 @@ describe "Usergrades" do
              ug=Usergrades.new
             ug.category_average_for_each_studnet
         end
+        
+
 
      end
  end

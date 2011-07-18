@@ -111,7 +111,12 @@ describe "Utility" do
         end
         
         it "should be able to return a weight code for a category" do
-           Utility.get_weight_code_for_category("Q-Q3")            
+           Utility.get_weight_code_for_category("q-Q3")            
+        end
+        
+        it "should be able to ge the points possible for a category" do
+           x=Utility.get_points_possible_for_category(@client.sps_client,@sps_id,"hw-hw1") 
+           puts x.inspect
         end
     end
     

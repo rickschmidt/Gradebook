@@ -322,10 +322,24 @@ module Gradebook
             return weights
         end
 =begin rdoc
-    Get weiht code for category.  Example param=="HW-HW1", "HW" is returned.  Another example param=="Q-Q3", "Q" is returned
+    Get weight code for category.  Example param=="HW-HW1", "HW" is returned.  Another example param=="Q-Q3", "Q" is returned
 =end 
         def self.get_weight_code_for_category(category)
            return category.gsub(/[-]\w*/,'').downcase
+        end
+        
+=begin rdoc
+    Get points possible for a category.
+=end
+        def self.get_possible_points_for_category(sps_client,sps_id,category)
+            pts_possible={}
+            list_feed=self.get_list_feed(sps_client,sps_id,'&sq=pointspossible%3E0',2)
+            list_feed.elements.each('entry') do |p|
+                if (p.elements['title'].text<=>category)==0
+                    pts_possible["#{p.elements['title'].text}"]="#{p.elements['gsx:pointspossible'].text}"
+                end
+            end
+            return pts_possible
         end
     end
 end
