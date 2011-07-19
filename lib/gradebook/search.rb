@@ -127,6 +127,19 @@ module Gradebook
         end
         
 =begin rdoc
+    Search for and return a SID fora student given their name
+=end
+        def self.search_for_and_return_sid(search,sps_id,sps_client)
+           rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}").to_xml
+
+            row=Hash.new
+            rows.elements.each('//gsx:id') do |header|
+                row[header.name]=header.text
+            end
+            return row
+        end
+        
+=begin rdoc
     Search for a student by id and returns the grades for that student
 =end
         def self.search_with_sid(search,sps_id,sps_client)

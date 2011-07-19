@@ -162,7 +162,9 @@ when "search"
     @client=Gradebook::Client.new
     @client.setup("","") 
     @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
-    Gradebook::Search.search_for_sid(name,@sps_id,@client.sps_client)
+    sids=Gradebook::Search.search_for_and_return_sid(name,@sps_id,@client.sps_client)
+    puts "Searching for student... #{name}"
+    puts "Matching SID:  #{sids.values}"
 
 when "category"
     if ARGV[1]=="new"
