@@ -5,21 +5,17 @@
 
 <html>
 <head>
-  <title>sps_get_version (Gradebook::Client)</title>
+  <title>sps_get_sheet (Gradebook::Client)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 126</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sps_get_version</span>(<span class="ruby-identifier">id</span>)
-            <span class="ruby-identifier">version</span>=<span class="ruby-keyword kw">nil</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 103</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sps_get_sheet</span>(<span class="ruby-identifier">id</span>)
             <span class="ruby-ivar">@sps_feed</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true&quot;</span>).<span class="ruby-identifier">to_xml</span>
-            
-            <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">version</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-value str">'version'</span>).<span class="ruby-identifier">value</span>
-            <span class="ruby-keyword kw">end</span>
 
-        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">version</span>
-    <span class="ruby-keyword kw">end</span></pre>
+
+            <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@sps_feed</span>
+        <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

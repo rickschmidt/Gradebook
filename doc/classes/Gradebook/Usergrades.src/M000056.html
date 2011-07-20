@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>grade_report_xml (Gradebook::Usergrades)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 114</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grade_report_xml</span>(<span class="ruby-identifier">sid</span>)
+            <span class="ruby-identifier">list_feed</span>=<span class="ruby-constant">Search</span>.<span class="ruby-identifier">search_with_sid</span>(<span class="ruby-identifier">sid</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>)
+            <span class="ruby-identifier">xmlDoc</span>=<span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>
+            <span class="ruby-identifier">xmlDoc</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'Grade Report'</span> <span class="ruby-comment cmt">#root</span>
+            <span class="ruby-identifier">root</span>=<span class="ruby-identifier">xmlDoc</span>.<span class="ruby-identifier">root</span>
+            <span class="ruby-identifier">student</span>=<span class="ruby-identifier">root</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-value str">'student'</span>, {<span class="ruby-value str">'firstname'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{list_feed.elements['entry/gsx:name'].text}&quot;</span>,
+                                            <span class="ruby-value str">'lastname'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{list_feed.elements['entry/gsx:name'].text}&quot;</span>,
+                                            <span class="ruby-value str">'id'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{list_feed.elements['entry/gsx:id'].text}&quot;</span>})
+            <span class="ruby-identifier">list_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'gsx:*'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+                    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">name!</span>=<span class="ruby-value str">'name'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">name!</span>=<span class="ruby-value str">'id'</span>
+                        <span class="ruby-identifier">category</span>=<span class="ruby-identifier">student</span>.<span class="ruby-identifier">add_element</span>(<span class="ruby-node">&quot;#{col.name}&quot;</span>)
+                        <span class="ruby-identifier">category</span>.<span class="ruby-identifier">text</span>=<span class="ruby-node">&quot;#{col.text}&quot;</span>
+                    <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-identifier">out</span>=<span class="ruby-value str">&quot;&quot;</span>
+            <span class="ruby-identifier">xmlDoc</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">out</span>, <span class="ruby-value">1</span>)
+
+            <span class="ruby-identifier">puts</span> <span class="ruby-identifier">out</span>
+
+                      
+        <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

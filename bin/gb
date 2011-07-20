@@ -4,6 +4,7 @@
 require 'optparse'
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'gradebook'
+require 'cmd'
 
 
 options = {}
@@ -186,7 +187,8 @@ when "category"
     end
          
 
-
+when "load"
+    `echo $LOAD_PATH`
 
 else
   puts opt_parser

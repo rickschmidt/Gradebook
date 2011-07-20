@@ -86,15 +86,25 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000028">add_category</a>&nbsp;&nbsp;
-      <a href="#M000029">add_columns</a>&nbsp;&nbsp;
-      <a href="#M000036">get_list_feed</a>&nbsp;&nbsp;
-      <a href="#M000031">get_number_of_columns</a>&nbsp;&nbsp;
-      <a href="#M000033">get_number_of_rows</a>&nbsp;&nbsp;
-      <a href="#M000032">get_number_of_used_columns</a>&nbsp;&nbsp;
-      <a href="#M000030">remove_columns</a>&nbsp;&nbsp;
-      <a href="#M000034">sps_get_etag</a>&nbsp;&nbsp;
-      <a href="#M000035">sps_get_version</a>&nbsp;&nbsp;
+      <a href="#M000032">add_category</a>&nbsp;&nbsp;
+      <a href="#M000033">add_columns</a>&nbsp;&nbsp;
+      <a href="#M000042">category_average</a>&nbsp;&nbsp;
+      <a href="#M000048">get_category_weights</a>&nbsp;&nbsp;
+      <a href="#M000047">get_cell_feed</a>&nbsp;&nbsp;
+      <a href="#M000041">get_list_feed</a>&nbsp;&nbsp;
+      <a href="#M000035">get_number_of_columns</a>&nbsp;&nbsp;
+      <a href="#M000037">get_number_of_rows</a>&nbsp;&nbsp;
+      <a href="#M000036">get_number_of_used_columns</a>&nbsp;&nbsp;
+      <a href="#M000038">get_number_of_used_rows</a>&nbsp;&nbsp;
+      <a href="#M000050">get_possible_points_for_category</a>&nbsp;&nbsp;
+      <a href="#M000049">get_weight_code_for_category</a>&nbsp;&nbsp;
+      <a href="#M000044">new_batch_entry</a>&nbsp;&nbsp;
+      <a href="#M000043">new_entry</a>&nbsp;&nbsp;
+      <a href="#M000046">num_of_rows_cell_feed</a>&nbsp;&nbsp;
+      <a href="#M000045">remove_category</a>&nbsp;&nbsp;
+      <a href="#M000034">remove_columns</a>&nbsp;&nbsp;
+      <a href="#M000039">sps_get_etag</a>&nbsp;&nbsp;
+      <a href="#M000040">sps_get_version</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,12 +126,12 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000028" class="method-detail">
-        <a name="M000028"></a>
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
 
         <div class="method-heading">
-          <a href="Utility.src/M000028.html" target="Code" class="method-signature"
-            onclick="popupCode('Utility.src/M000028.html');return false;">
+          <a href="Utility.src/M000032.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000032.html');return false;">
           <span class="method-name">add_category</span><span class="method-args">(sps_client,sps_id,category_name,rows,sheet)</span>
           </a>
         </div>
@@ -130,17 +140,17 @@
           <p>
 Adds a category to the gradebook. First the number of categories already
 present should be calculated using <b><a
-href="Utility.html#M000032">get_number_of_used_columns</a></b>
+href="Utility.html#M000036">get_number_of_used_columns</a></b>
 </p>
         </div>
       </div>
 
-      <div id="method-M000029" class="method-detail">
-        <a name="M000029"></a>
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
 
         <div class="method-heading">
-          <a href="Utility.src/M000029.html" target="Code" class="method-signature"
-            onclick="popupCode('Utility.src/M000029.html');return false;">
+          <a href="Utility.src/M000033.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000033.html');return false;">
           <span class="method-name">add_columns</span><span class="method-args">(num_of_columns,sps_client,sheet,sps_id)</span>
           </a>
         </div>
@@ -152,29 +162,85 @@ Adds another column to the spreadsheet by upating the sheets meta data.
         </div>
       </div>
 
-      <div id="method-M000036" class="method-detail">
-        <a name="M000036"></a>
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
 
         <div class="method-heading">
-          <a href="Utility.src/M000036.html" target="Code" class="method-signature"
-            onclick="popupCode('Utility.src/M000036.html');return false;">
-          <span class="method-name">get_list_feed</span><span class="method-args">(sps_client,id)</span>
+          <a href="Utility.src/M000042.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000042.html');return false;">
+          <span class="method-name">category_average</span><span class="method-args">(sps_client,sps_id,column_num)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Return the list feed ie row by row entries
+Average a category
 </p>
         </div>
       </div>
 
-      <div id="method-M000031" class="method-detail">
-        <a name="M000031"></a>
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
 
         <div class="method-heading">
-          <a href="Utility.src/M000031.html" target="Code" class="method-signature"
-            onclick="popupCode('Utility.src/M000031.html');return false;">
+          <a href="Utility.src/M000048.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000048.html');return false;">
+          <span class="method-name">get_category_weights</span><span class="method-args">(sps_client,sps_id,worksheetid)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get column weights
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000047.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000047.html');return false;">
+          <span class="method-name">get_cell_feed</span><span class="method-args">(sps_client,sps_id,params='')</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get cell feed
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000041.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000041.html');return false;">
+          <span class="method-name">get_list_feed</span><span class="method-args">(sps_client,sps_id,params='',worksheet_id=1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return the list feed ie row by row entries. @params sps_client,
+</p>
+<pre>
+  sps_id,
+  params:url params:defaults to blank ie '',
+  worksheet_id defaults to 1
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000035.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000035.html');return false;">
           <span class="method-name">get_number_of_columns</span><span class="method-args">(sheet)</span>
           </a>
         </div>
@@ -187,12 +253,12 @@ this atrribute is user focused.
         </div>
       </div>
 
-      <div id="method-M000033" class="method-detail">
-        <a name="M000033"></a>
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
 
         <div class="method-heading">
-          <a href="Utility.src/M000033.html" target="Code" class="method-signature"
-            onclick="popupCode('Utility.src/M000033.html');return false;">
+          <a href="Utility.src/M000037.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000037.html');return false;">
           <span class="method-name">get_number_of_rows</span><span class="method-args">(sps_id,sheet)</span>
           </a>
         </div>
@@ -205,12 +271,12 @@ this atrribute is user focused.
         </div>
       </div>
 
-      <div id="method-M000032" class="method-detail">
-        <a name="M000032"></a>
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
 
         <div class="method-heading">
-          <a href="Utility.src/M000032.html" target="Code" class="method-signature"
-            onclick="popupCode('Utility.src/M000032.html');return false;">
+          <a href="Utility.src/M000036.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000036.html');return false;">
           <span class="method-name">get_number_of_used_columns</span><span class="method-args">(rows)</span>
           </a>
         </div>
@@ -225,20 +291,126 @@ put a new category.
         </div>
       </div>
 
-      <div id="method-M000030" class="method-detail">
-        <a name="M000030"></a>
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
 
         <div class="method-heading">
-          <a href="Utility.src/M000030.html" target="Code" class="method-signature"
-            onclick="popupCode('Utility.src/M000030.html');return false;">
-          <span class="method-name">remove_columns</span><span class="method-args">(num_of_columns,sps_client,sheet,sps_id)</span>
+          <a href="Utility.src/M000038.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000038.html');return false;">
+          <span class="method-name">get_number_of_used_rows</span><span class="method-args">(sps_client,sps_id)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Remove a given number of columns from the spreadsheet by upating the sheets
-meta data.
+Returns the number of primary entry rows from the feed. This should be
+representative of the number of students in the class
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000050.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000050.html');return false;">
+          <span class="method-name">get_possible_points_for_category</span><span class="method-args">(sps_client,sps_id,category)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get points possible for a category.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000049.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000049.html');return false;">
+          <span class="method-name">get_weight_code_for_category</span><span class="method-args">(category)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get weight code for category. Example param==&quot;HW-HW1&quot;,
+&quot;HW&quot; is returned. Another example param==&quot;Q-Q3&quot;,
+&quot;Q&quot; is returned
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000044.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000044.html');return false;">
+          <span class="method-name">new_batch_entry</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a new xml entry for the cell feed batch update
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000043.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000043.html');return false;">
+          <span class="method-name">new_entry</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a new xml entry for the list feed and adds the equired namespaces
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000046.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000046.html');return false;">
+          <span class="method-name">num_of_rows_cell_feed</span><span class="method-args">(sps_client,sps_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Number of rows according to cell feed
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000045.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000045.html');return false;">
+          <span class="method-name">remove_category</span><span class="method-args">(sps_client,sps_id,category_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes a specific category from the spreadsheet. Uses a batch request to
+remove every entry in a column. TODO: Will need to change columns headers
+after refactoring in <a href="Search.html">Search</a>
 </p>
         </div>
       </div>
@@ -249,6 +421,25 @@ meta data.
         <div class="method-heading">
           <a href="Utility.src/M000034.html" target="Code" class="method-signature"
             onclick="popupCode('Utility.src/M000034.html');return false;">
+          <span class="method-name">remove_columns</span><span class="method-args">(num_of_columns,sps_client,sheet,sps_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Remove a given number of columns from the spreadsheet by upating the sheets
+meta data. This method does not remove a specific column. It removes
+columns from right to left.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="Utility.src/M000039.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000039.html');return false;">
           <span class="method-name">sps_get_etag</span><span class="method-args">(sps_client,id)</span>
           </a>
         </div>
@@ -261,12 +452,12 @@ for as a param. Returns nil if no course is found.
         </div>
       </div>
 
-      <div id="method-M000035" class="method-detail">
-        <a name="M000035"></a>
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
 
         <div class="method-heading">
-          <a href="Utility.src/M000035.html" target="Code" class="method-signature"
-            onclick="popupCode('Utility.src/M000035.html');return false;">
+          <a href="Utility.src/M000040.html" target="Code" class="method-signature"
+            onclick="popupCode('Utility.src/M000040.html');return false;">
           <span class="method-name">sps_get_version</span><span class="method-args">(sps_client,id)</span>
           </a>
         </div>

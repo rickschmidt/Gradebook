@@ -1,0 +1,244 @@
+#!/usr/bin/env ruby -rubygems
+#Executes with rubygems by default.  This way there is a singular place to change the package management system if you are not using rubygems.  
+
+require 'ripl'
+# To try place in ~/.riplrc
+
+require 'optparse'
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'gradebook'
+
+
+module Ripl
+  module RedError
+    def format_error(error)
+      "\e[31m#{super}\e[m"
+      puts "error"
+    end
+    
+    def before_loop
+        2.times do
+            puts "hello"
+        end
+        # user_grades=Gradebook::Usergrades.new
+        # user_grades.grade_report("7777")
+    end
+    
+    
+    
+    def eval_input(input)
+        if input=="grade"
+            puts "gradeing"
+            
+        elsif input=="report"
+            puts "reporting"
+        end
+        puts "Input #{input}"
+            
+   
+
+
+options = {}
+
+
+opt_parser = OptionParser.new do |opt|
+    opt.program_name="Gradebook App"
+    puts "options #{options}"    
+  opt.banner = "Usage: opt_parser COMMAND [OPTIONS]"
+  opt.separator ""
+  opt.separator "Commands"
+  opt.separator " search --name babbage"
+  opt.separator " grade all"
+  opt.separator " grade --sid 1010"
+  opt.separator "report --sid 1010"
+  opt.separator "report --name babbage"
+  
+  
+  opt.on("-c CREATE","--create CREATE ") do |course|
+    options[:course] = course
+  end
+  
+  opt.on("-u UPLOADROSTER","--uploadroster UPLOADROSTER") do |roster|
+      options[:roster]=roster
+  end
+  
+  opt.on("-e ENVIRONMENT", "--environement ENVIRONEMENT") do |environement|
+      option[:environment]=environment
+  end
+  
+  opt.on("-d","--daemon","runing on daemon mode?") do
+    options[:daemon] = true
+  end
+  
+  opt.on("-h","--help","help") do
+    puts opt_parser
+  end
+  
+  opt.on("--course COURSE") do |course|
+      options[:course]=course
+  end
+  
+  opt.on("--range RANGE") do |range|
+      options[:range]=range
+  end
+  
+  opt.on("--sid SID") do |sid|
+      options[:sid]=sid
+  end
+  
+  opt.on("--name NAME") do |name|
+      options[:name]=name
+  end
+  
+  opt.on("--out OUT") do |out|
+      options[:out]=out
+  end
+
+end
+
+opt_parser.parse!
+puts "ARGV #{ARGV[0]}"
+case input
+when "authenticate"
+  puts "Authenticate with #{options.inspect}"
+  client=Gradebook::Client.new
+    # puts "Enter Google Account"
+    # username=STDIN.gets()
+    # puts "Enter Google Password"
+    # `stty -echo`
+    # print "Password: "
+    # password = STDIN.gets.chomp
+    # `stty echo`
+    # puts ""
+    username=""
+    password=""
+    @clients=client.setup(username,password)
+    @doc_client=@clients[0]
+    @spradesheet_client=@clients[1]
+    
+    client.get
+   # client.post2
+#    client.post
+when "create"
+
+    puts "Creating Gradebook #{options[:course]}"
+            client=Gradebook::Client.new
+            @clients=client.setup("","")
+            @doc_client=@clients[0]
+            @spradesheet_client=@clients[1]
+
+    if @doc_client==nil
+        raise "Authentication Failer"
+    end
+    book=Gradebook::Book.new
+    book.create(@doc_client,options[:course])
+    
+    # rescue 
+    #     raise "User must authenticate. \n 
+    #     try >>grade authenticate"
+    # end
+
+when "uploadroster"
+    puts "Uploading Roster"
+    client=Gradebook::Client.new
+    @clients=client.setup("","")
+    @doc_client=@clients[0]
+    @spradesheet_client=@clients[1]
+    
+    book=Gradebook::Book.new
+    roster=File.open(options[:roster])
+    book.create(@doc_client,"testupload")
+    book.import_roster(@doc_client,@spradesheet_client,roster)
+    
+when "getcourse"
+    client=Gradebook::Client.new
+    client.setup("","")
+    client.get_course(options[:course])
+
+# ./bin/gb grade --range A/all or --range SID     
+when "grade"
+    if ARGV[1]!="all" 
+        puts "grade single"
+        user_grades=Gradebook::Usergrades.new
+        option=options[:sid]
+        user_grades.grade_by_sid(option)
+    else
+        puts "grade all"
+        user_grades=Gradebook::Usergrades.new
+        user_grades.grade_all
+    end
+    
+
+when "report"
+    
+    user_grades=Gradebook::Usergrades.new
+    if options[:sid]
+        sid=options[:sid]
+        if options[:out]=="xml"
+            user_grades.grade_report_xml(sid)
+        else
+            user_grades.grade_report(sid)
+        end
+    elsif options[:name]
+        name=options[:name]
+        if options[:out]=="xml"
+           user_grades.grade_report_by_name_xml(name) 
+        else
+            user_grades.grade_report_by_name(name)
+        end
+    end
+    
+
+
+when "search"
+    name=options[:name]
+    @client=Gradebook::Client.new
+    @client.setup("","") 
+    @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
+    sids=Gradebook::Search.search_for_and_return_sid(name,@sps_id,@client.sps_client)
+    puts "Searching for student... #{name}"
+    puts "Matching SID:  #{sids.values}"
+
+when "category"
+    if ARGV[1]=="new"
+        if options[:name]!=nil
+            category_name=options[:name]
+            user_grades=Gradebook::Usergrades.new
+            user_grades.new_category(category_name)
+        else
+            puts "No name for a new category given \n \e[1;37mcategory new --name CategoryName\e[0m"
+        end
+    elsif ARGV[1]=="remove"
+        if options[:name]!=nil
+            category_name=options[:name]
+            user_grades=Gradebook::Usergrades.new
+            user_grades.remove_category(category_name)
+        else
+            puts "No name for a new category given \n \e[1;37mcategory remove --name CategoryName\e[0m"
+        end
+    end
+         
+
+when "load"
+    
+    Ripl.start
+
+else
+  puts opt_parser
+end
+
+case ARGV[1]
+when "all"
+    
+    puts ARGC
+
+end
+     
+    
+        return 1
+    end
+    
+Ripl::Shell.include Ripl::RedError
+Ripl.start
+  end
+end

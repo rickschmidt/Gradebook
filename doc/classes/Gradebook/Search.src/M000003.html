@@ -22,7 +22,7 @@
             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">feed</span><span class="ruby-operator">==</span><span class="ruby-value str">&quot;spreadsheets&quot;</span>
                 <span class="ruby-identifier">id</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">text</span>[<span class="ruby-regexp re">/.com\/feeds\/spreadsheets\/(.*)/</span>, <span class="ruby-value">1</span>]
             <span class="ruby-keyword kw">else</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Invalid Feed: Must be 'documents' or 'spreadsheets'.&quot;</span>
+                <span class="ruby-comment cmt">#puts &quot;Invalid Feed: Must be 'documents' or 'spreadsheets'.&quot;</span>
                 <span class="ruby-identifier">id</span>=<span class="ruby-keyword kw">nil</span>
             <span class="ruby-keyword kw">end</span>
             

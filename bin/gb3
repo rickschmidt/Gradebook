@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby -rubygems
+#Executes with rubygems by default.  This way there is a singular place to change the package management system if you are not using rubygems.  
+
+
+require 'irb'
+
+module IRB # :nodoc:
+  def self.start_session(binding)
+    unless @__initialized
+      args = ARGV
+      ARGV.replace(ARGV.dup)
+      IRB.setup(nil)
+      ARGV.replace(args)
+      @__initialized = true
+      puts args
+    end
+
+    workspace = WorkSpace.new(binding)
+
+    irb = Irb.new(workspace)
+
+    @CONF[:IRB_RC].call(irb.context) if @CONF[:IRB_RC]
+    @CONF[:MAIN_CONTEXT] = irb.context
+
+    catch(:IRB_EXIT) do
+      irb.eval_input
+    end
+  end
+end
+
+
+
+IRB.start_session(binding)

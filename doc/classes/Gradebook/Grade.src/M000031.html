@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>batch_grade_all (Gradebook::Grade)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/grade.rb, line 45</span>
+ <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">batch_grade_all</span>(<span class="ruby-identifier">grade</span>,<span class="ruby-identifier">category_name</span>)
+            <span class="ruby-identifier">headers</span>=<span class="ruby-constant">Search</span>.<span class="ruby-identifier">get_columns_headers</span>(<span class="ruby-ivar">@sps_client</span>,<span class="ruby-ivar">@sps_id</span>)
+            <span class="ruby-identifier">column_id</span>=<span class="ruby-constant">Search</span>.<span class="ruby-identifier">search_for_column_id</span>(<span class="ruby-identifier">category_name</span>,<span class="ruby-identifier">headers</span>)
+            <span class="ruby-identifier">name_column</span>=<span class="ruby-constant">Search</span>.<span class="ruby-identifier">search_for_column_id</span>(<span class="ruby-identifier">category_name</span>,<span class="ruby-identifier">headers</span>)
+            
+            <span class="ruby-identifier">cells</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/cells/#{@sps_id}/1/private/full?prettyprint=true&quot;</span>).<span class="ruby-identifier">to_xml</span>
+            <span class="ruby-identifier">batch_post_url</span>=<span class="ruby-identifier">cells</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">text</span>=<span class="ruby-identifier">cells</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;link[@rel='http://schemas.google.com/g/2005#batch']&quot;</span>].<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'href'</span>] <span class="ruby-comment cmt">#converts ID element to the post batch rel</span>
+            <span class="ruby-identifier">new_cells_feed</span>=<span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>
+            <span class="ruby-identifier">root</span>=<span class="ruby-identifier">new_cells_feed</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'feed'</span>
+            <span class="ruby-identifier">root</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'http://www.w3.org/2005/Atom'</span>)
+            <span class="ruby-identifier">root</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'batch'</span>,<span class="ruby-value str">'http://schemas.google.com/gdata/batch'</span>)
+            <span class="ruby-identifier">root</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gs'</span>,<span class="ruby-value str">'http://schemas.google.com/spreadsheets/2006'</span>)
+                        
+            <span class="ruby-identifier">cells</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cell</span><span class="ruby-operator">|</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'gs:cell'</span>].<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'col'</span>]<span class="ruby-operator">==</span><span class="ruby-identifier">column_id</span>.<span class="ruby-identifier">first</span>  <span class="ruby-comment cmt">#column_id is an array so we remove the first element</span>
+                    <span class="ruby-identifier">entry</span>=<span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">arg</span>=<span class="ruby-value str">'entry'</span>)
+                    (<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'batch:id'</span>).<span class="ruby-identifier">add_text</span>(<span class="ruby-identifier">cell</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text</span>)
+                    <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'batch:operation'</span>, {<span class="ruby-value str">&quot;type&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;update&quot;</span>}
+                    (<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'id'</span>).<span class="ruby-identifier">add_text</span>(<span class="ruby-identifier">cell</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">text</span>)
+                    <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'link'</span>, {<span class="ruby-value str">&quot;rel&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;edit&quot;</span>,<span class="ruby-value str">&quot;type&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;application/xml&quot;</span>,<span class="ruby-value str">&quot;href&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{cell.elements['id'].text}&quot;</span>}
+                    <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">&quot;gs:cell&quot;</span>, {<span class="ruby-value str">&quot;row&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{cell.elements['gs:cell'].attributes['row']}&quot;</span>, <span class="ruby-value str">&quot;col&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{cell.elements['gs:cell'].attributes['col']}&quot;</span>, <span class="ruby-value str">&quot;inputValue&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{grade}&quot;</span>}
+                    <span class="ruby-identifier">root</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-identifier">entry</span>    
+                <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-identifier">tag</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">sps_get_etag</span>(<span class="ruby-ivar">@sps_client</span>,<span class="ruby-ivar">@sps_id</span>)
+            <span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">'If-None-Match'</span>]=<span class="ruby-identifier">tag</span>
+            <span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">post</span>(<span class="ruby-identifier">batch_post_url</span>,<span class="ruby-identifier">new_cells_feed</span>)
+        <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

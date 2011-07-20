@@ -86,8 +86,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000027">enter_grade</a>&nbsp;&nbsp;
-      <a href="#M000026">grade_each_student</a>&nbsp;&nbsp;
+      <a href="#M000031">batch_grade_all</a>&nbsp;&nbsp;
+      <a href="#M000030">enter_grade</a>&nbsp;&nbsp;
+      <a href="#M000029">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,13 +110,13 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000027" class="method-detail">
-        <a name="M000027"></a>
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
 
         <div class="method-heading">
-          <a href="Grade.src/M000027.html" target="Code" class="method-signature"
-            onclick="popupCode('Grade.src/M000027.html');return false;">
-          <span class="method-name">enter_grade</span><span class="method-args">(sps_client,sps_id,entry,column_id)</span>
+          <a href="Grade.src/M000029.html" target="Code" class="method-signature"
+            onclick="popupCode('Grade.src/M000029.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(sps_client,sps_id,column_id)</span>
           </a>
         </div>
       
@@ -123,17 +124,51 @@
         </div>
       </div>
 
-      <div id="method-M000026" class="method-detail">
-        <a name="M000026"></a>
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
 
         <div class="method-heading">
-          <a href="Grade.src/M000026.html" target="Code" class="method-signature"
-            onclick="popupCode('Grade.src/M000026.html');return false;">
-          <span class="method-name">grade_each_student</span><span class="method-args">(sps_client,sps_id,list_feed,column_id)</span>
+          <a href="Grade.src/M000031.html" target="Code" class="method-signature"
+            onclick="popupCode('Grade.src/M000031.html');return false;">
+          <span class="method-name">batch_grade_all</span><span class="method-args">(grade,category_name)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Batch <a href="Grade.html">Grade</a> All TODO: Complete
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="Grade.src/M000030.html" target="Code" class="method-signature"
+            onclick="popupCode('Grade.src/M000030.html');return false;">
+          <span class="method-name">enter_grade</span><span class="method-args">(entry,grade)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def grade_each_student(list_feed)
+</p>
+<pre>
+     list_feed.elements.each('entry') do |entry|
+         student_name=''
+         entry.elements.each('gsx:name') do |name|
+             student_name=name
+         end
+         puts &quot;Students Name: #{student_name.text}&quot;
+         puts &quot;Enter Grade for #{student_name.text}:&quot;
+         self.enter_grade(entry)
+     end
+ end
+</pre>
         </div>
       </div>
 

@@ -5,22 +5,29 @@
 
 <html>
 <head>
-  <title>sps_get_etag (Gradebook::Client)</title>
+  <title>sps_get_course (Gradebook::Client)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 111</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sps_get_etag</span>(<span class="ruby-identifier">course</span>,<span class="ruby-identifier">id</span>)
-                <span class="ruby-identifier">etag</span>=<span class="ruby-keyword kw">nil</span>
-                <span class="ruby-ivar">@sps_feed</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full&quot;</span>).<span class="ruby-identifier">to_xml</span>
-
-
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 81</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sps_get_course</span>(<span class="ruby-identifier">course</span>)
+            <span class="ruby-ivar">@sps_feed</span>=<span class="ruby-ivar">@doc_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://documents.google.com/feeds/documents/private/full?q=#{course}&amp;prettyprint=true&quot;</span>).<span class="ruby-identifier">to_xml</span>
+<span class="ruby-comment cmt">#            @sps_feed=@sps_client.get(&quot;https://spreadsheets.google.com/feeds/documents/private/full?q=#{course}&amp;prettyprint=true&quot;).to_xml</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'openSearch:totalResults'</span>].<span class="ruby-identifier">text!</span>=<span class="ruby-value str">&quot;0&quot;</span>
                 <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
-                    <span class="ruby-identifier">etag</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-value str">'etag'</span>).<span class="ruby-identifier">value</span>
+                    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text!</span>=<span class="ruby-value str">&quot;&quot;</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-value str">'Title Match:'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text</span>
+                        <span class="ruby-ivar">@sps_id</span>=<span class="ruby-identifier">extract_document_id_from_feed</span>(<span class="ruby-value str">&quot;documents&quot;</span>,<span class="ruby-identifier">entry</span>)
+                        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;ID for Match: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@sps_id</span>.<span class="ruby-identifier">to_s</span>
+                    <span class="ruby-keyword kw">end</span>
                 <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;No Spreadsheet found with that course name&quot;</span>
+                <span class="ruby-ivar">@sps_id</span>=<span class="ruby-keyword kw">nil</span>
+            <span class="ruby-keyword kw">end</span>
 
-            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">etag</span>
+            <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@sps_id</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -1,5 +1,6 @@
 require 'gdata'
 require 'gradebook/search'
+require 'gradebook/cache'
 =begin rdoc
     A class for gathering basic stats 
 =end
@@ -162,6 +163,14 @@ module Gradebook
         end
 
 =begin rdoc
+    Etag
+=end
+        def self.get_etag_list_feed(list_feed)
+            etag=list_feed.attributes['gd:etag'].to_s
+            return etag
+        end
+        
+=begin rdoc
     Returns the version of a worksheet extracted from its meta feed.
 =end
         def self.sps_get_version(sps_client,id)
@@ -184,7 +193,15 @@ module Gradebook
   
 =end
       def self.get_list_feed(sps_client,sps_id,params='',worksheet_id=1)
-        sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
+          sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
+          tag=get_etag_list_feed(sps_feed)
+         sps_client.headers['If-None-Match']=tag
+            response=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
+            puts response.inspect
+            
+
+
+#        sps_feed=Gradebook::Cache.fetch((sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml),60)
         return sps_feed
       end
       

@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Gradebook::Usergrades</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Gradebook::Usergrades</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/gradebook/user_grades_rb.html">
+                lib/gradebook/user_grades.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000060">add_average</a>&nbsp;&nbsp;
+      <a href="#M000061">add_student</a>&nbsp;&nbsp;
+      <a href="#M000064">category_average</a>&nbsp;&nbsp;
+      <a href="#M000066">category_average_for_each_studnet</a>&nbsp;&nbsp;
+      <a href="#M000059">create_or_search_for_category</a>&nbsp;&nbsp;
+      <a href="#M000065">extract_category_weight_from_header</a>&nbsp;&nbsp;
+      <a href="#M000052">grade_all</a>&nbsp;&nbsp;
+      <a href="#M000053">grade_all2</a>&nbsp;&nbsp;
+      <a href="#M000054">grade_by_sid</a>&nbsp;&nbsp;
+      <a href="#M000055">grade_report</a>&nbsp;&nbsp;
+      <a href="#M000057">grade_report_by_name</a>&nbsp;&nbsp;
+      <a href="#M000058">grade_report_by_name_xml</a>&nbsp;&nbsp;
+      <a href="#M000056">grade_report_xml</a>&nbsp;&nbsp;
+      <a href="#M000051">new</a>&nbsp;&nbsp;
+      <a href="#M000062">new_category</a>&nbsp;&nbsp;
+      <a href="#M000063">remove_category</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000051.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000051.html');return false;">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000060.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000060.html');return false;">
+          <span class="method-name">add_average</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Add Average forumula to a column
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000061.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000061.html');return false;">
+          <span class="method-name">add_student</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Add a <a href="Usergrades.html#M000051">new</a> student to list feed #Under
+Development TODO
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000064.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000064.html');return false;">
+          <span class="method-name">category_average</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Average a category(column)
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000066.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000066.html');return false;">
+          <span class="method-name">category_average_for_each_studnet</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Averages a row (student) score for a particular category ie. HW
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000059.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000059.html');return false;">
+          <span class="method-name">create_or_search_for_category</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This method runs while grading. It prompts the user for the category
+(column name) that is to be graded. If the category exists it is returned
+by searching. If it does not exist &#8216;<a
+href="Usergrades.html#M000062">new_category</a>(category) is run which will
+create the <a href="Usergrades.html#M000051">new</a> category and the
+search will be repeated by getting the <a
+href="Usergrades.html#M000051">new</a> list of categories.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000065.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000065.html');return false;">
+          <span class="method-name">extract_category_weight_from_header</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Extract category weight code.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000052.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000052.html');return false;">
+          <span class="method-name">grade_all</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Grades each student on the roster by first asking for and a category
+(column name) on the <a href="../Gradebook.html">Gradebook</a>. Then each
+students name is presented and waits for a grade to be entered for that
+student.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000053.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000053.html');return false;">
+          <span class="method-name">grade_all2</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000054.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000054.html');return false;">
+          <span class="method-name">grade_by_sid</span><span class="method-args">(sid)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Grades a single student for a single category. After a category is
+identified the student is looked up by searhching for the SID (student ID)
+that is passed as a parameter. The name of the student that is found is
+revealed and the user then enters a grade for that student in the category
+provided.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000055.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000055.html');return false;">
+          <span class="method-name">grade_report</span><span class="method-args">(sid)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a grade report for a student by searching for their row in the
+spreadshet using their SID (student ID) as a parameter.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000057.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000057.html');return false;">
+          <span class="method-name">grade_report_by_name</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a grade report for a student by searching for their row in the
+spreadsheet using their Name as a paramater.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000058.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000058.html');return false;">
+          <span class="method-name">grade_report_by_name_xml</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <pre>
+ Returns an XML Grade report for a student by searching for their row in the spreadsheet using their name as a parameter.
+</pre>
+<p>
+TODO Separate name to first name and last name.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000056.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000056.html');return false;">
+          <span class="method-name">grade_report_xml</span><span class="method-args">(sid)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an XML <a href="Grade.html">Grade</a> report for a student by
+searching for their row in the spreadsheet using their SID (student ID) as
+a parameter. TODO Separate name to first name and last name.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000062.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000062.html');return false;">
+          <span class="method-name">new_category</span><span class="method-args">(category)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Wraps <a href="Utility.html">Utility</a> functions to create a <a
+href="Usergrades.html#M000051">new</a> category.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <a href="Usergrades.src/M000063.html" target="Code" class="method-signature"
+            onclick="popupCode('Usergrades.src/M000063.html');return false;">
+          <span class="method-name">remove_category</span><span class="method-args">(category)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Wraps <a href="Utility.html">Utility</a> functions to remove a category.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

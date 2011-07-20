@@ -5,28 +5,22 @@
 
 <html>
 <head>
-  <title>extract_document_id_from_feed (Gradebook::Client)</title>
+  <title>sps_get_etag (Gradebook::Client)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 140</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_document_id_from_feed</span>(<span class="ruby-identifier">feed</span>,<span class="ruby-identifier">entry</span>)
-            <span class="ruby-identifier">links</span>={}
-            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'link'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">links</span>[<span class="ruby-identifier">link</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-value str">'rel'</span>).<span class="ruby-identifier">value</span>] = <span class="ruby-identifier">link</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-value str">'href'</span>).<span class="ruby-identifier">value</span>
-            <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/client.rb, line 112</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sps_get_etag</span>(<span class="ruby-identifier">course</span>,<span class="ruby-identifier">id</span>)
+                <span class="ruby-identifier">etag</span>=<span class="ruby-keyword kw">nil</span>
+                <span class="ruby-ivar">@sps_feed</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full&quot;</span>).<span class="ruby-identifier">to_xml</span>
 
-            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">feed</span><span class="ruby-operator">==</span><span class="ruby-value str">&quot;documents&quot;</span>
-                <span class="ruby-identifier">id</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">text</span>[<span class="ruby-regexp re">/.com\/feeds\/documents\/private\/full\/spreadsheet%3A(.*)/</span>, <span class="ruby-value">1</span>]
-            <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">feed</span><span class="ruby-operator">==</span><span class="ruby-value str">&quot;spreadsheets&quot;</span>
-                <span class="ruby-identifier">id</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'id'</span>].<span class="ruby-identifier">text</span>[<span class="ruby-regexp re">/.com\/feeds\/spreadsheets\/(.*)/</span>, <span class="ruby-value">1</span>]
-            <span class="ruby-keyword kw">else</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Invalid Feed: Must be 'documents' or 'spreadsheets'.&quot;</span>
-                <span class="ruby-identifier">id</span>=<span class="ruby-keyword kw">nil</span>
-            <span class="ruby-keyword kw">end</span>
-            
-            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">id</span>
+
+                <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+                    <span class="ruby-identifier">etag</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-value str">'etag'</span>).<span class="ruby-identifier">value</span>
+                <span class="ruby-keyword kw">end</span>
+
+            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">etag</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
