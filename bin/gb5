@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby -rubygems
+require 'rubygems'
+require 'pry'
+
+
+
+binding.pry
+lines=STDIN.gets.chomp
+puts lines
+

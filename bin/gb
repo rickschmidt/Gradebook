@@ -2,7 +2,9 @@
 #Executes with rubygems by default.  This way there is a singular place to change the package management system if you are not using rubygems.  
 
 require 'optparse'
+
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+
 require 'gradebook'
 require 'cmd'
 
@@ -188,10 +190,12 @@ when "category"
          
 
 when "load"
-     @client=Gradebook::Client.new
-    @client.setup("","") 
-    @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
-    Gradebook::Utility.get_list_feed(@client.sps_client,@sps_id,'',1)
+
+    x='a'
+
+#    x=STDIN.gets.chomp()
+  
+
 
 else
   puts opt_parser

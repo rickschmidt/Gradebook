@@ -4,42 +4,36 @@ require 'md5'
 
 module Gradebook
     class Cache
-        @@cache_dir='/tmp'
-       def initialize(cache_dir='/tmp')
-          # this is the dir where we store our cache
-          @@cache_dir=cache_dir
-       end
-       def self.fetch(xml, max_age=0)
-           puts "xml.class #{xml.class}"
-
-
-           puts "inspect #{xml.attributes['gd:etag'].to_s}"
-           file=''
-           xml.elements.each('title') do |title|
-               file=title.text
-           end
-#           doc=REXML::Element.new(url)
-
-
-               
-           puts "root #{file}"
-           puts "root #{file.class}"
-#          file = MD5.hexdigest(doc.root)
-            puts "Cachdir class #{@@cache_dir.class}"
-
-          file_path = File.join("", @@cache_dir, file)
-          puts "Path: #{file_path}"
-          # we check if the file -- a MD5 hexdigest of the URL -- exists
-          #  in the dir. If it does and the data is fresh, we just read
-          #  data from the file and return
-          if File.exists? file_path
-             return File.new(file_path).read if Time.now-File.mtime(file_path)<max_age
+      def self.cache_get_request(sps_client,file,url) 
+        before=Time.now
+          cach_dir='/tmp/'
+          file_path = File.join("", cach_dir, "#{file}")                      
+          if (File.exists? file_path) && (!File.zero? file_path)
+              contents=File.new(file_path).read             
+              xml_doc=REXML::Document.new(contents)
+              tag=xml_doc.root.attributes['gd:etag'].to_s
+              sps_client.headers['If-None-Match']=tag
+              response=sps_client.get(url)
+              if response.status_code==304
+                  after=Time.now
+                  puts "Time: #{after-before}"
+                  puts "304"
+                  return xml_doc
+              elsif response.status_code==200
+                  puts "200"
+                  File.open(file_path,"w") do |data|
+                      data<<response.body
+                  end
+              end                            
+          else
+            sps_feed=sps_client.get(url).to_xml
+            puts "new"
+            File.open(file_path,"w") do |data|
+                data<<sps_feed
+            end              
           end
-          # if the file does not exist (or if the data is not fresh), we
-          #  make an HTTP request and save it to a file
-          File.open(file_path, "w") do |data|
-             data <<file
-          end
-       end
+          after=Time.now
+          puts "Time: #{after-before}"
+      end
     end
 end

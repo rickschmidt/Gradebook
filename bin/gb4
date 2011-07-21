@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby -rubygems
+  putc ">>"
+    lines=STDIN.gets
+    text=lines.split(" ")
+    puts text.inspect
+    puts text.class
+    
+case text[0]
+when "grade"
+    puts "grade"
+    if text[1]=="all"
+        puts "grade all"
+    elsif text[1]=="--sid"
+        puts "grade by sid with #{text[2]}"
+    end
+    
+    puts "args #{args.inspect}"
+        puts "args #{args.class}"
+        
+    if x!='q'
+     @client=Gradebook::Client.new
+     puts "client stuff"
+    @client.setup("","") 
+    @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
+    Gradebook::Utility.get_list_feed(@client.sps_client,@sps_id,'',1)
+
+end
+end
