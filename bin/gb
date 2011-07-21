@@ -188,7 +188,10 @@ when "category"
          
 
 when "load"
-    `echo $LOAD_PATH`
+     @client=Gradebook::Client.new
+    @client.setup("","") 
+    @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
+    Gradebook::Utility.get_list_feed(@client.sps_client,@sps_id,'',1)
 
 else
   puts opt_parser

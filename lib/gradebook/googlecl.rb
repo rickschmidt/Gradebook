@@ -1,4 +1,4 @@
-require 'gdata'
+gem 'gdata2', '=1.0'
 
 =begin rdoc
     This module wraps the available google CL Docs tasks in ruby methods.

@@ -1,4 +1,4 @@
-require 'gdata'
+gem 'gdata2', '=1.0'
 
 =begin rdoc
     A class for gathering basic stats 

@@ -1,4 +1,5 @@
-
+require 'rubygems'
+gem 'gdata2'
 require 'gdata'
 
 module Gradebook

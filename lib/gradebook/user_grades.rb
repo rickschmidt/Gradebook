@@ -1,4 +1,4 @@
-require 'gdata'
+gem 'gdata2', '=1.0'
 include Gradebook
 =begin rdoc
     A class that encapsulates the grading classes

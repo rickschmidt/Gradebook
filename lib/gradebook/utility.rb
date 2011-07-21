@@ -1,4 +1,4 @@
-require 'gdata'
+gem 'gdata2', '=1.0'
 require 'gradebook/search'
 require 'gradebook/cache'
 =begin rdoc
@@ -193,16 +193,52 @@ module Gradebook
   
 =end
       def self.get_list_feed(sps_client,sps_id,params='',worksheet_id=1)
-          sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
-          tag=get_etag_list_feed(sps_feed)
-         sps_client.headers['If-None-Match']=tag
-            response=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
-            puts response.inspect
-            
-
-
-#        sps_feed=Gradebook::Cache.fetch((sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml),60)
-        return sps_feed
+          before=Time.now
+          cach_dir='/tmp/'
+          file_path = File.join("", cach_dir, 'list_feed')                      
+          if (File.exists? file_path) && (!File.zero? file_path)
+              contents=File.new(file_path).read             
+              xml_doc=REXML::Document.new(contents)
+              tag=xml_doc.root.attributes['gd:etag'].to_s
+              sps_client.headers['If-None-Match']=tag
+              response=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}")
+              if response.status_code==304
+                  after=Time.now
+                  puts "Time: #{after-before}"
+                  puts "304"
+                  return xml_doc
+              elsif response.status_code==200
+                  puts "200"
+                  File.open(file_path,"w") do |data|
+                      data<<response.body
+                  end
+              end                            
+          else
+            sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
+            puts "new"
+            File.open(file_path,"w") do |data|
+                data<<sps_feed
+            end              
+          end
+          after=Time.now
+          puts "Time: #{after-before}"
+              
+             #return File.new(file).read if Time.now-File.mtime(file)<max_age
+          # end
+          # 
+          #           File.open(file_path, "w") do |data|
+          #              data <<file
+          #           end
+          #           sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
+          #           tag=get_etag_list_feed(sps_feed)
+          #          sps_client.headers['If-None-Match']=tag
+          #             response=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
+          #             puts response.inspect
+          #             
+          # 
+          # 
+          # #        sps_feed=Gradebook::Cache.fetch((sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml),60)
+          #         return sps_feed
       end
       
 
