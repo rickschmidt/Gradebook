@@ -15,10 +15,16 @@ module Gradebook
             used_col_count=self.get_number_of_used_columns(rows)
             total_col_count=self.get_number_of_columns(sheet)
             if used_col_count >=total_col_count
-                self.add_columns(1,sps_client,sheet,sps_id)
+                #self.add_columns(1,sps_client,sheet,sps_id)
             end
 
+            headers=Search.get_columns_headers(sps_client,sps_id)            
+            if headers.has_key?(category_name)
+                return "Category exists."
 
+            end
+
+                
             entry = rows.elements['entry'] # first <atom:entry>
             entry.add_namespace('http://www.w3.org/2005/Atom')
             entry.add_namespace('gd','http://schemas.google.com/g/2005')
@@ -27,7 +33,8 @@ module Gradebook
  #           entry.elements['gs:cell'].add_attributes({"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"})
 #            el = doc.add_element 'my-tag', {'attr1'=>'val1', 'attr2'=>'val2'}
             entry.add_element 'gs:cell',{"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"}            
-            tag=self.sps_get_etag(sps_client,sps_id)
+            tag=self.get_etag_list_feed(rows)
+          
             sps_client.headers['If-None-Match']=tag
             response=sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}",entry)             
         end
@@ -36,70 +43,70 @@ module Gradebook
 =begin rdoc
     Adds another column to the spreadsheet by upating the sheets meta data. 
 =end
-    def self.add_columns(num_of_columns,sps_client,sheet,sps_id)
-
-
-
-        col_count=0
-        
-        
-        
-        sheet.elements.each('entry') do |entry|
-            col_count=entry.elements['gs:colCount'].text.to_i
-        end
-        
-        total_columns=col_count+num_of_columns
-        
-        entry = sheet.elements['entry'] # first <atom:entry>
-        
-        entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
-        
-        edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
-        tag=self.sps_get_etag(sps_client,sps_id)
-#               tag=tag.gsub! /"/, ''
-        
-        entry.add_namespace('http://www.w3.org/2005/Atom')
-        entry.add_namespace('gd','http://schemas.google.com/g/2005')
-        entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-        
-        response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
-             
-         
-    end
+#     def self.add_columns(num_of_columns,sps_client,sheet,sps_id)
+# 
+# 
+#         
+#         col_count=0
+#         
+#         
+#         
+#         sheet.elements.each('entry') do |entry|
+#             col_count=entry.elements['gs:colCount'].text.to_i
+#         end
+#         
+#         total_columns=col_count+num_of_columns
+#         
+#         entry = sheet.elements['entry'] # first <atom:entry>
+#         
+#         entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
+#         
+#         edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
+#         tag=self.sps_get_etag(sps_client,sps_id)
+# #               tag=tag.gsub! /"/, ''
+#         
+#         entry.add_namespace('http://www.w3.org/2005/Atom')
+#         entry.add_namespace('gd','http://schemas.google.com/g/2005')
+#         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+#         
+#         response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
+#              
+#          
+#     end
     
 =begin rdoc
     Remove a given number of columns from the spreadsheet by upating the sheets meta data. 
     This method does not remove a specific column.  It removes columns from right to left.
 =end
-    def self.remove_columns(num_of_columns,sps_client,sheet,sps_id)
-
-
-
-        col_count=0
-        
-        
-        sheet.elements.each('entry') do |entry|
-            col_count=entry.elements['gs:colCount'].text.to_i
-        end
-        
-        total_columns=col_count-num_of_columns
-        
-        entry = sheet.elements['entry'] # first <atom:entry>
-        
-        entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
-        
-        edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
-        tag=self.sps_get_etag(sps_client,sps_id)
-#               tag=tag.gsub! /"/, ''
-        
-        entry.add_namespace('http://www.w3.org/2005/Atom')
-        entry.add_namespace('gd','http://schemas.google.com/g/2005')
-        entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-        
-        response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
-     
-         
-    end
+   #  def self.remove_columns(num_of_columns,sps_client,sheet,sps_id)
+   # 
+   # 
+   # 
+   #         col_count=0
+   #         
+   #         
+   #         sheet.elements.each('entry') do |entry|
+   #             col_count=entry.elements['gs:colCount'].text.to_i
+   #         end
+   #         
+   #         total_columns=col_count-num_of_columns
+   #         
+   #         entry = sheet.elements['entry'] # first <atom:entry>
+   #         
+   #         entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
+   #         
+   #         edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
+   #         tag=self.sps_get_etag(sps_client,sps_id)
+   # #               tag=tag.gsub! /"/, ''
+   #         
+   #         entry.add_namespace('http://www.w3.org/2005/Atom')
+   #         entry.add_namespace('gd','http://schemas.google.com/g/2005')
+   #         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+   #         
+   #         response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
+   #      
+   #          
+   #     end
     
 =begin rdoc
     Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
@@ -152,15 +159,15 @@ module Gradebook
 =begin rdoc
     Returns the etag for authorization headers for the course that is searched for as a param.  Returns nil if no course is found.
 =end
-        def self.sps_get_etag(sps_client,id)
-                etag=nil
-                @sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full").to_xml
-                @sps_feed.elements.each('entry') do |entry|
-                    etag=entry.attribute('etag').value
-                end
-
-            return etag
-        end
+        # def self.sps_get_etag(sps_client,id)
+        #         etag=nil
+        #         @sps_feed=Gradebook::Cache.cache_get_request(sps_client,'sheet_feed',"https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full")
+        #         @sps_feed.elements.each('entry') do |entry|
+        #             etag=entry.attribute('etag').value
+        #         end
+        # 
+        #     return etag
+        # end
 
 =begin rdoc
     Etag
@@ -173,16 +180,16 @@ module Gradebook
 =begin rdoc
     Returns the version of a worksheet extracted from its meta feed.
 =end
-        def self.sps_get_version(sps_client,id)
-            version=nil
-            sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
-            
-            sps_feed.elements.each('entry') do |entry|
-                version=entry.attribute('version')
-            end
-
-            return version
-        end
+        # def self.sps_get_version(sps_client,id)
+        #     version=nil
+        #     sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
+        #     
+        #     sps_feed.elements.each('entry') do |entry|
+        #         version=entry.attribute('version')
+        #     end
+        # 
+        #     return version
+        # end
         
 =begin rdoc
   Return the list feed ie row by row entries.
@@ -194,53 +201,8 @@ module Gradebook
 =end
       def self.get_list_feed(sps_client,sps_id,params='',worksheet_id=1)
           
-          Gradebook::Cache.cache_get_request(sps_client,'list_feed',"https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}")
-          # before=Time.now
-          #          cach_dir='/tmp/'
-          #          file_path = File.join("", cach_dir, 'list_feed')                      
-          #          if (File.exists? file_path) && (!File.zero? file_path)
-          #              contents=File.new(file_path).read             
-          #              xml_doc=REXML::Document.new(contents)
-          #              tag=xml_doc.root.attributes['gd:etag'].to_s
-          #              sps_client.headers['If-None-Match']=tag
-          #              response=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}")
-          #              if response.status_code==304
-          #                  after=Time.now
-          #                  puts "Time: #{after-before}"
-          #                  puts "304"
-          #                  return xml_doc
-          #              elsif response.status_code==200
-          #                  puts "200"
-          #                  File.open(file_path,"w") do |data|
-          #                      data<<response.body
-          #                  end
-          #              end                            
-          #          else
-          #            sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
-          #            puts "new"
-          #            File.open(file_path,"w") do |data|
-          #                data<<sps_feed
-          #            end              
-          #          end
-          #          after=Time.now
-          #          puts "Time: #{after-before}"
-              
-             #return File.new(file).read if Time.now-File.mtime(file)<max_age
-          # end
-          # 
-          #           File.open(file_path, "w") do |data|
-          #              data <<file
-          #           end
-          #           sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
-          #           tag=get_etag_list_feed(sps_feed)
-          #          sps_client.headers['If-None-Match']=tag
-          #             response=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml
-          #             puts response.inspect
-          #             
-          # 
-          # 
-          # #        sps_feed=Gradebook::Cache.fetch((sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}").to_xml),60)
-          #         return sps_feed
+          sps_feed=Gradebook::Cache.cache_get_request(sps_client,'list_feed',"https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}")
+         return sps_feed
       end
       
 
@@ -255,7 +217,8 @@ module Gradebook
         #                 puts cell.text
         #             end
         #         end
-        stats_sheet=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/1/private/full?prettyprint=true").to_xml
+#        stats_sheet=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/1/private/full?prettyprint=true").to_xml
+        stats_sheet=self.get_list_feed(sps_client,sps_id,'',1)
         last_row=self.get_number_of_used_rows(sps_client,sps_id)+1
         row_num=last_row+2
         #entry=stats_sheet.elements['entry']
@@ -272,7 +235,7 @@ module Gradebook
         #             end
         entry.add_element 'gs:cell',{"row"=>"#{row_num}","col"=>"#{column_num}","inputValue"=>"=AVERAGE(R2C#{column_num}:R#{last_row}C#{column_num})"}            
         puts "entry inspect #{entry.inspect}"
-        tag=self.sps_get_etag(sps_client,sps_id)
+        tag=self.get_etag_list_feed(stats_sheet)
         sps_client.headers['If-None-Match']=tag
 #            @sps_client.put(edit_uri,entry.to_s)
         response=sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R#{row_num}C#{3}",entry.to_s)
@@ -321,7 +284,8 @@ module Gradebook
             column_id=Search.search_for_column_id(category_name,headers)
             before=Time.now
             if column_id.first!=nil
-                cells=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?min-col=#{column_id}&max-col=#{column_id}&prettyprint=true").to_xml
+#                cells=self.get_cell_feed(sps_client,sps_id,"&min-col=#{column_id}&max-col=#{column_id}")
+                cells=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?min-col=#{column_id}&max-col=#{column_id}&prettyprint=true").to_xml                
                 batch_post_url=cells.elements['id'].text=cells.elements["link[@rel='http://schemas.google.com/g/2005#batch']"].attributes['href'] #converts ID element to the post batch rel
                 new_cells_feed=REXML::Document.new
                 root=new_cells_feed.add_element 'feed'
@@ -342,7 +306,8 @@ module Gradebook
                 end
                 after=Time.now
                 puts "Time: #{after-before}"
-                tag=self.sps_get_etag(sps_client,sps_id)
+                list_feed=self.get_list_feed(sps_client,sps_id,params='',worksheet_id=1)
+                tag=self.get_etag_list_feed(list_feed)
                 sps_client.headers['If-None-Match']=tag
                 response=sps_client.post(batch_post_url,new_cells_feed)
             end
@@ -356,13 +321,15 @@ module Gradebook
         def self.num_of_rows_cell_feed(sps_client,sps_id)
             response=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true").to_xml
             puts response
+            return nil
         end
         
 =begin rdoc
     Get cell feed
 =end
         def self.get_cell_feed(sps_client,sps_id,params='')
-            sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true#{params}").to_xml
+            cell_feed=Gradebook::Cache.cache_get_request(sps_client,'cell_feed',"https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true#{params}")
+            return cell_feed
         end
         
 =begin rdoc

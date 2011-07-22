@@ -5,14 +5,19 @@
 
 <html>
 <head>
-  <title>get_weight_code_for_category (Gradebook::Utility)</title>
+  <title>get_category_weights (Gradebook::Utility)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 327</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_weight_code_for_category</span>(<span class="ruby-identifier">category</span>)
-           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">category</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/[-]\w*/</span>,<span class="ruby-value str">''</span>).<span class="ruby-identifier">downcase</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 330</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_category_weights</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-identifier">worksheetid</span>)
+            <span class="ruby-identifier">weights</span>={}
+            <span class="ruby-identifier">list_feed</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_list_feed</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-value str">'&amp;sq=weights%3E0'</span>,<span class="ruby-value">2</span>)
+            <span class="ruby-identifier">list_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">weights</span>[<span class="ruby-node">&quot;#{w.elements['title'].text}&quot;</span>]=<span class="ruby-node">&quot;#{w.elements['gsx:weights'].text}&quot;</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">weights</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

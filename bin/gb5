@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby -rubygems
 require 'rubygems'
-require 'pry'
 
+def main(*args)
 
-
-binding.pry
-lines=STDIN.gets.chomp
-puts lines
+   args.each do |a|
+       yield a
+       end
+       
+end
 

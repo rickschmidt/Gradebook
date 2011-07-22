@@ -5,26 +5,21 @@
 
 <html>
 <head>
-  <title>search_for_sid (Gradebook::Utility)</title>
+  <title>get_possible_points_for_category (Gradebook::Utility)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 93</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search_for_sid</span>(<span class="ruby-identifier">search</span>)
-            <span class="ruby-identifier">sps_id</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_course</span>(<span class="ruby-value str">&quot;Roster&quot;</span>)
-            <span class="ruby-identifier">rows</span>=<span class="ruby-ivar">@sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&amp;sq=id=#{search}&quot;</span>).<span class="ruby-identifier">to_xml</span>
-            <span class="ruby-identifier">row</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-            <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'//gsx:*'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">header</span><span class="ruby-operator">|</span>
-
-                <span class="ruby-identifier">row</span>[<span class="ruby-identifier">header</span>.<span class="ruby-identifier">name</span>]=<span class="ruby-identifier">header</span>.<span class="ruby-identifier">text</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 356</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_possible_points_for_category</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-identifier">category</span>)
+            <span class="ruby-identifier">pts_possible</span>={}
+            <span class="ruby-identifier">list_feed</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_list_feed</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-value str">'&amp;sq=pointspossible%3E0'</span>,<span class="ruby-value">2</span>)
+            <span class="ruby-identifier">list_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+                <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">p</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text</span><span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">category</span>)<span class="ruby-operator">==</span><span class="ruby-value">0</span>
+                    <span class="ruby-identifier">pts_possible</span>[<span class="ruby-node">&quot;#{p.elements['title'].text}&quot;</span>]=<span class="ruby-node">&quot;#{p.elements['gsx:pointspossible'].text}&quot;</span>
+                <span class="ruby-keyword kw">end</span>
             <span class="ruby-keyword kw">end</span>
-            <span class="ruby-identifier">puts</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">inspect</span>
-            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Searching for Student ID...#{search}&quot;</span>
-            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Grades for #{row['name']}&quot;</span>
-            <span class="ruby-identifier">row</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{key} :#{value} &quot;</span>
-            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">pts_possible</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

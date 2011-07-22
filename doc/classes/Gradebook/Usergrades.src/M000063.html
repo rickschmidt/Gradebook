@@ -5,19 +5,26 @@
 
 <html>
 <head>
-  <title>remove_category (Gradebook::Usergrades)</title>
+  <title>grade_report_by_name (Gradebook::Usergrades)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 254</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_category</span>(<span class="ruby-identifier">category</span>)
-           <span class="ruby-identifier">response</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">remove_category</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-identifier">category</span>) 
-           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">nil</span>
-               <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;\e[1;37mCategory does not exist.\e[0m&quot;</span>
-           <span class="ruby-keyword kw">else</span>
-               <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;\e[1;34mCategory removed.\e[0m&quot;</span>
-           <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 141</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grade_report_by_name</span>(<span class="ruby-identifier">name</span>)
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Name #{name}&quot;</span>
+            <span class="ruby-identifier">list_feed</span>=<span class="ruby-constant">Search</span>.<span class="ruby-identifier">search_for_sid</span>(<span class="ruby-identifier">name</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>)
+            <span class="ruby-identifier">row</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+            <span class="ruby-identifier">list_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'gsx:*'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+                    <span class="ruby-identifier">row</span>[<span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span>]=<span class="ruby-identifier">col</span>.<span class="ruby-identifier">text</span>
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-identifier">row</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+                    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">==</span><span class="ruby-constant">String</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\e[4;1;36m#{key}\e[0m&quot;</span><span class="ruby-operator">+</span><span class="ruby-value str">'::'</span><span class="ruby-operator">+</span><span class="ruby-node">&quot;\e[4;1;34m#{value}\e[0m&quot;</span>
+                    <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>  
+            <span class="ruby-keyword kw">end</span> 
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

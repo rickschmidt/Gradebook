@@ -5,39 +5,26 @@
 
 <html>
 <head>
-  <title>add_student (Gradebook::Usergrades)</title>
+  <title>grade_report (Gradebook::Usergrades)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 213</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_student</span>
-            <span class="ruby-comment cmt">#list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)</span>
-           <span class="ruby-comment cmt">#  list_feed.elements.each do |entry|</span>
-                <span class="ruby-comment cmt"># puts entry</span>
-          <span class="ruby-comment cmt">#   end</span>
-            <span class="ruby-identifier">entry</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">new_entry</span>
-            <span class="ruby-identifier">id</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'gsx:id'</span>
-            <span class="ruby-identifier">hw1</span>=<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'gsx:hw1'</span>
-            <span class="ruby-identifier">id</span>.<span class="ruby-identifier">text</span>=<span class="ruby-value str">&quot;TestNew&quot;</span>
-            <span class="ruby-identifier">hw1</span>.<span class="ruby-identifier">text</span>=<span class="ruby-value str">&quot;94&quot;</span>
-            <span class="ruby-identifier">puts</span> <span class="ruby-identifier">entry</span>
-            <span class="ruby-comment cmt">#entry.add_element 'gs:cell',{&quot;row&quot;=&gt;&quot;#{row_num}&quot;,&quot;col&quot;=&gt;&quot;#{column_num}&quot;,&quot;inputValue&quot;=&gt;&quot;=AVERAGE(R2C#{column_num}:R#{last_row}C#{column_num})&quot;}            </span>
-            <span class="ruby-comment cmt"># entry.elements.each(&quot;gsx:*[#{@column_id}]&quot;) do |col|</span>
-            <span class="ruby-comment cmt">#     col.text=grade</span>
-            <span class="ruby-comment cmt"># end</span>
-<span class="ruby-comment cmt">#            entry.add_element &quot;gsx:id&quot;</span>
-            <span class="ruby-comment cmt">#tag=Utility.sps_get_etag(@client.sps_client,@sps_id)</span>
-            <span class="ruby-comment cmt">#@client.sps_client.headers['If-None-Match']=tag</span>
-    <span class="ruby-comment cmt">#            @sps_client.put(edit_uri,entry.to_s)</span>
-<span class="ruby-comment cmt">#                                                https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true</span>
-            <span class="ruby-identifier">used_rows</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_number_of_used_rows</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>)
-            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;used_rows #{used_rows}&quot;</span>
-
-
-            <span class="ruby-identifier">response</span>=<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>.<span class="ruby-identifier">post</span>(<span class="ruby-value str">&quot;https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full&quot;</span>,<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">to_s</span>)
-            <span class="ruby-identifier">puts</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">inspect</span>
-            
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 94</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grade_report</span>(<span class="ruby-identifier">sid</span>)
+            <span class="ruby-identifier">list_feed</span>=<span class="ruby-constant">Search</span>.<span class="ruby-identifier">search_with_sid</span>(<span class="ruby-identifier">sid</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>)
+            <span class="ruby-identifier">row</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+            <span class="ruby-identifier">list_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'gsx:*'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+                    <span class="ruby-identifier">row</span>[<span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span>]=<span class="ruby-identifier">col</span>.<span class="ruby-identifier">text</span>
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;\e[4;1;36mReport\e[0m&quot;</span>
+                <span class="ruby-identifier">row</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+                    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">==</span><span class="ruby-constant">String</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\e[4;1;36m#{key}\e[0m&quot;</span><span class="ruby-operator">+</span><span class="ruby-value str">'::'</span><span class="ruby-operator">+</span><span class="ruby-node">&quot;\e[4;1;34m#{value}\e[0m&quot;</span>
+                    <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>  
+            <span class="ruby-keyword kw">end</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

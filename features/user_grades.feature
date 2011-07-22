@@ -6,10 +6,13 @@ sort of a public API vs a private API.
     I want to create a class to handle the common user interactions.
     
     
-    Scenario: User creates a new column 
-            Given an authenticated client and a spreadsheet ID
+    Scenario: User creates a category to hold grades
             When the new category command is given with the name of a new category as a param
-            Then check to see if an average column for the new category prefix exists
-            Then present the user with options Y or N to update the column.
-            Then if the answer is Y re-average the column.  
-         
+            
+    Scenario: User removes a category and grades in that category
+            When the remove category command is given with the name of a category as a param
+    
+    Scenario: User enters grades for an entire class
+            When the grade all command is issued each student should be graded for a category
+            
+    

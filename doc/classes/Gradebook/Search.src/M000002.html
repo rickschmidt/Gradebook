@@ -12,7 +12,13 @@
 <body class="standalone-code">
   <pre><span class="ruby-comment cmt"># File lib/gradebook/search.rb, line 33</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_course</span>(<span class="ruby-identifier">doc_client</span>,<span class="ruby-identifier">course</span>)
-            <span class="ruby-ivar">@sps_feed</span>=<span class="ruby-identifier">doc_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://documents.google.com/feeds/documents/private/full?q=#{course}&amp;prettyprint=true&quot;</span>).<span class="ruby-identifier">to_xml</span>
+            <span class="ruby-ivar">@sps_feed</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">cache_get_request</span>(<span class="ruby-identifier">doc_client</span>,<span class="ruby-value str">&quot;doc_feed&quot;</span>,<span class="ruby-node">&quot;https://documents.google.com/feeds/documents/private/full?q=#{course}&amp;prettyprint=true&quot;</span>)
+<span class="ruby-comment cmt">#            @sps_feed=doc_client.get(&quot;https://documents.google.com/feeds/documents/private/full?q=#{course}&amp;prettyprint=true&quot;).to_xml</span>
+            <span class="ruby-comment cmt">#  @sps_feed.elements.each do |e|</span>
+            <span class="ruby-comment cmt">#     e.elements.each do |f|</span>
+            <span class="ruby-comment cmt">#         puts f</span>
+            <span class="ruby-comment cmt">#     end</span>
+            <span class="ruby-comment cmt"># end</span>
             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'openSearch:totalResults'</span>].<span class="ruby-identifier">text!</span>=<span class="ruby-value str">&quot;0&quot;</span>
                 <span class="ruby-ivar">@sps_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
                     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text!</span>=<span class="ruby-value str">&quot;&quot;</span>

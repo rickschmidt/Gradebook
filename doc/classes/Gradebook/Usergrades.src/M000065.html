@@ -5,24 +5,26 @@
 
 <html>
 <head>
-  <title>extract_category_weight_from_header (Gradebook::Usergrades)</title>
+  <title>create_or_search_for_category (Gradebook::Usergrades)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 277</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_category_weight_from_header</span>
-
-            <span class="ruby-identifier">weights</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_category_weights</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-value">2</span>) 
-            <span class="ruby-identifier">cells</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_cell_feed</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-identifier">params</span>=<span class="ruby-value str">'&amp;max-row=1'</span>)
-            <span class="ruby-identifier">cells</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'gs:cell'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cell</span><span class="ruby-operator">|</span>
-                     <span class="ruby-identifier">weight_code</span>=<span class="ruby-identifier">cell</span>.<span class="ruby-identifier">text</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/[-]\w*/</span>,<span class="ruby-value str">''</span>) <span class="ruby-comment cmt">#removes column name and hyphen ie. HW-Homework1 becomes HW, Q-Quiz3 becomes Q</span>
-                     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">weights</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">weight_code</span>)
-                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Value: #{weights[weight_code]}, Weight_code:#{weight_code}&quot;</span>
-                     <span class="ruby-keyword kw">end</span>
-                <span class="ruby-keyword kw">end</span>
-            <span class="ruby-keyword kw">end</span>                          
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 186</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_or_search_for_category</span>
+            <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Enter a category name, if it does not match a current category one will be created&quot;</span>
+            <span class="ruby-identifier">category</span>=<span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Searching for category... #{category}&quot;</span>
+            <span class="ruby-identifier">column_id</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">Search</span>.<span class="ruby-identifier">search_for_column_id</span>(<span class="ruby-identifier">category</span>,<span class="ruby-ivar">@headers</span>)
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">column_id</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">class!</span>=<span class="ruby-constant">String</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Category does not exist and is being created.&quot;</span>
+                <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new_category</span>(<span class="ruby-identifier">category</span>)
+                <span class="ruby-ivar">@headers</span>=<span class="ruby-constant">Search</span>.<span class="ruby-identifier">get_columns_headers</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>)
+                <span class="ruby-identifier">column_id</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">Search</span>.<span class="ruby-identifier">search_for_column_id</span>(<span class="ruby-identifier">category</span>,<span class="ruby-ivar">@headers</span>)
+            <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Category exists.&quot;</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">column_id</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

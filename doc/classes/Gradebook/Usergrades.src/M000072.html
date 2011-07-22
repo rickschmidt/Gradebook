@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>category_average_for_each_studnet (Gradebook::Usergrades)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 294</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">category_average_for_each_studnet</span>
+            <span class="ruby-comment cmt">#puts &quot;Enter a category&quot;</span>
+           <span class="ruby-comment cmt">#category=STDIN.gets.chomp</span>
+           <span class="ruby-identifier">category</span>=<span class="ruby-value str">&quot;q&quot;</span>  <span class="ruby-comment cmt">#remove after testing, replace with above</span>
+           <span class="ruby-identifier">prefix</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_weight_code_for_category</span>(<span class="ruby-identifier">category</span>) 
+           <span class="ruby-identifier">weights</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_category_weights</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-value">2</span>)
+           <span class="ruby-identifier">weight</span>=<span class="ruby-identifier">weights</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-identifier">prefix</span>)
+           
+           <span class="ruby-identifier">list_feed</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_list_feed</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-value">1</span>)
+
+           <span class="ruby-identifier">list_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+               <span class="ruby-identifier">weighted_average</span>=[]
+               <span class="ruby-identifier">row</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'gsx:*'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ele</span><span class="ruby-operator">|</span>
+                   <span class="ruby-identifier">code</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_weight_code_for_category</span>(<span class="ruby-identifier">ele</span>.<span class="ruby-identifier">name</span>).<span class="ruby-identifier">to_s</span>
+                   <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">code</span><span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">prefix</span>)<span class="ruby-operator">==</span><span class="ruby-value">0</span>
+                       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Matched Element #{ele.name}&quot;</span>
+                       <span class="ruby-identifier">pts_possible</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_possible_points_for_category</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-identifier">ele</span>.<span class="ruby-identifier">name</span>)  <span class="ruby-comment cmt">#get this once then have a hash</span>
+                       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;pts#{pts_possible}&quot;</span>
+                       <span class="ruby-identifier">weighted_average</span><span class="ruby-operator">&lt;&lt;</span>(<span class="ruby-identifier">ele</span>.<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_f</span><span class="ruby-operator">/</span><span class="ruby-identifier">pts_possible</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-identifier">ele</span>.<span class="ruby-identifier">name</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_f</span>)<span class="ruby-operator">*</span><span class="ruby-identifier">weight</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_f</span>
+                   <span class="ruby-keyword kw">end</span>                       
+               <span class="ruby-keyword kw">end</span>
+               <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Weighted Average Size: #{weighted_average.size}&quot;</span>
+               <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Weighted Average: #{weighted_average.inspect}&quot;</span>
+               <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Weighted Average Sum:#{weighted_average.inject{|sum,x| sum + x }} &quot;</span>
+               <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>     
+            <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

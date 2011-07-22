@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>extract_category_weight_from_header (Gradebook::Usergrades)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/user_grades.rb, line 277</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_category_weight_from_header</span>
+
+            <span class="ruby-identifier">weights</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_category_weights</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-value">2</span>) 
+            <span class="ruby-identifier">cells</span>=<span class="ruby-constant">Utility</span>.<span class="ruby-identifier">get_cell_feed</span>(<span class="ruby-ivar">@client</span>.<span class="ruby-identifier">sps_client</span>,<span class="ruby-ivar">@sps_id</span>,<span class="ruby-identifier">params</span>=<span class="ruby-value str">'&amp;max-row=1'</span>)
+            <span class="ruby-identifier">cells</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'gs:cell'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cell</span><span class="ruby-operator">|</span>
+                     <span class="ruby-identifier">weight_code</span>=<span class="ruby-identifier">cell</span>.<span class="ruby-identifier">text</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/[-]\w*/</span>,<span class="ruby-value str">''</span>) <span class="ruby-comment cmt">#removes column name and hyphen ie. HW-Homework1 becomes HW, Q-Quiz3 becomes Q</span>
+                     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">weights</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">weight_code</span>)
+                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Value: #{weights[weight_code]}, Weight_code:#{weight_code}&quot;</span>
+                     <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">end</span>                          
+        <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

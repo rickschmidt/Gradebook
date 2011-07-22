@@ -4,12 +4,12 @@ include Gradebook
 
 describe "Utility" do
     context "general low level interactions" do
-       before(:each) do
+       before(:all) do
            @client= Client.new
            @client.setup('','')
-           @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
-           @sheet= Search.sps_get_sheet(@client.sps_client,@sps_id)
-           @rows= Search.sps_get_rows(@client.sps_client,@sps_id)
+           @sps_id=Search.sps_get_course(@client.doc_client,"Roster")
+           @sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
+           @rows=Search.sps_get_rows(@client.sps_client,@sps_id)
          end
      
          it "should be able to get a specific sheet from a spreadsheet" do
@@ -18,24 +18,25 @@ describe "Utility" do
          end
      
          it "should be able to add a column" do
-             before_num_of_cols= Utility.get_number_of_columns(@sheet)
+             should fail
+             before_num_of_cols=Utility.get_number_of_columns(@sheet)
+             puts "number of cols #{before_num_of_cols}"
               Utility.add_columns(1,@client.sps_client,@sheet,@sps_id)
              after_num_of_cols= Utility.get_number_of_columns(@sheet)
-             
-                after_num_of_cols.should eql(before_num_of_cols+1)
+                          puts "number of cols #{after_num_of_cols}"
+             after_num_of_cols.should eql(before_num_of_cols+1)
          end
          
          it "should be able to remove a column" do
-             before_num_of_cols=Utility.get_number_of_columns(@sheet)
-             
+             should fail
+             before_num_of_cols=Utility.get_number_of_columns(@sheet)             
              Utility.remove_columns(1,@client.sps_client,@sheet,@sps_id)
-             after_num_of_cols=Utility.get_number_of_columns(@sheet)
-             
-                after_num_of_cols.should eql(before_num_of_cols-1)
+             after_num_of_cols=Utility.get_number_of_columns(@sheet)             
+             after_num_of_cols.should eql(before_num_of_cols-1)
          end
      
         it "should be able to add a category" do
-             Utility.add_category(@client.sps_client,@sps_id,"Test 3",@rows,@sheet).should_not eql(nil)
+             Utility.add_category(@client.sps_client,@sps_id,"t-Test 3",@rows,@sheet).should_not eql(nil)
          end
      
          it "should be able to extract the document id from the feed" do
@@ -78,7 +79,8 @@ describe "Utility" do
          end
      
          it "should be able to get the etag of spreadsheet" do
-              Utility.sps_get_etag(@client.sps_client,@sps_id).should_not eql(nil)
+             should fail
+              #Utility.sps_get_etag(@client.sps_client,@sps_id).should_not eql(nil)
          end
      
          it "should be able to get the version of a spreadsheet" do
@@ -145,6 +147,10 @@ describe "Utility" do
             
         it "should then add another column to the spreadsheet by updating the metadata" do
             Utility.add_columns(1,@client.sps_client,@sheet,@sps_id)
+        end
+        
+        it "sps_get_course" do
+           Search.sps_get_course(@client.doc_client,"documents") 
         end
     end
 end
