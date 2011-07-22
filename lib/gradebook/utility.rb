@@ -24,15 +24,15 @@ module Gradebook
 
             end
 
-                
+                puts rows
             entry = rows.elements['entry'] # first <atom:entry>
-            entry.add_namespace('http://www.w3.org/2005/Atom')
-            entry.add_namespace('gd','http://schemas.google.com/g/2005')
-            entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-            entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
+#            entry.add_namespace('http://www.w3.org/2005/Atom')
+ #           entry.add_namespace('gd','http://schemas.google.com/g/2005')
+  #          entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+   #         entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
  #           entry.elements['gs:cell'].add_attributes({"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"})
 #            el = doc.add_element 'my-tag', {'attr1'=>'val1', 'attr2'=>'val2'}
-            entry.add_element 'gs:cell',{"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"}            
+            rows.add_element 'gs:cell',{"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"}            
             tag=self.get_etag_list_feed(rows)
           
             sps_client.headers['If-None-Match']=tag
@@ -363,6 +363,23 @@ module Gradebook
             end
             return pts_possible
         end
+        
+=begin rdoc
+    Returns the spreadsheet that is located by its id.
+=end
+        def self.sps_get_sheet(sps_client,sps_id)
+            sps_feed=Gradebook::Cache.cache_get_request(sps_client,"sheet_feed","https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true")
+            return sps_feed
+        end
+        
+        # =begin rdoc
+#     Returns the spreadsheet that is located by its id.
+# =end
+#         def self.sps_get_sheet(sps_client,sps_id)
+#             sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true").to_xml
+# 
+#             return sps_feed
+#         end
     end
 end
 

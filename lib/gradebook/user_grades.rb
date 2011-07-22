@@ -243,8 +243,10 @@ module Gradebook
     Wraps Utility functions to create a new category.
 =end
         def new_category(category)
-            sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
-            rows=Search.sps_get_rows(@client.sps_client,@sps_id)
+#            sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
+            sheet=Utility.sps_get_sheet(@client.sps_client,@sps_id)
+            rows=Utility.get_list_feed(@client.sps_client,@sps_id,'',1)
+#            rows=Search.sps_get_rows(@client.sps_client,@sps_id)
             Utility.add_category(@client.sps_client,@sps_id,category,rows,sheet)
         end
 

@@ -8,8 +8,8 @@ describe "Utility" do
            @client= Client.new
            @client.setup('','')
            @sps_id=Search.sps_get_course(@client.doc_client,"Roster")
-           @sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
-           @rows=Search.sps_get_rows(@client.sps_client,@sps_id)
+           @sheet=Utility.sps_get_sheet(@client.sps_client,@sps_id)
+           @rows=Utility.get_list_feed(@client.sps_client,@sps_id)
          end
      
          it "should be able to get a specific sheet from a spreadsheet" do
@@ -119,6 +119,11 @@ describe "Utility" do
         it "should be able to ge the points possible for a category" do
            x=Utility.get_points_possible_for_category(@client.sps_client,@sps_id,"hw-hw1") 
            puts x.inspect
+        end
+        
+        it "should be able to get a sheet" do
+           result=Utility.sps_get_sheet(@client.sps_client,@sps_id) 
+           result.should_not eql(nil)
         end
     end
     
