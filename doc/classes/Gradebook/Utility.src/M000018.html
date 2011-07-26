@@ -5,19 +5,27 @@
 
 <html>
 <head>
-  <title>new_entry (Gradebook::Utility)</title>
+  <title>new_batch_entry (Gradebook::Utility)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 249</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new_entry</span>
-            <span class="ruby-identifier">entry</span>=<span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">arg</span>=<span class="ruby-value str">'entry'</span>)
-            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'http://www.w3.org/2005/Atom'</span>)
-            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gd'</span>,<span class="ruby-value str">'http://schemas.google.com/g/2005'</span>)
-            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gs'</span>,<span class="ruby-value str">'http://schemas.google.com/spreadsheets/2006'</span>)
-            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gsx'</span>,<span class="ruby-value str">'http://schemas.google.com/spreadsheets/2006/extended'</span>)
-            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">entry</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 261</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new_batch_entry</span>()
+           <span class="ruby-identifier">entry</span>=<span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">arg</span>=<span class="ruby-value str">'entry'</span>)
+           <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span>( )
+           
+       
+           
+           
+  <span class="ruby-comment cmt">#          &lt;entry&gt;</span>
+  <span class="ruby-comment cmt">#   &lt;batch:id&gt;A1&lt;/batch:id&gt;</span>
+  <span class="ruby-comment cmt">#   &lt;batch:operation type=&quot;update&quot;/&gt;</span>
+  <span class="ruby-comment cmt">#   &lt;id&gt;https://spreadsheets.google.com/feeds/cells/key/worksheetId/private/full/R2C4&lt;/id&gt;</span>
+  <span class="ruby-comment cmt">#   &lt;link rel=&quot;edit&quot; type=&quot;application/atom+xml&quot;</span>
+  <span class="ruby-comment cmt">#     href=&quot;https://spreadsheets.google.com/feeds/cells/key/worksheetId/private/full/R2C4/version&quot;/&gt;</span>
+  <span class="ruby-comment cmt">#   &lt;gs:cell row=&quot;2&quot; col=&quot;4&quot; inputValue=&quot;newData&quot;/&gt;</span>
+  <span class="ruby-comment cmt"># &lt;/entry&gt;</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

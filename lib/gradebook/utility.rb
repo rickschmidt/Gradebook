@@ -14,108 +14,124 @@ module Gradebook
         def self.add_category(sps_client,sps_id,category_name,rows,sheet)
             used_col_count=self.get_number_of_used_columns(rows)
             total_col_count=self.get_number_of_columns(sheet)
+            puts "Used: #{used_col_count}"
+            puts "Total: #{total_col_count}"
             if used_col_count >=total_col_count
-                #self.add_columns(1,sps_client,sheet,sps_id)
+                self.add_columns(1,sps_client,sheet,sps_id)
             end
 
             headers=Search.get_columns_headers(sps_client,sps_id)            
+            puts "headers #{headers.inspect}"
             if headers.has_key?(category_name)
-                return "Category exists."
+                puts "Category exists."
+                return "Category exists"
 
             end
 
-                puts rows
-            entry = rows.elements['entry'] # first <atom:entry>
+  #              puts rows
+#            entry=rows.root.elements['entry']
+            # entry=self.new_entry
+            # puts entry
+             entry = rows.elements['entry'] # first <atom:entry>
+#            entry=REXML::Element.new(arg='entry')
+           entry.add_namespace('http://www.w3.org/2005/Atom')
+           entry.add_namespace('gd','http://schemas.google.com/g/2005')
+           entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+           entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
+ 
 #            entry.add_namespace('http://www.w3.org/2005/Atom')
- #           entry.add_namespace('gd','http://schemas.google.com/g/2005')
-  #          entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-   #         entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
- #           entry.elements['gs:cell'].add_attributes({"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"})
+#            entry.add_namespace('gd','http://schemas.google.com/g/2005')
+ #           entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+  #          entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
+#            rows.elements['gs:cell'].add_attributes({"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"})
 #            el = doc.add_element 'my-tag', {'attr1'=>'val1', 'attr2'=>'val2'}
-            rows.add_element 'gs:cell',{"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"}            
+            entry.add_element 'gs:cell',{"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"}            
+   #                    puts entry
             tag=self.get_etag_list_feed(rows)
           
             sps_client.headers['If-None-Match']=tag
             response=sps_client.put("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}",entry)             
+            puts response.inspect
         end
         
-        
+   
 =begin rdoc
     Adds another column to the spreadsheet by upating the sheets meta data. 
 =end
-#     def self.add_columns(num_of_columns,sps_client,sheet,sps_id)
-# 
-# 
-#         
-#         col_count=0
-#         
-#         
-#         
-#         sheet.elements.each('entry') do |entry|
-#             col_count=entry.elements['gs:colCount'].text.to_i
-#         end
-#         
-#         total_columns=col_count+num_of_columns
-#         
-#         entry = sheet.elements['entry'] # first <atom:entry>
-#         
-#         entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
-#         
-#         edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
-#         tag=self.sps_get_etag(sps_client,sps_id)
-# #               tag=tag.gsub! /"/, ''
-#         
-#         entry.add_namespace('http://www.w3.org/2005/Atom')
-#         entry.add_namespace('gd','http://schemas.google.com/g/2005')
-#         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-#         
-#         response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
-#              
-#          
-#     end
+
+    def self.add_columns(num_of_columns,sps_client,sheet,sps_id)
+        col_count=0        
+        col_count=sheet.elements['gs:colCount'].text.to_i
+         # do |entry|
+         #            col_count=entry.elements['gs:colCount'].text.to_i
+         #        end
+        
+        total_columns=col_count+num_of_columns
+        puts "sheet below from util#add_col"
+        puts sheet
+        puts "----"
+#        entry=sheet.elements['entry'] # first <atom:entry>
+        puts "col count #{col_count}"
+        puts "num of cols #{num_of_columns}"
+        puts "total cols to i #{total_columns.to_i}"
+        puts "entry below in util#addcol"
+ #       puts entry
+        #entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
+        sheet.elements['gs:colCount'].text="#{total_columns.to_i}"
+        edit_uri = sheet.elements["link[@rel='edit']"].attributes['href']
+        tag=self.sps_get_etag(sps_client,sps_id)
+#               tag=tag.gsub! /"/, ''
+        
+#        sheet.add_namespace('http://www.w3.org/2005/Atom')
+ #       sheet.add_namespace('gd','http://schemas.google.com/g/2005')
+  #      sheet.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+   
+        response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",sheet.to_s)
+             
+         
+    end
     
-=begin rdoc
-    Remove a given number of columns from the spreadsheet by upating the sheets meta data. 
-    This method does not remove a specific column.  It removes columns from right to left.
-=end
-   #  def self.remove_columns(num_of_columns,sps_client,sheet,sps_id)
-   # 
-   # 
-   # 
-   #         col_count=0
-   #         
-   #         
-   #         sheet.elements.each('entry') do |entry|
-   #             col_count=entry.elements['gs:colCount'].text.to_i
-   #         end
-   #         
-   #         total_columns=col_count-num_of_columns
-   #         
-   #         entry = sheet.elements['entry'] # first <atom:entry>
-   #         
-   #         entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
-   #         
-   #         edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
-   #         tag=self.sps_get_etag(sps_client,sps_id)
-   # #               tag=tag.gsub! /"/, ''
-   #         
-   #         entry.add_namespace('http://www.w3.org/2005/Atom')
-   #         entry.add_namespace('gd','http://schemas.google.com/g/2005')
-   #         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-   #         
-   #         response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
-   #      
-   #          
-   #     end
     
+        #    =begin rdoc
+         #       Remove a given number of columns from the spreadsheet by upating the sheets meta data. 
+          #      This method does not remove a specific column.  It removes columns from right to left.
+          #  =end
+               #  def self.remove_columns(num_of_columns,sps_client,sheet,sps_id)
+               # 
+               # 
+               # 
+               #         col_count=0
+               #         
+               #         
+               #         sheet.elements.each('entry') do |entry|
+               #             col_count=entry.elements['gs:colCount'].text.to_i
+               #         end
+               #         
+               #         total_columns=col_count-num_of_columns
+               #         
+               #         entry = sheet.elements['entry'] # first <atom:entry>
+               #         
+               #         entry.elements['gs:colCount'].text = "#{total_columns.to_i}"
+               #         
+               #         edit_uri = entry.elements["link[@rel='edit']"].attributes['href']
+               #         tag=self.sps_get_etag(sps_client,sps_id)
+               # #               tag=tag.gsub! /"/, ''
+               #         
+               #         entry.add_namespace('http://www.w3.org/2005/Atom')
+               #         entry.add_namespace('gd','http://schemas.google.com/g/2005')
+               #         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+               #         
+               #         response=sps_client.put("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6",entry.to_s)
+               #      
+               #          
+               #     end
+
+   
 =begin rdoc
     Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
 =end
         def self.get_number_of_columns(sheet)
-            colCount=0
-            sheet.elements.each('entry') do |entry|
-                colCount=entry.elements['gs:colCount'].text
-            end 
+            colCount=sheet.elements['gs:colCount'].text
            return colCount.to_i
         end
         
@@ -149,25 +165,26 @@ module Gradebook
 =end
         def self.get_number_of_used_rows(sps_client,sps_id)
             sps_feed=self.get_list_feed(sps_client,sps_id)
-            rowCount=0
-            sps_feed.elements.each('entry') do |entry|
-                rowCount=rowCount+1
-            end
+            # rowCount=0
+            # sps_feed.elements.each('entry') do |entry|
+            #     rowCount=rowCount+1
+            # end 
+            rowCount=sps_feed.root.elements.size
             return rowCount
         end
         
 =begin rdoc
     Returns the etag for authorization headers for the course that is searched for as a param.  Returns nil if no course is found.
 =end
-        # def self.sps_get_etag(sps_client,id)
-        #         etag=nil
-        #         @sps_feed=Gradebook::Cache.cache_get_request(sps_client,'sheet_feed',"https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full")
-        #         @sps_feed.elements.each('entry') do |entry|
-        #             etag=entry.attribute('etag').value
-        #         end
-        # 
-        #     return etag
-        # end
+        def self.sps_get_etag(sps_client,id)
+               etag=nil
+                @sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full").to_xml
+                @sps_feed.elements.each('entry') do |entry|
+                    etag=entry.attribute('etag').value
+                end
+
+            return etag
+          end
 
 =begin rdoc
     Etag
@@ -201,7 +218,8 @@ module Gradebook
 =end
       def self.get_list_feed(sps_client,sps_id,params='',worksheet_id=1)
           
-          sps_feed=Gradebook::Cache.cache_get_request(sps_client,'list_feed',"https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}")
+          sps_feed=Gradebook::Cache.cache_get_request(sps_client,"list_feed_sheet_#{worksheet_id}","https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}")
+          puts "sps_feed in util get list feed method #{sps_feed}"
          return sps_feed
       end
       
@@ -368,7 +386,7 @@ module Gradebook
     Returns the spreadsheet that is located by its id.
 =end
         def self.sps_get_sheet(sps_client,sps_id)
-            sps_feed=Gradebook::Cache.cache_get_request(sps_client,"sheet_feed","https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true")
+            sps_feed=Gradebook::Cache.cache_get_request(sps_client,"sheet_feed_1","https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true")
             return sps_feed
         end
         

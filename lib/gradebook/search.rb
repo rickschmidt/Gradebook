@@ -31,7 +31,9 @@ module Gradebook
     Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
 =end
         def self.sps_get_course(doc_client,course)
+                        puts "got course below"
             @sps_feed=Gradebook::Cache.cache_get_request(doc_client,"doc_feed","https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true")
+            puts "got course above"
 #            @sps_feed=doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
             #  @sps_feed.elements.each do |e|
             #     e.elements.each do |f|
@@ -73,24 +75,25 @@ module Gradebook
         #         return id
         #     end
         
-# =begin rdoc
-#     Returns the spreadsheet that is located by its id.
-# =end
-#         def self.sps_get_sheet(sps_client,sps_id)
-#             sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true").to_xml
-# 
-#             return sps_feed
-#         end
-# 
-# =begin rdoc
-#     Returns the rows located by its ID as a list feed.
-# =end        
-# 
-#         def self.sps_get_rows(sps_client,sps_id)
-#             rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
-#                         
-#             return rows
-#         end
+=begin rdoc
+    Returns the spreadsheet that is located by its id.
+=end
+        def self.sps_get_sheet(sps_client,sps_id)
+
+            sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6?prettyprint=true").to_xml
+
+            return sps_feed
+        end
+
+=begin rdoc
+    Returns the rows located by its ID as a list feed.
+=end        
+
+        def self.sps_get_rows(sps_client,sps_id)
+            rows=sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true").to_xml
+                        
+            return rows
+        end
 #         
 =begin rdoc
     Returns the first row of a spreadsheet ie its column headers
@@ -99,7 +102,8 @@ module Gradebook
 =end
 
         def self.get_columns_headers(sps_client,sps_id)
-            rows=Gradebook::Cache.cache_get_request(sps_client,"cell_headers","https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full?prettyprint=true&max-row=1")
+#            rows=Gradebook::Cache.cache_get_request(sps_client,"cell_headers","https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full?prettyprint=true&max-row=1")
+         rows=sps_client.get("https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full?prettyprint=true&max-row=1").to_xml
            header_row=Hash.new
            rows.elements.each('entry')do |entry|
                entry.elements.each('gs:cell') do |header|

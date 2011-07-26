@@ -5,21 +5,15 @@
 
 <html>
 <head>
-  <title>get_possible_points_for_category (Gradebook::Utility)</title>
+  <title>sps_get_sheet (Gradebook::Utility)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 356</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_possible_points_for_category</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-identifier">category</span>)
-            <span class="ruby-identifier">pts_possible</span>={}
-            <span class="ruby-identifier">list_feed</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_list_feed</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-value str">'&amp;sq=pointspossible%3E0'</span>,<span class="ruby-value">2</span>)
-            <span class="ruby-identifier">list_feed</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">'entry'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-                <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">p</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'title'</span>].<span class="ruby-identifier">text</span><span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">category</span>)<span class="ruby-operator">==</span><span class="ruby-value">0</span>
-                    <span class="ruby-identifier">pts_possible</span>[<span class="ruby-node">&quot;#{p.elements['title'].text}&quot;</span>]=<span class="ruby-node">&quot;#{p.elements['gsx:pointspossible'].text}&quot;</span>
-                <span class="ruby-keyword kw">end</span>
-            <span class="ruby-keyword kw">end</span>
-            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">pts_possible</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 370</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_sheet</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>)
+            <span class="ruby-identifier">sps_feed</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">cache_get_request</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-value str">&quot;sheet_feed&quot;</span>,<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true&quot;</span>)
+            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sps_feed</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -4,27 +4,30 @@ include Gradebook
 
 describe "Utility" do
     context "general low level interactions" do
-       before(:all) do
+       before(:each) do
            @client= Client.new
            @client.setup('','')
            @sps_id=Search.sps_get_course(@client.doc_client,"Roster")
-           @sheet=Utility.sps_get_sheet(@client.sps_client,@sps_id)
-           @rows=Utility.get_list_feed(@client.sps_client,@sps_id)
+ #          @sheet=Utility.sps_get_sheet(@client.sps_client,@sps_id)
+           @sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
+#           @rows=Utility.get_list_feed(@client.sps_client,@sps_id,'',1)
+           @rows=Search.sps_get_rows(@client.sps_client,@sps_id)
          end
      
          it "should be able to get a specific sheet from a spreadsheet" do
             sps_id= Search.sps_get_course(@client.doc_client,"Roster")
-            sheet= Search.sps_get_sheet(@client.sps_client,sps_id).should_not eql(nil)
+            sheet= Utility.sps_get_sheet(@client.sps_client,sps_id).should_not eql(nil)
          end
      
          it "should be able to add a column" do
-             should fail
              before_num_of_cols=Utility.get_number_of_columns(@sheet)
-             puts "number of cols #{before_num_of_cols}"
-              Utility.add_columns(1,@client.sps_client,@sheet,@sps_id)
-             after_num_of_cols= Utility.get_number_of_columns(@sheet)
-                          puts "number of cols #{after_num_of_cols}"
-             after_num_of_cols.should eql(before_num_of_cols+1)
+             puts "number of cols before#{before_num_of_cols}"
+             Utility.add_columns(1,@client.sps_client,@sheet,@sps_id)
+             s=Search.sps_get_sheet(@client.sps_client,@sps_id)
+             after_num_of_cols= Utility.get_number_of_columns(s)
+             puts "number of cols after#{after_num_of_cols}" 
+            after_num_of_cols.should eql(before_num_of_cols+1)
+            
          end
          
          it "should be able to remove a column" do
@@ -36,7 +39,7 @@ describe "Utility" do
          end
      
         it "should be able to add a category" do
-             Utility.add_category(@client.sps_client,@sps_id,"t-Test 3",@rows,@sheet).should_not eql(nil)
+             Utility.add_category(@client.sps_client,@sps_id,"t-rspec5",@rows,@sheet).should_not eql(nil)
          end
      
          it "should be able to extract the document id from the feed" do
@@ -117,6 +120,7 @@ describe "Utility" do
         end
         
         it "should be able to ge the points possible for a category" do
+            should fail
            x=Utility.get_points_possible_for_category(@client.sps_client,@sps_id,"hw-hw1") 
            puts x.inspect
         end
@@ -132,8 +136,9 @@ describe "Utility" do
             @client= Client.new
             @client.setup('','') #This would normally be a username password.  A dev account 'gradebookluc' is currently hard coded
             @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
-            @sheet= Search.sps_get_sheet(@client.sps_client,@sps_id)
-            @rows= Search.sps_get_rows(@client.sps_client,@sps_id)
+            @sheet= Utility.sps_get_sheet(@client.sps_client,@sps_id)
+            @rows= Utility.get_list_feed(@client.sps_client,@sps_id)
+
         end
         
         it "should be able to get the number of columns " do

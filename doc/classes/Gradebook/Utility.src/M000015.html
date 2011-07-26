@@ -5,15 +5,16 @@
 
 <html>
 <head>
-  <title>get_etag_list_feed (Gradebook::Utility)</title>
+  <title>get_list_feed (Gradebook::Utility)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 175</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_etag_list_feed</span>(<span class="ruby-identifier">list_feed</span>)
-            <span class="ruby-identifier">etag</span>=<span class="ruby-identifier">list_feed</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'gd:etag'</span>].<span class="ruby-identifier">to_s</span>
-            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">etag</span>
-        <span class="ruby-keyword kw">end</span></pre>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 202</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_list_feed</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-identifier">params</span>=<span class="ruby-value str">''</span>,<span class="ruby-identifier">worksheet_id</span>=<span class="ruby-value">1</span>)
+          
+          <span class="ruby-identifier">sps_feed</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">cache_get_request</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-value str">'list_feed'</span>,<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}&quot;</span>)
+         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sps_feed</span>
+      <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

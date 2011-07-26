@@ -5,16 +5,44 @@
 
 <html>
 <head>
-  <title>get_list_feed (Gradebook::Utility)</title>
+  <title>category_average (Gradebook::Utility)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 202</span>
-      <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_list_feed</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-identifier">params</span>=<span class="ruby-value str">''</span>,<span class="ruby-identifier">worksheet_id</span>=<span class="ruby-value">1</span>)
-          
-          <span class="ruby-identifier">sps_feed</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">cache_get_request</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-value str">'list_feed'</span>,<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/list/#{sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}&quot;</span>)
-         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sps_feed</span>
-      <span class="ruby-keyword kw">end</span></pre>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 212</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">category_average</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-identifier">column_num</span>)
+        <span class="ruby-comment cmt">#sps_feed=sps_client.get(&quot;https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true&amp;range=R2C#{column_num}:R25C#{column_num}&quot;).to_xml</span>
+        <span class="ruby-comment cmt"># sps_feed=sps_client.get(&quot;https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true&amp;min-col=#{column_num}&amp;max-col=#{column_num}&amp;min-row=2&quot;).to_xml</span>
+        <span class="ruby-comment cmt">#         sps_feed.elements.each('entry') do |entry|</span>
+        <span class="ruby-comment cmt">#             entry.elements.each('gs:cell') do |cell|</span>
+        <span class="ruby-comment cmt">#                 puts cell.text</span>
+        <span class="ruby-comment cmt">#             end</span>
+        <span class="ruby-comment cmt">#         end</span>
+<span class="ruby-comment cmt">#        stats_sheet=sps_client.get(&quot;https://spreadsheets.google.com/feeds/list/#{sps_id}/1/private/full?prettyprint=true&quot;).to_xml</span>
+        <span class="ruby-identifier">stats_sheet</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_list_feed</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-value str">''</span>,<span class="ruby-value">1</span>)
+        <span class="ruby-identifier">last_row</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_number_of_used_rows</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>)<span class="ruby-operator">+</span><span class="ruby-value">1</span>
+        <span class="ruby-identifier">row_num</span>=<span class="ruby-identifier">last_row</span><span class="ruby-operator">+</span><span class="ruby-value">2</span>
+        <span class="ruby-comment cmt">#entry=stats_sheet.elements['entry']</span>
+       <span class="ruby-comment cmt"># entry=REXML::Element.new(arg='entry')</span>
+        <span class="ruby-identifier">edit_uri</span>=<span class="ruby-value str">''</span>
+        <span class="ruby-identifier">entry</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new_entry</span>
+        <span class="ruby-comment cmt">#entry.elements.each('link') do |link|</span>
+         <span class="ruby-comment cmt">#   edit_uri = entry.elements[&quot;link[@rel='edit']&quot;].attributes['href']</span>
+        <span class="ruby-comment cmt">#end</span>
+<span class="ruby-comment cmt">#            entry.add_element 'gsx:hw1',{&quot;inputValue&quot;=&gt;&quot;=AVERAGE(R3C#{column_num}:R25C#{column_num})&quot;}            </span>
+<span class="ruby-comment cmt">#                       puts &quot;entry #{entry}&quot;</span>
+        <span class="ruby-comment cmt"># entry.elements.each(&quot;gsx:hw1&quot;) do |col|</span>
+        <span class="ruby-comment cmt">#                 col.text=&quot;=AVERAGE(R3C#{column_num}:R25C#{column_num})&quot;</span>
+        <span class="ruby-comment cmt">#             end</span>
+        <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'gs:cell'</span>,{<span class="ruby-value str">&quot;row&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{row_num}&quot;</span>,<span class="ruby-value str">&quot;col&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{column_num}&quot;</span>,<span class="ruby-value str">&quot;inputValue&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;=AVERAGE(R2C#{column_num}:R#{last_row}C#{column_num})&quot;</span>}            
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;entry inspect #{entry.inspect}&quot;</span>
+        <span class="ruby-identifier">tag</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_etag_list_feed</span>(<span class="ruby-identifier">stats_sheet</span>)
+        <span class="ruby-identifier">sps_client</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">'If-None-Match'</span>]=<span class="ruby-identifier">tag</span>
+<span class="ruby-comment cmt">#            @sps_client.put(edit_uri,entry.to_s)</span>
+        <span class="ruby-identifier">response</span>=<span class="ruby-identifier">sps_client</span>.<span class="ruby-identifier">put</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R#{row_num}C#{3}&quot;</span>,<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">to_s</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">inspect</span>
+ 
+    <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

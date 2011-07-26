@@ -38,12 +38,14 @@ module Gradebook
               end                            
           else
             sps_feed=sps_client.get(url).to_xml
+                      puts "SPSFEED IN CACHE #{sps_feed}"
             puts "new"
             File.open(file_path,"w") do |data|
                 data<<sps_feed
             end              
           end
           after=Time.now
+          puts "SPSFEED IN CACHE2 #{sps_feed}"
           puts "Time: #{after-before}"
           return sps_feed
       end
