@@ -80,7 +80,7 @@ module Gradebook
 =end
         def self.sps_get_sheet(sps_client,sps_id)
 
-            sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full/od6?prettyprint=true").to_xml
+            sps_feed=Gradebook::Cache.cache_get_request(sps_client,"sheet1","https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true")
 
             return sps_feed
         end

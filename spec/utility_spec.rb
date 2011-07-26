@@ -31,7 +31,6 @@ describe "Utility" do
          end
          
          it "should be able to remove a column" do
-             should fail
              before_num_of_cols=Utility.get_number_of_columns(@sheet)             
              Utility.remove_columns(1,@client.sps_client,@sheet,@sps_id)
              after_num_of_cols=Utility.get_number_of_columns(@sheet)             
@@ -39,7 +38,8 @@ describe "Utility" do
          end
      
         it "should be able to add a category" do
-             Utility.add_category(@client.sps_client,@sps_id,"t-rspec5",@rows,@sheet).should_not eql(nil)
+             result=Utility.add_category(@client.sps_client,@sps_id,"t-rspec",@rows,@sheet)
+             result.should_not eql(nil)
          end
      
          it "should be able to extract the document id from the feed" do
@@ -104,7 +104,7 @@ describe "Utility" do
          end
          
          it "should be able to remove a category by searching for one" do
-            Utility.remove_category(@client.sps_client,@sps_id,"Final") 
+            Utility.remove_category(@client.sps_client,@sps_id,"t-rspec") 
          end
          
          it "should be able to get the number of rows from the cell feed" do
