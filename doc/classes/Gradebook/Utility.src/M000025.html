@@ -10,9 +10,11 @@
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 370</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 458</span>
         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sps_get_sheet</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>)
-            <span class="ruby-identifier">sps_feed</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">cache_get_request</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-value str">&quot;sheet_feed&quot;</span>,<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true&quot;</span>)
+
+            <span class="ruby-identifier">sps_feed</span>=<span class="ruby-constant">Gradebook</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">cache_get_request</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-value str">&quot;sheet1&quot;</span>,<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/worksheets/#{sps_id}/private/full?prettyprint=true&quot;</span>)
+
             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sps_feed</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>

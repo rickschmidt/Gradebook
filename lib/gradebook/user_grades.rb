@@ -10,8 +10,8 @@ module Gradebook
         def initialize
            @client=Gradebook::Client.new
            @client.setup("","") 
-           @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
-           @headers=Search.get_columns_headers(@client.sps_client,@sps_id)
+           @sps_id= Utility.sps_get_course(@client.doc_client,"Roster")
+           @headers=Utility.get_columns_headers(@client.sps_client,@sps_id)
         end
 
 =begin rdoc
@@ -79,7 +79,7 @@ module Gradebook
             #column_id=Gradebook::Search.search_for_column_id(category,@headers)
             column_id=self.create_or_search_for_category
             #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
-            list_feed=Search.search_with_sid(sid,@sps_id,@client.sps_client)
+            list_feed=Utility.search_with_sid(sid,@sps_id,@client.sps_client)
             list_feed.elements.each('entry') do |entry| 
                 puts "Enter grade for student #{}"
                 score=STDIN.gets.chomp
@@ -92,7 +92,7 @@ module Gradebook
     Returns a grade report for a student by searching for their row in the spreadshet using their SID (student ID) as a parameter.
 =end
         def grade_report(sid)
-            list_feed=Search.search_with_sid(sid,@sps_id,@client.sps_client)
+            list_feed=Utility.search_with_sid(sid,@sps_id,@client.sps_client)
             row=Hash.new
             list_feed.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
@@ -112,13 +112,13 @@ module Gradebook
     TODO Separate name to first name and last name.
 =end
         def grade_report_xml(sid)
-            list_feed=Search.search_with_sid(sid,@sps_id,@client.sps_client)
+            list_feed=Utility.search_with_sid(sid,@sps_id,@client.sps_client)
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'Grade Report' #root
             root=xmlDoc.root
-            student=root.add_element('student', {'firstname'=>"#{list_feed.elements['entry/gsx:name'].text}",
-                                            'lastname'=>"#{list_feed.elements['entry/gsx:name'].text}",
-                                            'id'=>"#{list_feed.elements['entry/gsx:id'].text}"})
+            student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
+                                            'lastname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
+                                            'id'=>"#{list_feed.root.elements['entry/gsx:id'].text}"})
             list_feed.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
                     if col.name!='name' && col.name!='id'
@@ -140,7 +140,7 @@ module Gradebook
 =end
         def grade_report_by_name(name)
             puts "Name #{name}"
-            list_feed=Search.search_for_sid(name,@sps_id,@client.sps_client)
+            list_feed=Utility.search_for_sid(name,@sps_id,@client.sps_client)
             row=Hash.new
             list_feed.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
@@ -159,13 +159,13 @@ module Gradebook
     TODO Separate name to first name and last name.
 =end
          def grade_report_by_name_xml(name)
-            list_feed=Search.search_for_sid(name,@sps_id,@client.sps_client)
+            list_feed=Utility.search_for_sid(name,@sps_id,@client.sps_client)
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'Grade Report' #root
             root=xmlDoc.root
-            student=root.add_element('student', {'firstname'=>"#{list_feed.elements['entry/gsx:name'].text}",
-                                            'lastname'=>"#{list_feed.elements['entry/gsx:name'].text}",
-                                            'id'=>"#{list_feed.elements['entry/gsx:id'].text}"})
+            student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
+                                            'lastname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
+                                            'id'=>"#{list_feed.root.elements['entry/gsx:id'].text}"})
             list_feed.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
                     if col.name!='name' && col.name!='id'
@@ -187,12 +187,12 @@ module Gradebook
             puts "Enter a category name, if it does not match a current category one will be created"
             category=STDIN.gets.chomp
             puts "Searching for category... #{category}"
-            column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            column_id=Gradebook::Utility.search_for_column_id(category,@headers)
             if column_id.first.class!=String
                 puts "Category does not exist and is being created."
                 self.new_category(category)
-                @headers=Search.get_columns_headers(@client.sps_client,@sps_id)
-                column_id=Gradebook::Search.search_for_column_id(category,@headers)
+                @headers=Utility.get_columns_headers(@client.sps_client,@sps_id)
+                column_id=Gradebook::Utility.search_for_column_id(category,@headers)
             else
                 puts "Category exists."
             end
@@ -244,8 +244,8 @@ module Gradebook
 =end
         def new_category(category)
 #            sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
-            sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
-            rows=Search.sps_get_rows(@client.sps_client,@sps_id)#,'',1)
+            sheet=Utility.sps_get_sheet(@client.sps_client,@sps_id)
+            rows=Utility.get_list_feed(@client.sps_client,@sps_id)#,'',1)
 #            rows=Search.sps_get_rows(@client.sps_client,@sps_id)
             Utility.add_category(@client.sps_client,@sps_id,category,rows,sheet)
         end
@@ -269,7 +269,7 @@ module Gradebook
             puts "Enter a category name."
             category=STDIN.gets.chomp
             puts "Searching for category... #{category}"
-            column_id=Gradebook::Search.search_for_column_id(category,@headers)
+            column_id=Gradebook::Utility.search_for_column_id(category,@headers)
             Utility.category_average(@client.sps_client,@sps_id,column_id)
         end
         

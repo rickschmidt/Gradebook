@@ -13,7 +13,8 @@ module Gradebook
 =begin rdoc
     The cache is checked for an update file before the entire document is retrieved again.  In every case an XML document is returned. 
 =end
-      def self.cache_get_request(sps_client,file,url) 
+      def self.cache_get_request(sps_client,file,url)    
+
         before=Time.now
           cach_dir='/tmp/'
           file_path = File.join("", cach_dir, "#{file}")                      
@@ -25,8 +26,9 @@ module Gradebook
               response=sps_client.get(url)
               if response.status_code==304
                   after=Time.now
-                  puts "Time: #{after-before}"
+#                  puts "Time: #{after-before}"
                   puts "304"
+                  puts "xmldocs in cache #{xml_doc}"
                   return xml_doc
               elsif response.status_code==200
                   response=sps_client.get(url).to_xml
@@ -38,15 +40,15 @@ module Gradebook
               end                            
           else
             sps_feed=sps_client.get(url).to_xml
-                      puts "SPSFEED IN CACHE #{sps_feed}"
+            puts "sps in cach #{sps_feed}"
             puts "new"
             File.open(file_path,"w") do |data|
                 data<<sps_feed
             end              
           end
           after=Time.now
-          puts "SPSFEED IN CACHE2 #{sps_feed}"
-          puts "Time: #{after-before}"
+    #      puts "SPSFEED IN CACHE2 #{sps_feed}"
+     #     puts "Time: #{after-before}"
           return sps_feed
       end
     end

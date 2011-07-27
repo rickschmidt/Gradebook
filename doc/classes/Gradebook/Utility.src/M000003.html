@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>add_category (Gradebook::Utility)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 14</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">add_category</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>,<span class="ruby-identifier">category_name</span>,<span class="ruby-identifier">rows</span>,<span class="ruby-identifier">sheet</span>)
+            <span class="ruby-identifier">used_col_count</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_number_of_used_columns</span>(<span class="ruby-identifier">rows</span>)
+            <span class="ruby-identifier">total_col_count</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_number_of_columns</span>(<span class="ruby-identifier">sheet</span>)
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Used: #{used_col_count}&quot;</span>
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Total: #{total_col_count}&quot;</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">used_col_count</span> <span class="ruby-operator">&gt;=</span><span class="ruby-identifier">total_col_count</span>
+                <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">add_columns</span>(<span class="ruby-value">1</span>,<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sheet</span>,<span class="ruby-identifier">sps_id</span>)
+            <span class="ruby-keyword kw">end</span>
+
+            <span class="ruby-identifier">headers</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_columns_headers</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>)            
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;headers #{headers.inspect}&quot;</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">headers</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">category_name</span>)
+                <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Category exists.&quot;</span>
+                <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Category exists&quot;</span>
+
+            <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-comment cmt">#              puts rows</span>
+<span class="ruby-comment cmt">#            entry=rows.root.elements['entry']</span>
+            <span class="ruby-comment cmt"># entry=self.new_entry</span>
+            <span class="ruby-comment cmt"># puts entry</span>
+             <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">'entry'</span>] <span class="ruby-comment cmt"># first &lt;atom:entry&gt;</span>
+<span class="ruby-comment cmt">#            entry=REXML::Element.new(arg='entry')</span>
+<span class="ruby-comment cmt">#           entry.add_namespace('http://www.w3.org/2005/Atom')</span>
+ <span class="ruby-comment cmt">#          entry.add_namespace('gd','http://schemas.google.com/g/2005')</span>
+  <span class="ruby-comment cmt">#         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')</span>
+   <span class="ruby-comment cmt">#        entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')</span>
+ 
+            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'http://www.w3.org/2005/Atom'</span>)
+            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gd'</span>,<span class="ruby-value str">'http://schemas.google.com/g/2005'</span>)
+          <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gs'</span>,<span class="ruby-value str">'http://schemas.google.com/spreadsheets/2006'</span>)
+            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_namespace</span>(<span class="ruby-value str">'gsx'</span>,<span class="ruby-value str">'http://schemas.google.com/spreadsheets/2006/extended'</span>)
+<span class="ruby-comment cmt">#            rows.elements['gs:cell'].add_attributes({&quot;row&quot;=&gt;&quot;1&quot;,&quot;col&quot;=&gt;&quot;#{used_col_count+1}&quot;,&quot;inputValue&quot;=&gt;&quot;#{category_name}&quot;})</span>
+<span class="ruby-comment cmt">#            el = doc.add_element 'my-tag', {'attr1'=&gt;'val1', 'attr2'=&gt;'val2'}</span>
+            <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">add_element</span> <span class="ruby-value str">'gs:cell'</span>,{<span class="ruby-value str">&quot;row&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;1&quot;</span>,<span class="ruby-value str">&quot;col&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{used_col_count+1}&quot;</span>,<span class="ruby-value str">&quot;inputValue&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;#{category_name}&quot;</span>}            
+   <span class="ruby-comment cmt">#                    puts entry</span>
+            <span class="ruby-identifier">tag</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_etag_list_feed</span>(<span class="ruby-identifier">rows</span>)
+          
+            <span class="ruby-identifier">sps_client</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-value str">'If-None-Match'</span>]=<span class="ruby-identifier">tag</span>
+            <span class="ruby-identifier">response</span>=<span class="ruby-identifier">sps_client</span>.<span class="ruby-identifier">put</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/cells/#{sps_id}/od6/private/full/R1C#{used_col_count+1}&quot;</span>,<span class="ruby-identifier">entry</span>)             
+            <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>
+        <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

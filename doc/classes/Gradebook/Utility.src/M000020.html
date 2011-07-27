@@ -5,16 +5,14 @@
 
 <html>
 <head>
-  <title>num_of_rows_cell_feed (Gradebook::Utility)</title>
+  <title>get_weight_code_for_category (Gradebook::Utility)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 321</span>
-        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">num_of_rows_cell_feed</span>(<span class="ruby-identifier">sps_client</span>,<span class="ruby-identifier">sps_id</span>)
-            <span class="ruby-identifier">response</span>=<span class="ruby-identifier">sps_client</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;https://spreadsheets.google.com/feeds/cells/#{sps_id}/1/private/full?prettyprint=true&quot;</span>).<span class="ruby-identifier">to_xml</span>
-            <span class="ruby-identifier">puts</span> <span class="ruby-identifier">response</span>
-            <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+  <pre><span class="ruby-comment cmt"># File lib/gradebook/utility.rb, line 372</span>
+        <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_weight_code_for_category</span>(<span class="ruby-identifier">category</span>)
+           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">category</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/[-]\w*/</span>,<span class="ruby-value str">''</span>).<span class="ruby-identifier">downcase</span>
         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
