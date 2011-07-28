@@ -1,6 +1,6 @@
 gem 'gdata2', '=1.0'
 require 'gradebook/search'
-require 'gradebook/utility'
+
 
 
 module Gradebook

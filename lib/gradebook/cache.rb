@@ -27,29 +27,33 @@ module Gradebook
               if response.status_code==304
                   after=Time.now
 #                  puts "Time: #{after-before}"
-                  puts "304"
-                  puts "xmldocs in cache #{xml_doc}"
+#                  puts "304"
                   return xml_doc
               elsif response.status_code==200
                   response=sps_client.get(url).to_xml
-                  puts "200"
+ #                 puts "200"
                   File.open(file_path,"w") do |data|
                       data<<response
                   end
-                    return response
+			  	contents=File.new(file_path).read             
+              	xml_doc=REXML::Document.new(contents)
+               	return xml_doc
               end                            
           else
             sps_feed=sps_client.get(url).to_xml
-            puts "sps in cach #{sps_feed}"
-            puts "new"
+#			puts "new feed #{sps_feed}"
+            puts "new #{file_path}"
             File.open(file_path,"w") do |data|
                 data<<sps_feed
             end              
-          end
+
           after=Time.now
     #      puts "SPSFEED IN CACHE2 #{sps_feed}"
      #     puts "Time: #{after-before}"
-          return sps_feed
+			  	contents=File.new(file_path).read             
+              	xml_doc=REXML::Document.new(contents)
+               	return xml_doc
+          end
       end
     end
 end

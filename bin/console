@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby -rubygems
 #Executes with rubygems by default.  This way there is a singular place to change the package management system if you are not using rubygems.  
 
-
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require "gradebook"
 require 'irb'
 
 module IRB # :nodoc:

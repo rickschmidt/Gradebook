@@ -2,27 +2,37 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'gradebook'
 include Gradebook
 
+
 describe "Utility" do
     context "general low level interactions" do
        before(:each) do
-           @client= Client.new
-           @client.setup('','')
-           @sps_id=Utility.sps_get_course(@client.doc_client,"Roster")
-           @sheet=Utility.sps_get_sheet(@client.sps_client,@sps_id)
-           @rows=Utility.get_list_feed(@client.sps_client,@sps_id)
+          @base=Utility::Base.new
+#           @sheet=Utility::Base.sps_get_sheet(@client.sps_client,@sps_id)
+ #          @rows=Utility::Base.get_list_feed(@client.sps_client,@sps_id)
          end
      
          it "should be able to get a specific sheet from a spreadsheet" do
-            sps_id= Utility.sps_get_course(@client.doc_client,"Roster")
-            sheet=Utility.sps_get_sheet(@client.sps_client,sps_id).should_not eql(nil)
+#            sps_id= Utility::Base.sps_get_course(@client.doc_client,"Roster")
+            sheet=@base.sps_get_sheet.should_not eql(nil)
          end
      
          it "should be able to add a column" do
-             before_num_of_cols=Utility.get_number_of_columns(@sheet)
-             Utility.add_columns(1,@client.sps_client,@sheet,@sps_id)
-             after_num_of_cols= Utility.get_number_of_columns(@sheet)
-            after_num_of_cols.should eql(before_num_of_cols+1)
-            
+             before_num_of_cols=@base.get_number_of_columns
+             sheet=@base.sps_get_sheet
+             @structure=Utility::Structure.new
+             @structure.add_columns(1,sheet,@structure.sps_id)
+             after_num_of_cols=@base.get_number_of_columns
+             after_num_of_cols.should eql(before_num_of_cols+1)            
+         end
+         
+         it "should test" do
+#              set_trace_func proc { |event, file, line, id, binding, classname|
+#   printf "%8s %s:%-2d %10s %8s\n", event, file, line, id, classname
+# }
+            @structure=Utility::Structure.new
+             puts @structure.inspect
+             puts "var #{@structure.sps_id}"
+#             puts @structure.instance_variable_get(:@sps_id)
          end
          
          it "should be able to remove a column" do
