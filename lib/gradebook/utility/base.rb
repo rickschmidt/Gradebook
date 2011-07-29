@@ -35,8 +35,10 @@ module Gradebook
 =end
            
             def get_number_of_used_columns
+
                 rows ||=self.get_list_feed
                 column_headers=[]
+				puts "rows #{rows.elements.size}"
                 e=rows.root.elements['entry[1]']
                 e.elements.each('gsx:*') do |ele|
                     column_headers<<ele
@@ -70,7 +72,7 @@ module Gradebook
                 # sps_feed.elements.each('entry') do |entry|
                 #     rowCount=rowCount+1
                 # end 
-                rowCount=sps_feed.root.elements.size
+                rowCount=sps_feed.elements.size
                 return rowCount
             end
         
@@ -112,11 +114,16 @@ module Gradebook
         worksheet_id defaults to 1
   
 =end
-          def get_list_feed(params='',worksheet_id=1)
-          
-              sps_feed=Gradebook::Cache.cache_get_request(@client.sps_client,"list_feed_sheet_#{worksheet_id}","https://spreadsheets.google.com/feeds/list/#{@sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}")
-          
-             return sps_feed
+          def get_list_feed(worksheet_id='1',params='')
+          		url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}"
+				puts "url #{url}"
+
+		              cache=Gradebook::Cache.new
+					list_feed=cache.cache_get_request(@client.sps_client,"list_feed_sheet#{worksheet_id}",url)
+#          		list_feed=@client.sps_client.get(url).to_xml
+			
+
+             return list_feed
           end
      
 # =begin rdoc
@@ -133,7 +140,8 @@ module Gradebook
 =end
             def get_cell_feed(col_range='all',params='')
                 url="https://spreadsheets.google.com/feeds/cells/#{@sps_id}/1/private/full?prettyprint=true#{params}"
-                cell_feed=Gradebook::Cache.cache_get_request(@client.sps_client,"cell_feed_#{params}",url)
+                cache=Gradebook::Cache.new        
+                cell_feed=cache.cache_get_request(@client.sps_client,"cell_feed_#{params}",url)
                 return cell_feed
             end
         
@@ -146,13 +154,18 @@ module Gradebook
 =end
             def get_possible_points_for_category(category)
                 pts_possible={}
-                list_feed=self.get_list_feed('&sq=pointspossible%3E0',2)
-                list_feed.elements.each('entry') do |p|
+				pts=nil
+
+					list_feed||=self.get_list_feed("2","")#'&sq=pointspossible%3E0')
+
+                list_feed.root.elements.each('entry') do |p|
                     if (p.elements['title'].text<=>category)==0
-                        pts_possible["#{p.elements['title'].text}"]="#{p.elements['gsx:pointspossible'].text}"
+                        #pts_possible["#{p.elements['title'].text}"]="#{p.elements['gsx:pointspossible'].text}"
+						pts="#{p.elements['gsx:pointspossible'].text}"
                     end
                 end
-                return pts_possible
+                #return pts_possible
+				return pts.to_i
             end
         
 =begin rdoc
@@ -180,8 +193,8 @@ module Gradebook
         Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
 =end
             def self.sps_get_course(doc_client,course)
-                        
-                @sps_feed=Gradebook::Cache.cache_get_request(doc_client,"doc_feed","https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true")
+                cache=Gradebook::Cache.new        
+                @sps_feed=cache.cache_get_request(doc_client,"doc_feed","https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true")
             
     #            @sps_feed=doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
                 #  @sps_feed.elements.each do |e|
@@ -211,8 +224,8 @@ module Gradebook
 
             def get_columns_headers
 
-
-                rows=Gradebook::Cache.cache_get_request(@client.sps_client,"cell_headers2","https://spreadsheets.google.com/feeds/cells/#{@sps_id}/od6/private/full?prettyprint=true&max-row=1")
+				cache=Gradebook::Cache.new        
+                rows=cache.cache_get_request(@client.sps_client,"cell_headers2","https://spreadsheets.google.com/feeds/cells/#{@sps_id}/od6/private/full?prettyprint=true&max-row=1")
     #         rows=get_list_feed(sps_client,sps_id)
                header_row=Hash.new
                rows.root.elements.each('entry')do |entry|
@@ -229,7 +242,8 @@ module Gradebook
     Returns the spreadsheet that is located by its id.
 =end
         def sps_get_sheet
-            sps_feed=Gradebook::Cache.cache_get_request(@client.sps_client,"sheet_feed_1","https://spreadsheets.google.com/feeds/worksheets/#{@sps_id}/private/full?prettyprint=true")
+		     cache=Gradebook::Cache.new        
+            sps_feed=cache.cache_get_request(@client.sps_client,"sheet_feed_1","https://spreadsheets.google.com/feeds/worksheets/#{@sps_id}/private/full?prettyprint=true")
             return sps_feed
         end
         
