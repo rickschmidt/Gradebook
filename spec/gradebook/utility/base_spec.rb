@@ -4,7 +4,7 @@ include Utility
     
 describe "Base" do
 	context "can do general low level interactions with an accumulating tmp directory and " do
-		before(:each) do
+		before(:all) do
 			@base=Utility::Base.new
 		end
 		

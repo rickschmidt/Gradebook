@@ -14,7 +14,7 @@ module Gradebook
     The cache is checked for an update file before the entire document is retrieved again.  In every case an XML document is returned. 
 =end
       def cache_get_request(sps_client,file,url)    
-
+		sps_client.headers.delete('If-None-Match')
         before=Time.now
           cach_dir='/Users/rickschmidt/gbout'
           file_path = File.join("", cach_dir, "#{file}")
