@@ -15,9 +15,7 @@ module Gradebook
             def initialize
                 @client= Client.new
                 @client.setup('','')
-                puts "client: #{@client}"
                 @sps_id=self.class.sps_get_course(@client.doc_client,"Roster")             
-                puts "id: #{@sps_id}"
             end
             
         
@@ -38,7 +36,7 @@ module Gradebook
 
                 rows ||=self.get_list_feed
                 column_headers=[]
-				puts "rows #{rows.elements.size}"
+				
                 e=rows.root.elements['entry[1]']
                 e.elements.each('gsx:*') do |ele|
                     column_headers<<ele
@@ -116,7 +114,7 @@ module Gradebook
 =end
           def get_list_feed(worksheet_id='1',params='')
           		url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}"
-				puts "url #{url}"
+				
 
 		              cache=Gradebook::Cache.new
 					list_feed=cache.cache_get_request(@client.sps_client,"list_feed_sheet#{worksheet_id}",url)
