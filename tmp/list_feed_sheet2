@@ -1,92 +1,22 @@
-<feed xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended' gd:etag='W/&quot;DEEDQ3c6cCp7ImA9WhdREEk.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'>
+<feed xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended' gd:etag='W/&quot;DkMBR3Y6eyp7ImA9WhdREEs.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'>
 	<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full</id>
-	<updated>2011-07-30T17:24:32.918Z</updated>
+	<updated>2011-07-30T22:20:56.813Z</updated>
 	<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 	<title>Sheet2</title>
 	<link href='https://spreadsheets.google.com/ccc?key=0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E' rel='alternate' type='text/html'/>
 	<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full' rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml'/>
 	<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full' rel='http://schemas.google.com/g/2005#post' type='application/atom+xml'/>
-	<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full' rel='self' type='application/atom+xml'/>
+	<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full?sq=pointspossible%3E0' rel='self' type='application/atom+xml'/>
 	<author>
 		<name>gradebookluc</name>
 		<email>gradebookluc@gmail.com</email>
 	</author>
-	<openSearch:totalResults>10</openSearch:totalResults>
+	<openSearch:totalResults>5</openSearch:totalResults>
 	<openSearch:startIndex>1</openSearch:startIndex>
-	<entry gd:etag='&quot;Z1xOABAWAyp7ImA.&quot;'>
-		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/cokwr</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
-		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
-		<title>hw</title>
-		<content>weights: 0.2</content>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/cokwr' rel='self' type='application/atom+xml'/>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/cokwr' rel='edit' type='application/atom+xml'/>
-		<gsx:_cn6ca>hw</gsx:_cn6ca>
-		<gsx:weights>0.2</gsx:weights>
-		<gsx:average/>
-		<gsx:pointspossible/>
-	</entry>
-	<entry gd:etag='&quot;Z1xOAUMfUip7ImA.&quot;'>
-		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/cpzh4</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
-		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
-		<title>q</title>
-		<content>weights: 0.2</content>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/cpzh4' rel='self' type='application/atom+xml'/>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/cpzh4' rel='edit' type='application/atom+xml'/>
-		<gsx:_cn6ca>q</gsx:_cn6ca>
-		<gsx:weights>0.2</gsx:weights>
-		<gsx:average/>
-		<gsx:pointspossible/>
-	</entry>
-	<entry gd:etag='&quot;Z1xOCk8YDyp7ImA.&quot;'>
-		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/cre1l</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
-		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
-		<title>t</title>
-		<content>weights: 0.3</content>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/cre1l' rel='self' type='application/atom+xml'/>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/cre1l' rel='edit' type='application/atom+xml'/>
-		<gsx:_cn6ca>t</gsx:_cn6ca>
-		<gsx:weights>0.3</gsx:weights>
-		<gsx:average/>
-		<gsx:pointspossible/>
-	</entry>
-	<entry gd:etag='&quot;WkRXR0pSEip7ImBj&quot;'>
-		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/chk2m</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
-		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
-		<title>Final</title>
-		<content>weights: 0.15</content>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/chk2m' rel='self' type='application/atom+xml'/>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/chk2m' rel='edit' type='application/atom+xml'/>
-		<gsx:_cn6ca>Final</gsx:_cn6ca>
-		<gsx:weights>0.15</gsx:weights>
-		<gsx:average/>
-		<gsx:pointspossible/>
-	</entry>
-	<entry gd:etag='&quot;W01TUB5fEip7ImBj&quot;'>
-		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/ciyn3</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
-		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
-		<title>P</title>
-		<content>weights: 0.15</content>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/ciyn3' rel='self' type='application/atom+xml'/>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/private/full/ciyn3' rel='edit' type='application/atom+xml'/>
-		<gsx:_cn6ca>P</gsx:_cn6ca>
-		<gsx:weights>0.15</gsx:weights>
-		<gsx:average/>
-		<gsx:pointspossible/>
-	</entry>
 	<entry gd:etag='&quot;CRdKVhxaFSp7ImA4Bkg.&quot;'>
 		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/ckd7g</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
+		<updated>2011-07-30T22:20:56.813Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T22:20:56.813Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>hw-hw1</title>
 		<content>average: 10, pointspossible: 11</content>
@@ -99,8 +29,8 @@
 	</entry>
 	<entry gd:etag='&quot;CRceWENdGyp7ImA4Bkg.&quot;'>
 		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/clrrx</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
+		<updated>2011-07-30T22:20:56.813Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T22:20:56.813Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>hw-hw2</title>
 		<content>average: 10, pointspossible: 12</content>
@@ -113,8 +43,8 @@
 	</entry>
 	<entry gd:etag='&quot;SVBMEwlHAip7ImA4UQ..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/cyevm</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
+		<updated>2011-07-30T22:20:56.813Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T22:20:56.813Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>hw-hw3</title>
 		<content>average: 5, pointspossible: 3</content>
@@ -127,8 +57,8 @@
 	</entry>
 	<entry gd:etag='&quot;bQBFUEwTVyp7ImA.&quot;'>
 		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/cztg3</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
+		<updated>2011-07-30T22:20:56.813Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T22:20:56.813Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>q-q1</title>
 		<content>pointspossible: 15</content>
@@ -141,8 +71,8 @@
 	</entry>
 	<entry gd:etag='&quot;bltCDhlIXyp7ImA.&quot;'>
 		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/2/d180g</id>
-		<updated>2011-07-30T17:24:32.918Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T17:24:32.918Z</app:edited>
+		<updated>2011-07-30T22:20:56.813Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-07-30T22:20:56.813Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>q-q2</title>
 		<content>pointspossible: 30</content>

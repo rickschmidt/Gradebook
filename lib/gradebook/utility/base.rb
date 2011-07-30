@@ -18,6 +18,7 @@ module Gradebook
                 @sps_id=self.class.sps_get_course(@client.doc_client,"Roster")             
             end
             
+		
         
 =begin rdoc
     Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
