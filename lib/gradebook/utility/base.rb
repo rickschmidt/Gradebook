@@ -18,6 +18,31 @@ module Gradebook
                 @sps_id=self.class.sps_get_course(@client.doc_client,"Roster")             
             end
             
+			#currently not used, this would be ideal
+			def make_request(client_type,request_type,url,entry=nil)
+				case client_type
+				when :doc_client
+					client=@client.doc_client
+				when :sps_client
+					client=@client.sps_client
+				end
+				
+				case request_type
+				when :get
+					return client.get(url)
+				when :put
+					return client.put(url,enrty.to_s)
+				when :post
+					return client.post(url,entry.to_s)
+				when :delete
+					return client.delete(url)
+				else
+		          	raise ArgumentError, "Unsupported HTTP method specified."
+		        end
+					
+				
+				
+			end
 		
         
 =begin rdoc

@@ -70,6 +70,10 @@ describe "Base" do
 		  	points=@base.get_possible_points_for_category("hw-hw1")
 			points.should be_a_kind_of(Integer)			
 		end
+		
+		it "should be able to make a proper request" do
+			@base.make_request(:sps_client,:get,"https://spreadsheets.google.com/feeds/list/#{@base.sps_id}/1/private/full?prettyprint=true").should_not eql(nil)
+		end
 
      end
 
@@ -78,7 +82,7 @@ context "can do general low level interactions clearing the tmp directory and ",
 		before(:each) do
 			@cache=Gradebook::Cache.new
 			@cache.clear_cache
-			@base=Utility::Base.new 
+			@base=Utility::Base.new 			
 		end
 		
 		it "should delete cache" do

@@ -41,15 +41,18 @@ module Gradebook
             sps_client.headers['If-None-Match']=tag
               response=sps_client.get(url)
 				xml=REXML::Document.new(response.body).root
-              if response.status_code==304                
+              if response.status_code==304
+	             Gradebook::Utility::Logger.log("#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
                   return xml_doc
               elsif response.status_code==200
-                  response=sps_client.get(url).to_xml                
+                  response=sps_client.get(url)
+				  body=response.to_xml                
                   File.open(file_path,"w") do |data|
-                      data<<response
+                      data<<body
                   end
 			  	contents=File.new(file_path).read             
               	xml_doc=REXML::Document.new(contents)
+	             Gradebook::Utility::Logger.log("#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
                	return xml_doc
               end                            
           else	
@@ -70,7 +73,8 @@ module Gradebook
 			rescue SystemCallError
 				contents=File.open(file_path,'r')
 			ensure
-				xml_doc=REXML::Document.new(contents)					
+				xml_doc=REXML::Document.new(contents)
+#				Gradebook::Utility::Logger.log("#{Time.now}","GET", "#{url}","Response:#{sps_feed.status_code}")					
 			end
 				return xml_doc
           end

@@ -9,6 +9,7 @@ describe "Utility" do
           @base=Utility::Base.new
 #           @sheet=Utility::Base.sps_get_sheet(@client.sps_client,@sps_id)
  #          @rows=Utility::Base.get_list_feed(@client.sps_client,@sps_id)
+
          end
      
          it "should be able to get a specific sheet from a spreadsheet" do

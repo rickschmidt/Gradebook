@@ -27,6 +27,7 @@ module Utility
             headers=self.get_columns_headers
 
             if headers.has_key?(category_name)
+				puts "Category Exists"
                 return "Category exists"
 
             end
@@ -165,7 +166,9 @@ module Utility
 =begin rdoc
     Removes a specific category from the spreadsheet.
     Uses a batch request to remove every entry in a column.
-    TODO: Will need to change columns headers after refactoring in Search
+	TODO:  A bug was fixed where no elements were being added to teh cells feed. Namespaces were being added.
+	This resulted in the posting of an empty feed which missed the testing since the response was still 200. 
+	
 =end
         def remove_category(category_name)
 			@function=Gradebook::Utility::Function.new
@@ -182,7 +185,7 @@ module Utility
 	                root.add_namespace('batch','http://schemas.google.com/gdata/batch')
 	                root.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
                         
-	                cells.elements.each('entry') do |cell|
+	                cells.root.elements.each('entry') do |cell|
 	                    if cell.elements['gs:cell'].attributes['col']==column_id.first  #column_id is an array so we remove the first element
 	                        entry=REXML::Element.new(arg='entry')
 	                        (entry.add_element 'batch:id').add_text(cell.elements['title'].text)
@@ -193,11 +196,16 @@ module Utility
 	                        root.add_element entry    
 	                    end
 	                end
-                
-	                list_feed=self.get_list_feed(worksheet_id=1,params='')
-	                tag=self.get_etag_list_feed
-	                @client.sps_client.headers['If-None-Match']=tag
-	                return response=@client.sps_client.post(batch_post_url,new_cells_feed)
+                	if new_cells_feed.root.elements.size >0
+		
+	                	list_feed=self.get_list_feed(worksheet_id=1,params='')
+		                tag=self.get_etag_list_feed
+		                @client.sps_client.headers['If-None-Match']=tag
+		                response=@client.sps_client.post(batch_post_url,new_cells_feed)
+					return response
+					else
+						raise "Batch Cell Feed Empty"
+					end
 	            end
 			raise "Search returned no results"
 		end
