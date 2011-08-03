@@ -4,12 +4,10 @@ include Gradebook
 
 describe "Usergrades" do
     context "high level abstractions that test the 'grade all and grade by sid' functionality" do
-       before(:each) do
-           @client=Gradebook::Client.new
-           @client.setup("","") 
-           @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
-           @headers=Search.get_columns_headers(@client.sps_client,@sps_id)
-           
+       before(:all) do
+			@client=Gradebook::Client.new
+           @function=Utility::Function.new(@client)
+           @user_grades=Usergrades.new
          end
      
          it "should be able to grade all the students" do
@@ -44,6 +42,12 @@ describe "Usergrades" do
              ug=Usergrades.new
             ug.category_average_for_each_studnet
         end
+
+		it "should be able to get the number of students" do
+			@user_grades.number_of_students.should be_a_kind_of(Integer)
+
+			
+		end
         
 
 

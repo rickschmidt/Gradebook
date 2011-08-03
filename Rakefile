@@ -2,6 +2,8 @@ require 'rake'
 require 'rubygems'
 require 'rspec/core/rake_task'
 
+#Other requires in the program
+	#'aruba/cucumber'
 #Default is to run all tests in spec folder
 
 RSpec::Core::RakeTask.new(:spec)do |t|

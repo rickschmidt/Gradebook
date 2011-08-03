@@ -22,6 +22,7 @@ module Gradebook
  #           category=STDIN.gets.chomp
 #            puts "Searching for category... #{category}"
    #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
+			print "cuke"
             column_id=self.create_or_search_for_category
             list_feed=@function.get_list_feed
             
@@ -321,5 +322,11 @@ module Gradebook
                puts ""     
             end
         end
+
+		def number_of_students
+			list_feed=@function.get_list_feed
+			number_of_students=list_feed.root.elements.size
+			return number_of_students
+		end
     end
 end

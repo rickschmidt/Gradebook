@@ -68,7 +68,9 @@ end
 
 opt_parser.parse!
 
+
 case ARGV[0]
+
 when "authenticate"
   puts "Authenticate with #{options.inspect}"
   client=Gradebook::Client.new
@@ -127,6 +129,7 @@ when "getcourse"
 
 # ./bin/gb grade --range A/all or --range SID     
 when "grade"
+	puts "grading"
     if ARGV[1]!="all" 
         puts "grade single"
         user_grades=Gradebook::Usergrades.new
@@ -195,10 +198,14 @@ when "load"
 #    x=STDIN.gets.chomp()
   
 
-
+when "cuke"
+	puts "cuke"
+when "quit"
+	exit
 else
   puts opt_parser
 end
+
 
 case ARGV[1]
 when "all"
