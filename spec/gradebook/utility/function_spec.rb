@@ -5,14 +5,15 @@ include Utility
 describe "Function" do
 	context "performs various functions on spreadsheet cells" do
 		before(:all) do
-			@function=Function.new
+			@client=Gradebook::Client.new
+			@function=Function.new(@client)
 		end
 		
 		it "should get the category average" 
 
 		
 		it "should get the weight code for a category" do
-			@structure=Utility::Structure.new
+			@structure=Utility::Structure.new(@client)
 			@structure.add_category("rspec")
 			@function.get_weight_code_for_category("rspec").should_not eql(nil)
 			@structure.remove_category("rspec").should_not eql(nil)
@@ -31,14 +32,14 @@ describe "Function" do
 		end
 		
 		it "should search for a column id" do
-			@structure=Utility::Structure.new
+			@structure=Utility::Structure.new(@client)
 			@structure.add_category("rspec")
 		  	@function.search_for_column_id("rspec").should_not eql(nil)
 		  	@structure.remove_category("rspec").should_not eql(nil)
 		end
 		
 		it "should get the possible points for a category" do
-			@structure=Utility::Structure.new
+			@structure=Utility::Structure.new(@client)
 			@structure.add_category("rspec")
 		  	@function.get_possible_points_for_category('rspec').should be_a_kind_of(Hash)
 		

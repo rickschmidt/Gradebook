@@ -5,7 +5,8 @@ include Utility
 describe "Base" do
 	context "can do general low level interactions with an accumulating tmp directory and ", :cache_collects => true do
 		before(:all) do
-			@base=Utility::Base.new
+			@client=Gradebook::Client.new
+			@base=Utility::Base.new(@client)
 		end
 		
 		
@@ -80,9 +81,11 @@ describe "Base" do
 context "can do general low level interactions clearing the tmp directory and ", :cache_empty => true do
 
 		before(:each) do
+			@client=Gradebook::Client.new
+			@client.setup('','')
+			@base=Utility::Base.new(@client)
 			@cache=Gradebook::Cache.new
-			@cache.clear_cache
-			@base=Utility::Base.new 			
+			@cache.clear_cache	
 		end
 		
 		it "should delete cache" do

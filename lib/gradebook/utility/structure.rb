@@ -54,7 +54,9 @@ module Utility
             tag=self.get_etag_list_feed
           
             @client.sps_client.headers['If-None-Match']=tag
-            response=@client.sps_client.put("https://spreadsheets.google.com/feeds/cells/#{@sps_id}/od6/private/full/R1C#{used_col_count+1}",entry)             
+			url="https://spreadsheets.google.com/feeds/cells/#{@sps_id}/od6/private/full/R1C#{used_col_count+1}"
+            response=@client.sps_client.put(url,entry)             
+			Gradebook::Utility::Logger.log("#{Time.now}", "PUT","#{url}","Response:#{response.status_code}")
             return response
         end
         
@@ -171,7 +173,7 @@ module Utility
 	
 =end
         def remove_category(category_name)
-			@function=Gradebook::Utility::Function.new
+			@function=Gradebook::Utility::Function.new(@client)
 			column_id=@function.search_for_column_id(category_name)
 			begin
 	            if column_id.first!=nil

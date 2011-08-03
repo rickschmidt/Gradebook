@@ -13,6 +13,10 @@ RSpec::Core::RakeTask.new(:utility)do |t|
   	t.pattern = FileList['spec/gradebook/utility/*_spec.rb']
 end
 
+RSpec::Core::RakeTask.new(:base)do |t|
+  	t.pattern = FileList['spec/gradebook/utility/base_spec.rb']
+end
+
 #Runs Utility::Base examples while continuously purging the caches.
 # run 'rake cache_empty'
 RSpec::Core::RakeTask.new(:cache_empty)do |t|

@@ -12,10 +12,12 @@ module Gradebook
            attr_reader :sps_id
            attr_reader :client
         
-            def initialize
-                @client= Client.new
-                @client.setup('','')
-                @sps_id=self.class.sps_get_course(@client.doc_client,"Roster")             
+            def initialize(client)
+  #              @client= Client.new
+ #               @client.setup('','')
+#                @sps_id=self.class.sps_get_course(@client.doc_client,"Roster")
+             	@client=client
+				@sps_id=client.sps_id
             end
             
 			#currently not used, this would be ideal
@@ -192,53 +194,7 @@ module Gradebook
 				return pts.to_i
             end
         
-=begin rdoc
-        Extracts the ID of a document entry and returns it. The entry would come from iterating through a feed.
-=end
-            def self.extract_document_id_from_feed(feed,entry)
-                links={}
-                entry.elements.each('link') do |link|
-                    links[link.attribute('rel').value] = link.attribute('href').value
-                end
 
-                if feed=="documents"
-                    id=entry.elements['id'].text[/.com\/feeds\/documents\/private\/full\/spreadsheet%3A(.*)/, 1]
-                elsif feed=="spreadsheets"
-                    id=entry.elements['id'].text[/.com\/feeds\/spreadsheets\/(.*)/, 1]
-                else
-                
-                    id=nil
-                end
-            
-                return id
-            end
-        
-=begin rdoc
-        Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
-=end
-            def self.sps_get_course(doc_client,course)
-                cache=Gradebook::Cache.new        
-                @sps_feed=cache.cache_get_request(doc_client,"doc_feed","https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true")
-            
-    #            @sps_feed=doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
-                #  @sps_feed.elements.each do |e|
-                #     e.elements.each do |f|
-                #         puts f
-                #     end
-                # end
-                if @sps_feed.root.elements['openSearch:totalResults'].text!="0"
-                    @sps_feed.root.elements.each('entry') do |entry|
-                        if entry.elements['title'].text!=""
-                            @sps_id=self.extract_document_id_from_feed("documents",entry)
-                        end
-                    end
-                else
-                    #puts "No Spreadsheet found with that course name"
-                    @sps_id=nil
-                end
-
-                return @sps_id
-            end
 
 =begin rdoc
         Returns the first row of a spreadsheet ie its column headers

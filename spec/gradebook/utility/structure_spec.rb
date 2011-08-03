@@ -5,7 +5,8 @@ include Utility
 describe "Structure" do
 	context "can adjust the structure of the spreadsheet" do
 		before(:all) do
-			@structure=Utility::Structure.new
+			@client=Gradebook::Client.new
+			@structure=Utility::Structure.new(@client)
 		end
 		
 		it "should be able to add a column" do

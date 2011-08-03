@@ -64,7 +64,6 @@ module Gradebook
 #            sps_id=self.sps_get_course("Roster")
 			cache=Gradebook::Cache.new
             rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}")
-
             row=Hash.new
             rows.elements.each('//gsx:id') do |header|
 #            rows.elements.each do |header|

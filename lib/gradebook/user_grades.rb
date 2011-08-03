@@ -8,10 +8,9 @@ module Gradebook
     class Usergrades
         
         def initialize
-           @client=Gradebook::Client.new
-           @client.setup("","") 
-           @sps_id= Utility.sps_get_course(@client.doc_client,"Roster")
-           @headers=Utility.get_columns_headers(@client.sps_client,@sps_id)
+			@client=Gradebook::Client.new
+           @function=Utility::Function.new(@client)
+           #@headers=Utility.get_columns_headers(@client.sps_client,@sps_id)
         end
 
 =begin rdoc
@@ -24,10 +23,10 @@ module Gradebook
 #            puts "Searching for category... #{category}"
    #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
             column_id=self.create_or_search_for_category
-            list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
+            list_feed=@function.get_list_feed
             
 
-            list_feed.elements.each('entry') do |entry| 
+            list_feed.root.elements.each('entry') do |entry| 
                   student_name=''
                   score=''
                   entry.elements.each('gsx:name') do |name|
@@ -37,35 +36,35 @@ module Gradebook
                       
                   end
                      
-                grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
+                grade=Gradebook::Grade.new(column_id)
                 puts "entry #{entry.class}, score: #{score}"
                 grade.enter_grade(entry,score)
             end         
         end
         
-        def grade_all2
-  #          puts "Enter search term for grade category"
- #           category=STDIN.gets.chomp
-#            puts "Searching for category... #{category}"
-   #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
-            column_id=self.create_or_search_for_category
-            list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
-            
-
-            list_feed.elements.each('entry') do |entry| 
-                  student_name=''
-                  score=''
-                  entry.elements.each('gsx:name') do |name|
-                      student_name=name
-                      puts "Enter grade for student: #{student_name.text}"
-                      score=STDIN.gets.chomp
-                      
-                  end
-                     
-                grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
-                grade.enter_grade(entry,score)
-            end         
-        end
+    #     def grade_all2
+    #   #          puts "Enter search term for grade category"
+    #  #           category=STDIN.gets.chomp
+    # #            puts "Searching for category... #{category}"
+    #    #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
+    #             column_id=self.create_or_search_for_category
+    #             list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
+    #             
+    # 
+    #             list_feed.elements.each('entry') do |entry| 
+    #                   student_name=''
+    #                   score=''
+    #                   entry.elements.each('gsx:name') do |name|
+    #                       student_name=name
+    #                       puts "Enter grade for student: #{student_name.text}"
+    #                       score=STDIN.gets.chomp
+    #                       
+    #                   end
+    #                      
+    #                 grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
+    #                 grade.enter_grade(entry,score)
+    #             end         
+    #         end
         
 =begin rdoc
     Grades a single student for a single category.  After a category is identified the student is looked up by searhching for the SID (student ID) that is passed as a parameter.
@@ -79,11 +78,11 @@ module Gradebook
             #column_id=Gradebook::Search.search_for_column_id(category,@headers)
             column_id=self.create_or_search_for_category
             #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
-            list_feed=Utility.search_with_sid(sid,@sps_id,@client.sps_client)
-            list_feed.elements.each('entry') do |entry| 
+            list_feed=@function.search_with_sid(sid)
+            list_feed.root.elements.each('entry') do |entry| 
                 puts "Enter grade for student #{}"
                 score=STDIN.gets.chomp
-                grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
+                grade=Gradebook::Grade.new(@client,column_id)
                 grade.enter_grade(entry,score)
             end
         end
@@ -92,9 +91,9 @@ module Gradebook
     Returns a grade report for a student by searching for their row in the spreadshet using their SID (student ID) as a parameter.
 =end
         def grade_report(sid)
-            list_feed=Utility.search_with_sid(sid,@sps_id,@client.sps_client)
-            row=Hash.new
-            list_feed.elements.each('entry') do |entry|
+            list_feed=@function.search_with_sid(sid)
+            row={}
+            list_feed.root.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
                     row[col.name]=col.text
                 end
@@ -112,14 +111,14 @@ module Gradebook
     TODO Separate name to first name and last name.
 =end
         def grade_report_xml(sid)
-            list_feed=Utility.search_with_sid(sid,@sps_id,@client.sps_client)
+            list_feed=@function.search_with_sid(sid)
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'Grade Report' #root
             root=xmlDoc.root
             student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
                                             'lastname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
                                             'id'=>"#{list_feed.root.elements['entry/gsx:id'].text}"})
-            list_feed.elements.each('entry') do |entry|
+            list_feed.root.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
                     if col.name!='name' && col.name!='id'
                         category=student.add_element("#{col.name}")
@@ -140,9 +139,9 @@ module Gradebook
 =end
         def grade_report_by_name(name)
             puts "Name #{name}"
-            list_feed=Utility.search_for_sid(name,@sps_id,@client.sps_client)
-            row=Hash.new
-            list_feed.elements.each('entry') do |entry|
+            list_feed=@function.search_for_sid(name)
+            row={}
+            list_feed.root.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
                     row[col.name]=col.text
                 end
@@ -159,14 +158,14 @@ module Gradebook
     TODO Separate name to first name and last name.
 =end
          def grade_report_by_name_xml(name)
-            list_feed=Utility.search_for_sid(name,@sps_id,@client.sps_client)
+            list_feed=@function.search_for_sid(name)
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'Grade Report' #root
             root=xmlDoc.root
             student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
                                             'lastname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
                                             'id'=>"#{list_feed.root.elements['entry/gsx:id'].text}"})
-            list_feed.elements.each('entry') do |entry|
+            list_feed.root.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
                     if col.name!='name' && col.name!='id'
                         category=student.add_element("#{col.name}")
@@ -187,15 +186,15 @@ module Gradebook
             puts "Enter a category name, if it does not match a current category one will be created"
             category=STDIN.gets.chomp
             puts "Searching for category... #{category}"
-            column_id=Gradebook::Utility.search_for_column_id(category,@headers)
+            column_id=@function.search_for_column_id(category)
             if column_id.first.class!=String
                 puts "Category does not exist and is being created."
                 self.new_category(category)
-                @headers=Utility.get_columns_headers(@client.sps_client,@sps_id)
-                column_id=Gradebook::Utility.search_for_column_id(category,@headers)
+                column_id=@function.search_for_column_id(category)
             else
                 puts "Category exists."
             end
+
             return column_id
         end
         
@@ -243,18 +242,17 @@ module Gradebook
     Wraps Utility functions to create a new category.
 =end
         def new_category(category)
-#            sheet=Search.sps_get_sheet(@client.sps_client,@sps_id)
-            sheet=Utility.sps_get_sheet(@client.sps_client,@sps_id)
-            rows=Utility.get_list_feed(@client.sps_client,@sps_id)#,'',1)
-#            rows=Search.sps_get_rows(@client.sps_client,@sps_id)
-            Utility.add_category(@client.sps_client,@sps_id,category,rows,sheet)
+
+			structure=Utility::Structure.new(@client)
+            structure.add_category(category)
         end
 
 =begin rdoc
     Wraps Utility functions to remove a category.
 =end
         def remove_category(category)
-           response=Utility.remove_category(@client.sps_client,@sps_id,category) 
+			@structure=Gradebook::Utility::Structure.new(@client)
+           response=@structure.remove_category(category) 
            if response==nil
                puts "\e[1;37mCategory does not exist.\e[0m"
            else

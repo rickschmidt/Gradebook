@@ -9,11 +9,21 @@ module Gradebook
        attr_accessor :sps_client
        attr_accessor :doc_feed
        attr_accessor :sps_feed
+		attr_accessor :sps_id
        
-       
-        def initialize
-           
-        end
+       	def initialize
+			 #The DOC API must be used for creating new docs AND spreadsheets
+            @doc_client = GData::Client::DocList.new
+            @doc_client.clientlogin("gradebookluc","gradebookluc2011")
+            
+            #The Spreadsheets Client is used for everything except creation.
+            @sps_client=GData::Client::Spreadsheets.new
+            @sps_client.clientlogin("gradebookluc","gradebookluc2011")
+			@sps_id=self.class.sps_get_course(@doc_client,"Roster")             
+
+	
+		end
+
     
         
         def setup(username,password)
@@ -25,9 +35,58 @@ module Gradebook
             @sps_client=GData::Client::Spreadsheets.new
             @sps_client.clientlogin("gradebookluc","gradebookluc2011")
 #            puts "Token #{@sps_client.auth_handler.token}"
+			@sps_id=self.class.sps_get_course(@doc_client,"Roster")             
             return @doc_client, @sps_client
         
         end 
+
+=begin rdoc
+        Extracts the ID of a document entry and returns it. The entry would come from iterating through a feed.
+=end
+            def self.extract_document_id_from_feed(feed,entry)
+                links={}
+                entry.elements.each('link') do |link|
+                    links[link.attribute('rel').value] = link.attribute('href').value
+                end
+
+                if feed=="documents"
+                    id=entry.elements['id'].text[/.com\/feeds\/documents\/private\/full\/spreadsheet%3A(.*)/, 1]
+                elsif feed=="spreadsheets"
+                    id=entry.elements['id'].text[/.com\/feeds\/spreadsheets\/(.*)/, 1]
+                else
+                
+                    id=nil
+                end
+            
+                return id
+            end
+        
+=begin rdoc
+        Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
+=end
+            def self.sps_get_course(doc_client,course)
+                cache=Gradebook::Cache.new        
+                @sps_feed=cache.cache_get_request(doc_client,"doc_feed","https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true")
+            
+    #            @sps_feed=doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
+                #  @sps_feed.elements.each do |e|
+                #     e.elements.each do |f|
+                #         puts f
+                #     end
+                # end
+                if @sps_feed.root.elements['openSearch:totalResults'].text!="0"
+                    @sps_feed.root.elements.each('entry') do |entry|
+                        if entry.elements['title'].text!=""
+                            @sps_id=self.extract_document_id_from_feed("documents",entry)
+                        end
+                    end
+                else
+                    #puts "No Spreadsheet found with that course name"
+                    @sps_id=nil
+                end
+
+                return @sps_id
+            end
         
         
 =begin rdoc
