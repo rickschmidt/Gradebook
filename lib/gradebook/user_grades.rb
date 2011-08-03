@@ -36,7 +36,7 @@ module Gradebook
                       
                   end
                      
-                grade=Gradebook::Grade.new(column_id)
+                grade=Gradebook::Grade.new(@client,column_id)
                 puts "entry #{entry.class}, score: #{score}"
                 grade.enter_grade(entry,score)
             end         
@@ -244,15 +244,18 @@ module Gradebook
         def new_category(category)
 
 			structure=Utility::Structure.new(@client)
-            structure.add_category(category)
+            response=structure.add_category(category)
+             puts "\e[1;34mCategory added.\e[0m"
+
+			
         end
 
 =begin rdoc
     Wraps Utility functions to remove a category.
 =end
         def remove_category(category)
-			@structure=Gradebook::Utility::Structure.new(@client)
-           response=@structure.remove_category(category) 
+			structure=Gradebook::Utility::Structure.new(@client)
+           response=structure.remove_category(category) 
            if response==nil
                puts "\e[1;37mCategory does not exist.\e[0m"
            else

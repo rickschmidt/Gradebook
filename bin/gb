@@ -163,9 +163,8 @@ when "report"
 when "search"
     name=options[:name]
     @client=Gradebook::Client.new
-    @client.setup("","") 
-    @sps_id= Utility.sps_get_course(@client.doc_client,"Roster")
-    sids=Gradebook::Utility.search_for_and_return_sid(name,@sps_id,@client.sps_client)
+	@function=Gradebook::Utility::Function.new(@client)
+    sids=@function.search_for_and_return_sid(name)
     puts "Searching for student... #{name}"
     puts "Matching SID:  #{sids.values}"
 

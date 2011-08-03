@@ -1,38 +1,38 @@
-<feed xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended' gd:etag='W/&quot;DUEBRHY7fyp7ImA9WhdRE04.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'>
+<feed xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended' gd:etag='W/&quot;AkIBQX46fCp7ImA9WhdRE04.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'>
 	<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full</id>
-	<updated>2011-08-03T02:14:15.807Z</updated>
+	<updated>2011-08-03T02:29:10.014Z</updated>
 	<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 	<title>Sheet1</title>
 	<link href='https://spreadsheets.google.com/ccc?key=0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E' rel='alternate' type='text/html'/>
 	<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full' rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml'/>
 	<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full' rel='http://schemas.google.com/g/2005#post' type='application/atom+xml'/>
-	<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full?sq=name%3Dcarol' rel='self' type='application/atom+xml'/>
+	<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full?sq=name%3Dmary' rel='self' type='application/atom+xml'/>
 	<author>
 		<name>gradebookluc</name>
 		<email>gradebookluc@gmail.com</email>
 	</author>
 	<openSearch:totalResults>2</openSearch:totalResults>
 	<openSearch:startIndex>1</openSearch:startIndex>
-	<entry gd:etag='&quot;AhZfQCdiIip7ImBoGRANFRA.&quot;'>
-		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/chk2m</id>
-		<updated>2011-08-03T02:14:15.807Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T02:14:15.807Z</app:edited>
+	<entry gd:etag='&quot;VUReSSN7cSp7ImBnX01SGBA.&quot;'>
+		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/cre1l</id>
+		<updated>2011-08-03T02:29:10.014Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T02:29:10.014Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
-		<title>4444</title>
-		<content>name: Carol, hw-hw1: 500, hw-hw2: 5, hw-hw3: 17.3154878596453, q-q1: 91.7308592535708, q-q2: 27.4579434497746, t-t1: 81.7189227414941, t-t2: 77.0767166405559, p-participation: 82.0081012355342, avg-hw: 104.463097571929</content>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full/chk2m' rel='self' type='application/atom+xml'/>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full/chk2m' rel='edit' type='application/atom+xml'/>
-		<gsx:id>4444</gsx:id>
-		<gsx:name>Carol</gsx:name>
-		<gsx:hw-hw1>500</gsx:hw-hw1>
-		<gsx:hw-hw2>5</gsx:hw-hw2>
-		<gsx:hw-hw3>17.3154878596453</gsx:hw-hw3>
-		<gsx:q-q1>91.7308592535708</gsx:q-q1>
-		<gsx:q-q2>27.4579434497746</gsx:q-q2>
-		<gsx:t-t1>81.7189227414941</gsx:t-t1>
-		<gsx:t-t2>77.0767166405559</gsx:t-t2>
-		<gsx:p-participation>82.0081012355342</gsx:p-participation>
-		<gsx:avg-hw>104.463097571929</gsx:avg-hw>
+		<title>3333</title>
+		<content>name: Mary, hw-hw1: 8888, hw-hw2: 99.8113704517582, hw-hw3: 9.61767918648062, q-q1: 55, q-q2: 33, t-t1: 4.67755061560936, t-t2: 79.9183930928821, p-participation: 36.1062163306865, avg-hw: 36.6647712680565, testing: 76, testing2: C</content>
+		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full/cre1l' rel='self' type='application/atom+xml'/>
+		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full/cre1l' rel='edit' type='application/atom+xml'/>
+		<gsx:id>3333</gsx:id>
+		<gsx:name>Mary</gsx:name>
+		<gsx:hw-hw1>8888</gsx:hw-hw1>
+		<gsx:hw-hw2>99.8113704517582</gsx:hw-hw2>
+		<gsx:hw-hw3>9.61767918648062</gsx:hw-hw3>
+		<gsx:q-q1>55</gsx:q-q1>
+		<gsx:q-q2>33</gsx:q-q2>
+		<gsx:t-t1>4.67755061560936</gsx:t-t1>
+		<gsx:t-t2>79.9183930928821</gsx:t-t2>
+		<gsx:p-participation>36.1062163306865</gsx:p-participation>
+		<gsx:avg-hw>36.6647712680565</gsx:avg-hw>
 		<gsx:test/>
 		<gsx:t-test3/>
 		<gsx:t-test3_2/>
@@ -43,28 +43,29 @@
 		<gsx:testcommand5_2/>
 		<gsx:testcommand6/>
 		<gsx:t-rspec3/>
-		<gsx:testing/>
+		<gsx:testing>76</gsx:testing>
+		<gsx:testing2>C</gsx:testing2>
 	</entry>
-	<entry gd:etag='&quot;VBwCRnszLCp7ImBoGRAKQks.&quot;'>
-		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/ciyn3</id>
-		<updated>2011-08-03T02:14:15.807Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T02:14:15.807Z</app:edited>
+	<entry gd:etag='&quot;AkJSFz5kLSp7ImBrXBcNFRw.&quot;'>
+		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/cyevm</id>
+		<updated>2011-08-03T02:29:10.014Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T02:29:10.014Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
-		<title>5555</title>
-		<content>name: carol, hw-hw1: 45, hw-hw2: 5, hw-hw3: 24.0091987015096, q-q1: 55.3508571075425, q-q2: 0.81650916148098, t-t1: 14.7716492869425, t-t2: 13.3628651113098, p-participation: 16.0185514852199, avg-hw: 14.8018397403019</content>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full/ciyn3' rel='self' type='application/atom+xml'/>
-		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full/ciyn3' rel='edit' type='application/atom+xml'/>
-		<gsx:id>5555</gsx:id>
-		<gsx:name>carol</gsx:name>
-		<gsx:hw-hw1>45</gsx:hw-hw1>
+		<title>7777</title>
+		<content>name: mary, hw-hw1: 8888, hw-hw2: 5, hw-hw3: 90.508987096807, q-q1: 74.1808926034475, q-q2: 60.5685262563396, t-t1: 22, t-t2: 77.1602808092816, p-participation: 74.262263823961, avg-hw: 38.689233910526</content>
+		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full/cyevm' rel='self' type='application/atom+xml'/>
+		<link href='https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full/cyevm' rel='edit' type='application/atom+xml'/>
+		<gsx:id>7777</gsx:id>
+		<gsx:name>mary</gsx:name>
+		<gsx:hw-hw1>8888</gsx:hw-hw1>
 		<gsx:hw-hw2>5</gsx:hw-hw2>
-		<gsx:hw-hw3>24.0091987015096</gsx:hw-hw3>
-		<gsx:q-q1>55.3508571075425</gsx:q-q1>
-		<gsx:q-q2>0.81650916148098</gsx:q-q2>
-		<gsx:t-t1>14.7716492869425</gsx:t-t1>
-		<gsx:t-t2>13.3628651113098</gsx:t-t2>
-		<gsx:p-participation>16.0185514852199</gsx:p-participation>
-		<gsx:avg-hw>14.8018397403019</gsx:avg-hw>
+		<gsx:hw-hw3>90.508987096807</gsx:hw-hw3>
+		<gsx:q-q1>74.1808926034475</gsx:q-q1>
+		<gsx:q-q2>60.5685262563396</gsx:q-q2>
+		<gsx:t-t1>22</gsx:t-t1>
+		<gsx:t-t2>77.1602808092816</gsx:t-t2>
+		<gsx:p-participation>74.262263823961</gsx:p-participation>
+		<gsx:avg-hw>38.689233910526</gsx:avg-hw>
 		<gsx:test/>
 		<gsx:t-test3/>
 		<gsx:t-test3_2/>
@@ -76,5 +77,6 @@
 		<gsx:testcommand6/>
 		<gsx:t-rspec3/>
 		<gsx:testing/>
+		<gsx:testing2/>
 	</entry>
 </feed>
