@@ -1,6 +1,6 @@
-<feed xmlns:gs='http://schemas.google.com/spreadsheets/2006' gd:etag='W/&quot;DEADQXw4eip7ImA9WhdRE0k.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:batch='http://schemas.google.com/gdata/batch' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'>
+<feed xmlns:gs='http://schemas.google.com/spreadsheets/2006' gd:etag='W/&quot;DUcESHY9eip7ImA9WhdRFE8.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:batch='http://schemas.google.com/gdata/batch' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'>
 	<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/private/full</id>
-	<updated>2011-08-03T04:46:10.232Z</updated>
+	<updated>2011-08-04T03:03:29.862Z</updated>
 	<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 	<title>Sheet1</title>
 	<link href='https://spreadsheets.google.com/ccc?key=0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E' rel='alternate' type='text/html'/>
@@ -12,14 +12,14 @@
 		<name>gradebookluc</name>
 		<email>gradebookluc@gmail.com</email>
 	</author>
-	<openSearch:totalResults>63</openSearch:totalResults>
+	<openSearch:totalResults>64</openSearch:totalResults>
 	<openSearch:startIndex>1</openSearch:startIndex>
 	<gs:rowCount>102</gs:rowCount>
-	<gs:colCount>29</gs:colCount>
+	<gs:colCount>31</gs:colCount>
 	<entry gd:etag='&quot;KnsiYD4FEQ..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C1</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>A1</title>
 		<content>id</content>
@@ -29,8 +29,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDkFEREYDyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C2</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>B1</title>
 		<content>Name</content>
@@ -40,8 +40,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGocQ1JYGip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C3</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>C1</title>
 		<content>hw-HW1</content>
@@ -51,8 +51,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGtdQg1CRCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C4</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>D1</title>
 		<content>hw-HW2</content>
@@ -62,8 +62,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGsMQltQTyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C5</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>E1</title>
 		<content>hw-HW3</content>
@@ -73,8 +73,8 @@
 	</entry>
 	<entry gd:etag='&quot;YD1cXApFSSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C6</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>F1</title>
 		<content>q-Q1</content>
@@ -84,8 +84,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGBcEFpZSCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C7</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>G1</title>
 		<content>q-Q2</content>
@@ -95,8 +95,8 @@
 	</entry>
 	<entry gd:etag='&quot;YD0OF1NUTyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C8</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>H1</title>
 		<content>t-T1</content>
@@ -106,8 +106,8 @@
 	</entry>
 	<entry gd:etag='&quot;YD5ZFlRLEyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C9</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>I1</title>
 		<content>t-T2</content>
@@ -117,8 +117,8 @@
 	</entry>
 	<entry gd:etag='&quot;YH5bXFpUCip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C10</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>J1</title>
 		<content>p-Participation</content>
@@ -128,8 +128,8 @@
 	</entry>
 	<entry gd:etag='&quot;YG0LSw0WBCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C11</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>K1</title>
 		<content>avg-hw</content>
@@ -139,8 +139,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDtQUgwVCCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C12</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>L1</title>
 		<content>test</content>
@@ -150,8 +150,8 @@
 	</entry>
 	<entry gd:etag='&quot;YD0cVBNFTSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C13</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>M1</title>
 		<content>t-test3</content>
@@ -161,8 +161,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGRaQBQXTyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C14</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>N1</title>
 		<content>t-Test 3</content>
@@ -172,8 +172,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGsdQQJUHCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C15</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>O1</title>
 		<content>t-Test 3</content>
@@ -183,8 +183,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDUfVwQYCCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C16</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>P1</title>
 		<content>t-Test 3</content>
@@ -194,8 +194,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDUFVxZWTyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C17</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>Q1</title>
 		<content>t-Test 3</content>
@@ -205,8 +205,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGEPEVYVEip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C18</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>R1</title>
 		<content>testcommand5</content>
@@ -216,8 +216,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGEZEBJKGip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C19</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>S1</title>
 		<content>testcommand5</content>
@@ -227,8 +227,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGNaEhNHGSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C20</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>T1</title>
 		<content>testcommand6</content>
@@ -238,8 +238,8 @@
 	</entry>
 	<entry gd:etag='&quot;YHoAQAtVEyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C21</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>U1</title>
 		<content>t-rspec3</content>
@@ -249,8 +249,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDheXAVWSSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C22</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>V1</title>
 		<content>testing</content>
@@ -260,8 +260,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDQAThIRCCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C23</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>W1</title>
 		<content>testing2</content>
@@ -271,8 +271,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDRRT1dPSSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C24</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>X1</title>
 		<content>testing4</content>
@@ -282,8 +282,8 @@
 	</entry>
 	<entry gd:etag='&quot;YD4KERpMESp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C25</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>Y1</title>
 		<content>testing-cuke</content>
@@ -293,8 +293,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGYISA1BCyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C26</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>Z1</title>
 		<content>C-from_cuke</content>
@@ -304,8 +304,8 @@
 	</entry>
 	<entry gd:etag='&quot;YH4ERxVUBCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C27</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>AA1</title>
 		<content>cuke test again</content>
@@ -315,8 +315,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGdeRRBQRSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C28</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>AB1</title>
 		<content>cuke test again2</content>
@@ -326,8 +326,8 @@
 	</entry>
 	<entry gd:etag='&quot;YHxYFFBCFyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R1C29</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>AC1</title>
 		<content>quit</content>
@@ -337,8 +337,8 @@
 	</entry>
 	<entry gd:etag='&quot;eyJgeRFFUyo.&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C1</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>A2</title>
 		<content>1111</content>
@@ -348,8 +348,8 @@
 	</entry>
 	<entry gd:etag='&quot;YD0IVRMXBCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C2</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>B2</title>
 		<content>John Smith</content>
@@ -359,8 +359,8 @@
 	</entry>
 	<entry gd:etag='&quot;ImBuWF9XRyp7&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C3</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>C2</title>
 		<content>8888</content>
@@ -370,8 +370,8 @@
 	</entry>
 	<entry gd:etag='&quot;ImBuBF4WWip7&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C4</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>D2</title>
 		<content>47.7622055897858</content>
@@ -381,8 +381,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDoAUBJRFip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C5</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>E2</title>
 		<content>42.7811332758401</content>
@@ -392,8 +392,8 @@
 	</entry>
 	<entry gd:etag='&quot;YD9fUBVJCip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C6</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>F2</title>
 		<content>70.4468868966273</content>
@@ -403,8 +403,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGIBSw1JTCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C7</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>G2</title>
 		<content>85.4730571456121</content>
@@ -414,8 +414,8 @@
 	</entry>
 	<entry gd:etag='&quot;YG5eU1RWGCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C8</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>H2</title>
 		<content>61.2659641899835</content>
@@ -425,8 +425,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGRbTw1VRSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C9</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>I2</title>
 		<content>8.28309005752032</content>
@@ -436,8 +436,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDRZSxQWSSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C10</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>J2</title>
 		<content>31.3508339820685</content>
@@ -447,8 +447,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGZZSBpEGSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C11</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>K2</title>
 		<content>36.1004988806576</content>
@@ -458,8 +458,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDteVxZMGSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C12</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>L2</title>
 		<content>a</content>
@@ -469,8 +469,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDUTSwUSECp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C22</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>V2</title>
 		<content>sid</content>
@@ -480,8 +480,8 @@
 	</entry>
 	<entry gd:etag='&quot;YG1QSwURHip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C23</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>W2</title>
 		<content>55</content>
@@ -491,8 +491,8 @@
 	</entry>
 	<entry gd:etag='&quot;YH4QQwBTSCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C25</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>Y2</title>
 		<content>A-from_cuke</content>
@@ -502,8 +502,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDUPHhkSByp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C28</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>AB2</title>
 		<content>CukeB1</content>
@@ -513,8 +513,8 @@
 	</entry>
 	<entry gd:etag='&quot;YHxZUlAUCCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R2C29</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>AC2</title>
 		<content>exit</content>
@@ -524,8 +524,8 @@
 	</entry>
 	<entry gd:etag='&quot;eyJgeV9PDCo.&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C1</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>A3</title>
 		<content>2222</content>
@@ -535,8 +535,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGoeXwdREip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C2</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>B3</title>
 		<content>Mike Doe</content>
@@ -546,8 +546,8 @@
 	</entry>
 	<entry gd:etag='&quot;ImBtEVcFFCp7&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C3</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>C3</title>
 		<content>8888</content>
@@ -557,8 +557,8 @@
 	</entry>
 	<entry gd:etag='&quot;ImBnWxdUSyp7&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C4</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>D3</title>
 		<content>55</content>
@@ -568,8 +568,8 @@
 	</entry>
 	<entry gd:etag='&quot;YHYAEgdEByp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C5</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>E3</title>
 		<content>32.9434329426792</content>
@@ -579,8 +579,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDQaSghaFip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C6</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>F3</title>
 		<content>65.0206776108967</content>
@@ -590,8 +590,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGBaERlIHip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C7</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>G3</title>
 		<content>33</content>
@@ -601,8 +601,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDQfEQZYTCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C8</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>H3</title>
 		<content>17.6125917174769</content>
@@ -612,8 +612,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGsMX1pFSyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C9</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>I3</title>
 		<content>69.199941711841</content>
@@ -623,8 +623,8 @@
 	</entry>
 	<entry gd:etag='&quot;YG9eT1UZEyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C10</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>J3</title>
 		<content>8.64235722221962</content>
@@ -634,8 +634,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDRfH1NWGip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C11</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>K3</title>
 		<content>23.2349949972841</content>
@@ -645,8 +645,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDteVVoVCSp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C12</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>L3</title>
 		<content>a</content>
@@ -656,8 +656,8 @@
 	</entry>
 	<entry gd:etag='&quot;YDUTSVtCFyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C22</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>V3</title>
 		<content>98</content>
@@ -667,8 +667,8 @@
 	</entry>
 	<entry gd:etag='&quot;YG1QSBBDFCp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C23</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>W3</title>
 		<content>B</content>
@@ -678,8 +678,8 @@
 	</entry>
 	<entry gd:etag='&quot;YGcGTxcSCyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C25</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>Y3</title>
 		<content>C-from_cuke</content>
@@ -687,10 +687,21 @@
 		<link href='https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/private/full/R3C25' rel='edit' type='application/atom+xml'/>
 		<gs:cell col='25' row='3' inputValue='C-from_cuke'>C-from_cuke</gs:cell>
 	</entry>
+	<entry gd:etag='&quot;YGsHQwQVGSp7Ig..&quot;'>
+		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C27</id>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
+		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
+		<title>AA3</title>
+		<content>A</content>
+		<link href='https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/private/full/R3C27' rel='self' type='application/atom+xml'/>
+		<link href='https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/private/full/R3C27' rel='edit' type='application/atom+xml'/>
+		<gs:cell col='27' row='3' inputValue='A'>A</gs:cell>
+	</entry>
 	<entry gd:etag='&quot;YDUPEQhJFip7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C28</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>AB3</title>
 		<content>CukeB2</content>
@@ -700,8 +711,8 @@
 	</entry>
 	<entry gd:etag='&quot;YHxYEhRHGyp7Ig..&quot;'>
 		<id>https://spreadsheets.google.com/feeds/cells/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/1/R3C29</id>
-		<updated>2011-08-03T04:46:10.232Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-03T04:46:10.232Z</app:edited>
+		<updated>2011-08-04T03:03:29.862Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:03:29.862Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#cell' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>AC3</title>
 		<content>quit</content>

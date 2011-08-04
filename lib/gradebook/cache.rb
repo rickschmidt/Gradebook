@@ -15,7 +15,7 @@ module Gradebook
 		
 		def initialize
 
-			@cache_dir=File.expand_path('../../../tmp', __FILE__)
+			@cache_dir=File.expand_path('../../../tmp/cache', __FILE__)
 		end
 =begin rdoc
 	Clear cache
