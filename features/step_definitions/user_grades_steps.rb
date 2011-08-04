@@ -2,25 +2,25 @@ $LOAD_PATH.unshift File.expand_path('../../../lib', __FILE__)
 gem 'gdata2'
 require 'aruba/cucumber'
 include Gradebook
+
 Before('@slow_process') do
   @aruba_io_wait_seconds = 10
 end
-# Before do
-#   @aruba_timeout_seconds = 10
-# 
-# end
+Before do
+  @aruba_timeout_seconds = 10
 
-
-
-When /^I run the new category command is given with the name of a new category as a param$/ do
-#    user_grades=Gradebook::Usergrades.new
- #   user_grades.new_category('cuke-cucumbertest')
 end
 
-When /^the remove category command is given with the name of a category as a param$/ do
-   # user_grades=Gradebook::Usergrades.new
-  #  user_grades.remove_category('cuke-cucumbertest')
+
+Then /^CucumberTest should exist as a column header$/ do
+	@client=Gradebook::Client.new
+	@function=Gradebook::Utility::Function.new(@client)
+	@function.search_for_column_id("CucumberTest").should_not eql(nil)
 end
+
+
+	
+
 
 When /^I am grading all$/ do
 	@user_grades=Gradebook::Usergrades.new
@@ -35,15 +35,12 @@ When /^I am grading all$/ do
 	
 end
 
-When /^I send an interrupt$/ do
-	exit_requested = false
-	Kernel.trap( "INT" ) { exit_requested = true }
-	puts "exiting"
-end
+
 
 
 
 
 AfterStep('@slow') do
   @aruba_io_wait_seconds = 3
+
 end

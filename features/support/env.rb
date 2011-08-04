@@ -19,8 +19,11 @@ require 'aruba/cucumber'
 
 Before('@slow')do
 
-	  @aruba_io_wait_seconds = 2
+	  @aruba_io_wait_seconds = 4
 end
+
+
+puts "file path #{@file_path}"
 # AfterStep ('@slow2')do
 # 
 # #   @aruba_timeout_seconds = 20
