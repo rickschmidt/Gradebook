@@ -1,6 +1,6 @@
-<feed xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended' gd:etag='W/&quot;DUIGRno9cCp7ImA9WhdRFE8.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'>
+<feed xmlns:gsx='http://schemas.google.com/spreadsheets/2006/extended' gd:etag='W/&quot;AkcAQHw7fip7ImA9WhdRFE8.&quot;' xmlns:gd='http://schemas.google.com/g/2005' xmlns:openSearch='http://a9.com/-/spec/opensearch/1.1/' xmlns='http://www.w3.org/2005/Atom'>
 	<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/private/full</id>
-	<updated>2011-08-04T03:12:07.468Z</updated>
+	<updated>2011-08-04T03:20:41.206Z</updated>
 	<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 	<title>Sheet1</title>
 	<link href='https://spreadsheets.google.com/ccc?key=0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E' rel='alternate' type='text/html'/>
@@ -15,8 +15,8 @@
 	<openSearch:startIndex>1</openSearch:startIndex>
 	<entry gd:etag='&quot;DUBcRiBmcSp7ImBqBFZQRkk.&quot;'>
 		<id>https://spreadsheets.google.com/feeds/list/0AkCuQp9zaZcbdEZmM3Zjby1HTi1rLTY0Zm9kOUttc0E/od6/cokwr</id>
-		<updated>2011-08-04T03:12:07.468Z</updated>
-		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:12:07.468Z</app:edited>
+		<updated>2011-08-04T03:20:41.206Z</updated>
+		<app:edited xmlns:app='http://www.w3.org/2007/app'>2011-08-04T03:20:41.206Z</app:edited>
 		<category term='http://schemas.google.com/spreadsheets/2006#list' scheme='http://schemas.google.com/spreadsheets/2006'/>
 		<title>1111</title>
 		<content>name: John Smith, hw-hw1: 8888, hw-hw2: 47.7622055897858, hw-hw3: 42.7811332758401, q-q1: 70.4468868966273, q-q2: 85.4730571456121, t-t1: 61.2659641899835, t-t2: 8.28309005752032, p-participation: 31.3508339820685, avg-hw: 36.1004988806576, test: a, testing: sid, testing2: 55, testing-cuke: A-from_cuke, cuketestagain2: CukeB1, quit: exit</content>
