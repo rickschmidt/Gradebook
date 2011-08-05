@@ -110,6 +110,19 @@ module Gradebook
 
             return doc_id
         end
+
+=begin rdoc
+	Checks preference in home folder for pref file.
+=end
+
+	def preference
+		if Dir.exists?('/')
+			puts "y"
+		else
+			puts "no"
+		end
+		
+	end
 =begin rdoc
     Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
 =end
