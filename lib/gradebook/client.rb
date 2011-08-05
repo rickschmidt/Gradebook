@@ -115,14 +115,27 @@ module Gradebook
 	Checks preference in home folder for pref file.
 =end
 
-	def preference
-		if Dir.exists?('/')
-			puts "y"
+	def preference?
+		if File.exists? File.expand_path("~/.gradebook")
+			return true
 		else
-			puts "no"
-		end
-		
+			self.create_preference_file
+			return false
+		end		
 	end
+	
+=begin rdoc
+	Creates preference file in the users home directory
+=end
+	def create_preference
+		begin
+			File.new(File.expand_path("~/.gradebook"))
+		rescue
+			raise "Failed to create preference"
+		end
+	end
+	
+	
 =begin rdoc
     Returns the number of rows in a given sheet.  Indexing starts at 1 because this atrribute is user focused.
 =end
