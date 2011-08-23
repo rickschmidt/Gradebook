@@ -56,10 +56,14 @@ opt_parser = OptionParser.new do |opt|
       options[:sid]=sid
   end
   
-  opt.on("--name NAME") do |name|
-      options[:name]=name
+  opt.on("--firstname NAME") do |name|
+      options[:firstname]=name
   end
   
+  opt.on("--lastname NAME") do |name|
+      options[:lastname]=name
+  end
+
   opt.on("--out OUT") do |out|
       options[:out]=out
   end
@@ -143,7 +147,7 @@ when "grade"
     
 
 when "report"
-    
+    raise "name needs to be updated"
     user_grades=Gradebook::Usergrades.new
     if options[:sid]
         sid=options[:sid]
@@ -152,6 +156,9 @@ when "report"
         else
             user_grades.grade_report(sid)
         end
+=begin
+	TODO CHANGE NAME TO FIRST AND LAST 
+=end
     elsif options[:name]
         name=options[:name]
         if options[:out]=="xml"
@@ -164,10 +171,20 @@ when "report"
 
 
 when "search"
-    name=options[:name]
+	column='', name=''
+	if options[:firstname]!=nil
+		column="firstname"
+		name=options[:firstname]
+	end
+	
+	if options[:lastname]!=nil
+		column="lastname"
+		name=options[:lastname]
+	end
+
     @client=Gradebook::Client.new
 	@function=Gradebook::Utility::Function.new(@client)
-    sids=@function.search_for_and_return_sid(name)
+    sids=@function.search_for_and_return_sid(column,name)
     puts "Searching for student... #{name}"
 	puts "Matches"
 	sids.each do |key,value|
