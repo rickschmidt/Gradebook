@@ -169,7 +169,11 @@ when "search"
 	@function=Gradebook::Utility::Function.new(@client)
     sids=@function.search_for_and_return_sid(name)
     puts "Searching for student... #{name}"
-    puts "Matching SID:  #{sids.values}"
+	puts "Matches"
+	sids.each do |key,value|
+		puts "Name: #{value}.... #{key}"
+	end
+	puts "inpsect #{sids.inspect}"
 
 when "category"
     if ARGV[1]=="new"

@@ -83,10 +83,13 @@ module Gradebook
 =end
         def search_for_and_return_sid(search)
 			cache=Gradebook::Cache.new
-            rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}")
-            row=Hash.new
-            rows.elements.each('//gsx:id') do |header|
-                row[header.name]=header.text
+			
+            #rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}")
+			url="https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=firstname=#{search}"
+            rows=@client.sps_client.get(url).to_xml
+			row=Hash.new
+            rows.elements.each('entry') do |header|
+                row[header.elements['gsx:id'].text]=header.elements['gsx:firstname'].text+' '+header.elements['gsx:lastname'].text
             end
             return row
         end
