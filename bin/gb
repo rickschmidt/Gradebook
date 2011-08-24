@@ -56,6 +56,10 @@ opt_parser = OptionParser.new do |opt|
       options[:sid]=sid
   end
   
+  opt.on("--name NAME") do |name|
+	options[:name]=name
+  end
+  
   opt.on("--firstname NAME") do |name|
       options[:firstname]=name
   end
@@ -147,7 +151,7 @@ when "grade"
     
 
 when "report"
-    raise "name needs to be updated"
+
     user_grades=Gradebook::Usergrades.new
     if options[:sid]
         sid=options[:sid]
@@ -159,12 +163,19 @@ when "report"
 =begin
 	TODO CHANGE NAME TO FIRST AND LAST 
 =end
-    elsif options[:name]
-        name=options[:name]
+    elsif options[:firstname]
+        name=options[:firstname]
         if options[:out]=="xml"
-           user_grades.grade_report_by_name_xml(name) 
+           user_grades.grade_report_by_name_xml("firstname",name) 
         else
-            user_grades.grade_report_by_name(name)
+            user_grades.grade_report_by_name("firstname",name)
+        end
+	elsif options[:lastname]
+		name=options[:lastname]
+		if options[:out]=="xml"
+           user_grades.grade_report_by_name_xml("lastname",name) 
+        else
+            user_grades.grade_report_by_name("lastname",name)
         end
     end
     

@@ -16,7 +16,7 @@ sort of a public API vs a private API.
 
     
 	@slow @announce
-    Scenario: User enters grades for an entire class
+    Scenario: User enters grades for an individual
             When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb grade --sid 2222` interactively
  			When I type "cuke test again2"
 			When I type "A"
@@ -31,15 +31,15 @@ sort of a public API vs a private API.
 			
 	@search
  	Scenario: User searches for the SID(Student ID) of a student using their name as a param
-			When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb search --name mary`
+			When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb search --firstname mary`
 			Then the output should contain "Searching for student... mary"
 			
 	Scenario: User should be able to read a grade report for a student by using their name as a search parameter
-			When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb report --name mary`
+			When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb report --firstname mary`
 			Then the output should contain "Name mary"
 			
 	Scenario: User should be able to read a grade report in xml format for a student by using their name as a search parameter
- 			When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb report --name mary --out xml`
+ 			When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb report --firstname mary --out xml`
 			Then the output should contain "<Grade Report>"
 			
 	Scenario: User should be able to read a grade report for a student by using their SID as a search parameter

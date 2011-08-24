@@ -26,7 +26,7 @@ When /^I am grading all$/ do
 	@user_grades=Gradebook::Usergrades.new
 	num_of_students=@user_grades.number_of_students
 	puts "num #{num_of_students}"
-	for i in (1..23)
+	for i in (1..num_of_students.to_i)
 		type("CukeB#{i}")
 	end
 	# $stdin<ARGV.pop

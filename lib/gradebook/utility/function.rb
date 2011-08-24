@@ -60,11 +60,13 @@ module Gradebook
 =begin rdoc
     Search for a student by name and returns an id number to be used in other commands
 =end
-        def search_for_sid(search)
+        def search_for_sid(column,search)
 #            sps_id=self.sps_get_course("Roster")
-			cache=Gradebook::Cache.new
-            rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}")
-            row=Hash.new
+#			cache=Gradebook::Cache.new
+#            rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}")
+            url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
+			rows=@client.sps_client.get(url).to_xml
+			row=Hash.new
             rows.elements.each('//gsx:id') do |header|
 #            rows.elements.each do |header|
                 row[header.name]=header.text
@@ -82,7 +84,7 @@ module Gradebook
     Search for and return a SID for a student given their name
 =end
         def search_for_and_return_sid(column,search)
-			cache=Gradebook::Cache.new
+			#cache=Gradebook::Cache.new
 			
             #rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}")
 			url="https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"

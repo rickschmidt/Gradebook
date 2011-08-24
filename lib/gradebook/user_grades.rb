@@ -22,7 +22,7 @@ module Gradebook
  #           category=STDIN.gets.chomp
 #            puts "Searching for category... #{category}"
    #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
-			print "cuke"
+
             column_id=self.create_or_search_for_category
             list_feed=@function.get_list_feed
             
@@ -30,9 +30,9 @@ module Gradebook
             list_feed.root.elements.each('entry') do |entry| 
                   student_name=''
                   score=''
-                  entry.elements.each('gsx:name') do |name|
-                      student_name=name
-                      puts "Enter grade for student: #{student_name.text}"
+                  entry.elements.each('gsx:id') do |id|
+
+                      puts "Enter grade for student: #{id.text}"
                       score=STDIN.gets.chomp
                       
                   end
@@ -116,12 +116,12 @@ module Gradebook
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'Grade Report' #root
             root=xmlDoc.root
-            student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
-                                            'lastname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
+            student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:firstname'].text}",
+                                            'lastname'=>"#{list_feed.root.elements['entry/gsx:lastname'].text}",
                                             'id'=>"#{list_feed.root.elements['entry/gsx:id'].text}"})
             list_feed.root.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
-                    if col.name!='name' && col.name!='id'
+                    if col.name!='firstname' && col.name!='lastname' && col.name!='id'
                         category=student.add_element("#{col.name}")
                         category.text="#{col.text}"
                     end
@@ -138,9 +138,9 @@ module Gradebook
 =begin rdoc
     Returns a grade report for a student by searching for their row in the spreadsheet using their Name as a paramater. 
 =end
-        def grade_report_by_name(name)
+        def grade_report_by_name(column,name)
             puts "Name #{name}"
-            list_feed=@function.search_for_sid(name)
+            list_feed=@function.search_for_sid(column,name)
             row={}
             list_feed.root.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
@@ -158,17 +158,17 @@ module Gradebook
      Returns an XML Grade report for a student by searching for their row in the spreadsheet using their name as a parameter.
     TODO Separate name to first name and last name.
 =end
-         def grade_report_by_name_xml(name)
-            list_feed=@function.search_for_sid(name)
+         def grade_report_by_name_xml(column,name)
+            list_feed=@function.search_for_sid(column,name)
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'Grade Report' #root
             root=xmlDoc.root
-            student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
-                                            'lastname'=>"#{list_feed.root.elements['entry/gsx:name'].text}",
+            student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:firstname'].text}",
+                                            'lastname'=>"#{list_feed.root.elements['entry/gsx:lastname'].text}",
                                             'id'=>"#{list_feed.root.elements['entry/gsx:id'].text}"})
             list_feed.root.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
-                    if col.name!='name' && col.name!='id'
+                    if col.name!='firstname' && col.name!='lastname' && col.name!='id'
                         category=student.add_element("#{col.name}")
                         category.text="#{col.text}"
                     end
