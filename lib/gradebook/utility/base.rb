@@ -1,4 +1,4 @@
-gem 'gdata2', '=1.0'
+
 
 require 'gradebook/cache'
 =begin rdoc

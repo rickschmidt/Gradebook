@@ -1,4 +1,4 @@
-gem 'gdata2', '=1.0'
+
 
 module Gradebook
    class Grade
@@ -24,6 +24,7 @@ module Gradebook
                 col.text=grade
             end
             @client.sps_client.put(edit_uri,entry.to_s)
+	        Gradebook::Utility::Logger.log("grades","#{Time.now}", "ColumnID: #{@column_id}", "LastName:#{entry.elements['gsx:lastname'].text}","FirstName:#{entry.elements['gsx:firstname'].text}","Grade: #{grade}","\n")
         end
         
 

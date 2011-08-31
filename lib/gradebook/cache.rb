@@ -14,8 +14,10 @@ module Gradebook
 		attr_accessor :sps_client
 		
 		def initialize
-
-			@cache_dir=File.expand_path('../../../tmp/cache', __FILE__)
+			@cache_dir=File.expand_path('~/.gb/cache', __FILE__)
+			unless (File.exists? @cache_dir)
+				Dir.mkdir(@cache_dir)
+			end
 		end
 =begin rdoc
 	Clear cache
@@ -42,7 +44,7 @@ module Gradebook
               response=sps_client.get(url)
 				xml=REXML::Document.new(response.body).root
               if response.status_code==304
-	             Gradebook::Utility::Logger.log("#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
+	             Gradebook::Utility::Logger.log("http","#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
                   return xml_doc
               elsif response.status_code==200
                   response=sps_client.get(url)
@@ -52,12 +54,12 @@ module Gradebook
                   end
 			  	contents=File.new(file_path).read             
               	xml_doc=REXML::Document.new(contents)
-	             Gradebook::Utility::Logger.log("#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
+	             Gradebook::Utility::Logger.log("http","#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
                	return xml_doc
               end                            
           else	
 			begin				
-				sps_feed=sps_client.get(url).to_xml						
+				sps_feed=sps_client.get(url).to_xml				
 				f=File.open(file_path, 'w') {|f| f.write(sps_feed) }
 				attempts=0
 			rescue	 

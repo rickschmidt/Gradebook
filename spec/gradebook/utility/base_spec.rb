@@ -82,7 +82,6 @@ context "can do general low level interactions clearing the tmp directory and ",
 
 		before(:each) do
 			@client=Gradebook::Client.new
-			@client.setup('','')
 			@base=Utility::Base.new(@client)
 			@cache=Gradebook::Cache.new
 			@cache.clear_cache	

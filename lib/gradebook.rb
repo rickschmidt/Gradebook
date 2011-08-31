@@ -12,4 +12,8 @@ require 'gradebook/utility/logger'
 require 'gradebook/grade'
 require 'gradebook/user_grades'
 require 'gradebook/cache'
+require 'gdata_gradebook'
+
+#Loads gdata2-1
+require 'gdata2-1/lib/gdata'
 

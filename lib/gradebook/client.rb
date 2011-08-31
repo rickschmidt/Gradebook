@@ -1,6 +1,5 @@
 require 'rubygems'
-gem 'gdata2'
-require 'gdata'
+
 
 module Gradebook
     class Client
@@ -10,35 +9,119 @@ module Gradebook
        attr_accessor :doc_feed
        attr_accessor :sps_feed
 		attr_accessor :sps_id
+		attr_reader :sps_id_path
+		attr_reader :doc_token_path
+		attr_reader :sps_token_path
        
-       	def initialize
-			 #The DOC API must be used for creating new docs AND spreadsheets
-            @doc_client = GData::Client::DocList.new
-            @doc_client.clientlogin("gradebookluc","gradebookluc2011")
+		def initialize
+			#The DOC API must be used for creating new docs AND spreadsheets
+			path=File.expand_path('~/.gb')
+			unless (File.exists? path)
+				Dir.mkdir(path)
+			end
+			
+			@doc_client = GData::Client::DocList.new
+		    @sps_client=GData::Client::Spreadsheets.new
+			
+			
+			@doc_token_path=File.expand_path('~/.gb/doc_token')
+			@sps_token_path=File.expand_path('~/.gb/sps_token')
+			unless((File.exists? doc_token_path) || (File.exists? sps_token_path))
+				puts "Enter Username"
+				@username=STDIN.gets.chomp
+				puts "Enter Password"
+				system "stty -echo"
+				@pwd=STDIN.gets.chomp
+				system "stty echo"
+				puts "Logging in..."
+			end
+			unless(File.exists? doc_token_path)
+				File.new(path)	
+		
+            	@doc_client.clientlogin(@username,@pwd)
+				File.open(doc_token_path,"a") do |data|
+					token=@doc_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
+
+					data<<token
+				end
+			else
+				@doc_client.auth_handler=GData::Auth::ClientLogin.new('writely')
+				@doc_client.auth_handler.token=File.open(doc_token_path,'r').read
+
+			end
+
+			
+			unless(File.exists? sps_token_path)
+				File.new(path)
+	            @sps_client.clientlogin(@username,@pwd)
+				File.open(sps_token_path,"a") do |data|
+					token=@sps_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
+					data<<token
+				end
+			else
+				@sps_client.auth_handler=GData::Auth::ClientLogin.new('wise')
+				@sps_client.auth_handler.token=File.open(sps_token_path,'r').read		
+
+			end
+			
+			@sps_id_path=File.expand_path('~/.gb/sps_id')
+			unless(File.exists? sps_id_path)
+				File.new(path)
+				puts "What is the name of the spreadsheet on google docs?"
+				sps_name=STDIN.gets.chomp
+				@sps_id=self.class.sps_get_course(@doc_client,sps_name)        
+				File.open(sps_id_path,"a") do |data|
+					data<<@sps_id
+				end
+			else
+				@sps_id=File.open(sps_id_path,'r').read
+
+			end
+			
+			
+
+           
+		
+		
+			@username=''
+			@pwd=''
             
             #The Spreadsheets Client is used for everything except creation.
-            @sps_client=GData::Client::Spreadsheets.new
-            @sps_client.clientlogin("gradebookluc","gradebookluc2011")
-			@sps_id=self.class.sps_get_course(@doc_client,"Roster")             
+           
+			
+			
+			
+		
 
-	
+			
+			
 		end
 
+		def clear_sps_id
+			File.delete(@sps_id_path)
+			puts "SPS ID Cleared"
+		end
+		
+		def clear_credentials
+			File.delete(@doc_token_path)
+			File.delete(@sps_token_path)
+			puts "Credentials Cleared"
+		end
     
-        
-        def setup(username,password)
-            #The DOC API must be used for creating new docs AND spreadsheets
-            @doc_client = GData::Client::DocList.new
-            @doc_client.clientlogin("gradebookluc","gradebookluc2011")
-            
-            #The Spreadsheets Client is used for everything except creation.
-            @sps_client=GData::Client::Spreadsheets.new
-            @sps_client.clientlogin("gradebookluc","gradebookluc2011")
-#            puts "Token #{@sps_client.auth_handler.token}"
-			@sps_id=self.class.sps_get_course(@doc_client,"Roster")             
-            return @doc_client, @sps_client
-        
-        end 
+        #Depracted 
+        # def setup(username,password)
+        #             #The DOC API must be used for creating new docs AND spreadsheets
+        #             @doc_client = GData::Client::DocList.new
+        #             @doc_client.clientlogin("gradebookluc","gradebookluc2011")
+        #             
+        #             #The Spreadsheets Client is used for everything except creation.
+        #             @sps_client=GData::Client::Spreadsheets.new
+        #             @sps_client.clientlogin("gradebookluc","gradebookluc2011")
+        # #            puts "Token #{@sps_client.auth_handler.token}"
+        # 			@sps_id=self.class.sps_get_course(@doc_client,"Roster")             
+        #             return @doc_client, @sps_client
+        #         
+        #         end 
 
 =begin rdoc
         Extracts the ID of a document entry and returns it. The entry would come from iterating through a feed.

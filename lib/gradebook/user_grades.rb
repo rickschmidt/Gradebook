@@ -1,4 +1,4 @@
-gem 'gdata2', '=1.0'
+
 include Gradebook
 =begin rdoc
     A class that encapsulates the grading classes
@@ -32,14 +32,15 @@ module Gradebook
                   score=''
                   entry.elements.each('gsx:id') do |id|
 
-                      puts "Enter grade for student: #{id.text}"
+                      puts "Enter grade for student: #{entry.elements['gsx:lastname'].text}, #{entry.elements['gsx:firstname'].text}"
                       score=STDIN.gets.chomp
                       
                   end
                      
                 grade=Gradebook::Grade.new(@client,column_id)
-                puts "entry #{entry.class}, score: #{score}"
+                puts "Student: #{entry.elements['gsx:lastname'].text}, #{entry.elements['gsx:firstname'].text}, Grade: #{score}"
                 grade.enter_grade(entry,score)
+				puts "\n"
             end         
         end
         
@@ -114,7 +115,7 @@ module Gradebook
         def grade_report_xml(sid)
             list_feed=@function.search_with_sid(sid)
             xmlDoc=REXML::Document.new
-            xmlDoc.add_element 'Grade Report' #root
+            xmlDoc.add_element 'GradeReport' #root
             root=xmlDoc.root
             student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:firstname'].text}",
                                             'lastname'=>"#{list_feed.root.elements['entry/gsx:lastname'].text}",
@@ -161,7 +162,7 @@ module Gradebook
          def grade_report_by_name_xml(column,name)
             list_feed=@function.search_for_sid(column,name)
             xmlDoc=REXML::Document.new
-            xmlDoc.add_element 'Grade Report' #root
+            xmlDoc.add_element 'GradeReport' #root
             root=xmlDoc.root
             student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:firstname'].text}",
                                             'lastname'=>"#{list_feed.root.elements['entry/gsx:lastname'].text}",

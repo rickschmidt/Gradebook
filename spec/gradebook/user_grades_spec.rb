@@ -21,7 +21,7 @@ describe "Usergrades" do
          
         it "should be able to generate an xml report for an individiual student their name" do
             ug=Usergrades.new
-            ug.grade_report_by_name_xml("mary") 
+            ug.grade_report_by_name_xml("firstname","mary") 
          end
          
          it "should be able to grade an individual student with the students SID as a paramter" do

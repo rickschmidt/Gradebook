@@ -1,4 +1,4 @@
-gem 'gdata2', '=1.0'
+
 
 require 'gradebook/cache'
 require 'gradebook/utility/base'
@@ -88,6 +88,7 @@ module Gradebook
 			
             #rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}")
 			url="https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
+
             rows=@client.sps_client.get(url).to_xml
 			row=Hash.new
             rows.elements.each('entry') do |header|

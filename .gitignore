@@ -1,4 +1,6 @@
 tmp/**/*
 tmp/*
 log/*
-.gem
+gradebook-*.gem
+
+lib/gdata*

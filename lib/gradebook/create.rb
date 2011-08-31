@@ -1,5 +1,5 @@
 
-gem 'gdata2', '=1.0'
+
 require 'csv'
 module Gradebook
    class Book

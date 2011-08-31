@@ -6,7 +6,8 @@ require 'optparse'
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
 require 'gradebook'
-require 'cmd'
+require 'gdata_gradebook'
+
 
 
 options = {}
@@ -17,12 +18,18 @@ opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage: opt_parser COMMAND [OPTIONS]"
   opt.separator ""
   opt.separator "Commands"
-  opt.separator " search --name babbage"
+  opt.separator " search --lastname babbage"
+  opt.separator " search --firstname chuck"
   opt.separator " grade all"
   opt.separator " grade --sid 1010"
   opt.separator "report --sid 1010"
-  opt.separator "report --name babbage"
-  
+  opt.separator "report --sid 1010 --out xml"
+  opt.separator "report --lastname babbage"
+  opt.separator "report --lastname babbage --out xml"
+  opt.separator "To work with a different spreadsheet id"
+  opt.separator "new_class"
+	opt.separator "To clear credentials"
+	opt.separator "clear_credentials"
   
   opt.on("-c CREATE","--create CREATE ") do |course|
     options[:course] = course
@@ -137,14 +144,11 @@ when "getcourse"
 
 # ./bin/gb grade --range A/all or --range SID     
 when "grade"
-	puts "grading"
     if ARGV[1]!="all" 
-        puts "grade single"
         user_grades=Gradebook::Usergrades.new
         option=options[:sid]
         user_grades.grade_by_sid(option)
     else
-        puts "grade all"
         user_grades=Gradebook::Usergrades.new
         user_grades.grade_all
     end
@@ -201,7 +205,7 @@ when "search"
 	sids.each do |key,value|
 		puts "Name: #{value}.... #{key}"
 	end
-	puts "inpsect #{sids.inspect}"
+
 
 when "category"
     if ARGV[1]=="new"
@@ -229,9 +233,16 @@ when "load"
 
 #    x=STDIN.gets.chomp()
   
+when "new_class"
+	@client=Gradebook::Client.new
+	@client.clear_sps_id
 
-when "cuke"
-	puts "cuke"
+when "clear_credentials"
+	@client=Gradebook::Client.new
+	@client.clear_credentials
+
+when "setup"
+	
 when "quit"
 	exit
 else
@@ -239,9 +250,8 @@ else
 end
 
 
-case ARGV[1]
-when "all"
-    
-    puts ARGC
 
-end
+
+    
+
+
