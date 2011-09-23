@@ -15,7 +15,7 @@ sort of a public API vs a private API.
             When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb category remove --name CucumberTest`
 
     
-	@slow @announce
+	@slow @announce @individual
     Scenario: User enters grades for an individual
             When I run `/Users/rickschmidt/GradebookProject/Gradebook/bin/gb grade --sid 2222` interactively
  			When I type "cuke test again2"

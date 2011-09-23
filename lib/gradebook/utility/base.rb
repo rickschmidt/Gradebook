@@ -1,6 +1,6 @@
 
 
-require 'gradebook/cache'
+
 =begin rdoc
     A class for gathering basic stats 
 =end
@@ -18,6 +18,7 @@ module Gradebook
 #                @sps_id=self.class.sps_get_course(@client.doc_client,"Roster")
              	@client=client
 				@sps_id=client.sps_id
+
             end
             
 			#currently not used, this would be ideal
@@ -205,6 +206,8 @@ module Gradebook
             def get_columns_headers
 
 				cache=Gradebook::Cache.new        
+				puts "BASE:GETCOLHEAD SPSID #{@sps_id}"
+
                 rows=cache.cache_get_request(@client.sps_client,"cell_headers2","https://spreadsheets.google.com/feeds/cells/#{@sps_id}/od6/private/full?prettyprint=true&max-row=1")
     #         rows=get_list_feed(sps_client,sps_id)
                header_row=Hash.new

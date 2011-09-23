@@ -1,3 +1,5 @@
+
+# $LOAD_PATH.unshift File.expand_path("../gdata2-1/lib/gdata", __FILE__)
 require 'gradebook/create'
 require 'gradebook/client'
 require 'gradebook/googlecl'
@@ -15,5 +17,7 @@ require 'gradebook/cache'
 require 'gdata_gradebook'
 
 #Loads gdata2-1
-require 'gdata2-1/lib/gdata'
+require 'rubygems'
 
+require 'gdata'
+require 'gradebook/gdata_monkeypatch'

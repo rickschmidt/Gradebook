@@ -1,7 +1,6 @@
 
 
-require 'gradebook/cache'
-require 'gradebook/utility/base'
+
 
 =begin rdoc
     A class for gathering basic stats 

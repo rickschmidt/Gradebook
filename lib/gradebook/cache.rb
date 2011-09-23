@@ -14,7 +14,7 @@ module Gradebook
 		attr_accessor :sps_client
 		
 		def initialize
-			@cache_dir=File.expand_path('~/.gb/cache', __FILE__)
+			@cache_dir=File.expand_path('~/.gb/cache/', __FILE__)
 			unless (File.exists? @cache_dir)
 				Dir.mkdir(@cache_dir)
 			end
@@ -32,54 +32,61 @@ module Gradebook
 =begin rdoc
     The cache is checked for an update file before the entire document is retrieved again.  In every case an XML document is returned. 
 =end
-      def cache_get_request(sps_client,file,url)    
-		sps_client.headers.delete('If-None-Match')
-		file_path = File.join("", @cache_dir, "#{file}")
+		def cache_get_request(sps_client,file,url)    
+			sps_client.headers.delete('If-None-Match')
+			file_path = File.join("", @cache_dir, "#{file}")
           
-          if (File.exists? file_path) && (!File.zero? file_path)
-              contents=File.open(file_path,'r')             
-              xml_doc=REXML::Document.new(contents)
-             tag=xml_doc.root.attributes['gd:etag'].to_s
-            sps_client.headers['If-None-Match']=tag
-              response=sps_client.get(url)
-				xml=REXML::Document.new(response.body).root
-              if response.status_code==304
-	             Gradebook::Utility::Logger.log("http","#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
-                  return xml_doc
-              elsif response.status_code==200
-                  response=sps_client.get(url)
-				  body=response.to_xml                
-                  File.open(file_path,"w") do |data|
-                      data<<body
-                  end
-			  	contents=File.new(file_path).read             
-              	xml_doc=REXML::Document.new(contents)
-	             Gradebook::Utility::Logger.log("http","#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
-               	return xml_doc
-              end                            
-          else	
-			begin				
-				sps_feed=sps_client.get(url).to_xml				
-				f=File.open(file_path, 'w') {|f| f.write(sps_feed) }
-				attempts=0
-			rescue	 
-				if sps_feed==nil
-					attempts=attempts.to_i+1
-					retry if attempts.to_i<3 	
-				else
-					raise "HTTP request failed after 3 attempts"
-				 end
-			end
-			begin
-			    contents=File.open(file_path,'r')
-			rescue SystemCallError
-				contents=File.open(file_path,'r')
-			ensure
+			if(File.exists? file_path) && (!File.zero? file_path)
+				contents=File.open(file_path,'r')             
 				xml_doc=REXML::Document.new(contents)
-#				Gradebook::Utility::Logger.log("#{Time.now}","GET", "#{url}","Response:#{sps_feed.status_code}")					
-			end
-				return xml_doc
-          end
-      end
-    end
-end
+	            tag=xml_doc.root.attributes['gd:etag'].to_s
+	            sps_client.headers['If-None-Match']=tag
+	            response=sps_client.get(url)
+				xml=REXML::Document.new(response.body).root
+	            if response.status_code==304
+					Gradebook::Utility::Logger.log("http","#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
+	                return xml_doc
+	            elsif response.status_code==200
+					response=sps_client.get(url)
+					body=response.to_xml                
+	                File.open(file_path,"w") do |data|
+						data<<body
+	                end
+				  	contents=File.new(file_path).read             
+	              	xml_doc=REXML::Document.new(contents)
+		            Gradebook::Utility::Logger.log("http","#{Time.now}","GET", "#{url}","Response:#{response.status_code}")
+	               	return xml_doc
+	            end                            
+	        else	
+				begin				
+					puts "url: #{url}"
+					sps_feed=sps_client.get(url).to_xml				
+					
+					f=File.open(file_path, 'w') {|f| f.write(sps_feed) }
+					puts "F #{f}"
+					attempts=0
+				rescue	 
+					if sps_feed==nil
+						attempts=attempts.to_i+1
+						retry if attempts.to_i<3 	
+					else
+						raise "HTTP request failed after 3 attempts"
+					end
+				end
+				begin
+				    contents=File.open(file_path,'r')
+					puts "CONTENTS: #{contents}"
+				rescue SystemCallError
+					puts "Error"
+					puts "FP: #{file_path}"
+					contents=File.open(file_path,'r')
+				ensure
+					xml_doc=REXML::Document.new(contents)
+	#				Gradebook::Utility::Logger.log("#{Time.now}","GET", "#{url}","Response:#{sps_feed.status_code}")					
+				end
+					return xml_doc
+	        end
+     
+ 		end
+    end#Class
+end #Module

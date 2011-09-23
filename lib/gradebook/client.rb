@@ -1,4 +1,4 @@
-require 'rubygems'
+
 
 
 module Gradebook
@@ -20,65 +20,88 @@ module Gradebook
 				Dir.mkdir(path)
 			end
 			
-			@doc_client = GData::Client::DocList.new
-		    @sps_client=GData::Client::Spreadsheets.new
-			
-			
-			@doc_token_path=File.expand_path('~/.gb/doc_token')
-			@sps_token_path=File.expand_path('~/.gb/sps_token')
-			unless((File.exists? doc_token_path) || (File.exists? sps_token_path))
-				puts "Enter Username"
-				@username=STDIN.gets.chomp
-				puts "Enter Password"
-				system "stty -echo"
-				@pwd=STDIN.gets.chomp
-				system "stty echo"
-				puts "Logging in..."
-			end
-			unless(File.exists? doc_token_path)
-				File.new(path)	
 		
-            	@doc_client.clientlogin(@username,@pwd)
-				File.open(doc_token_path,"a") do |data|
-					token=@doc_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
+				# puts "Enter Username"
+				# @username=STDIN.gets.chomp
+				# puts "Enter Password"
+				# system "stty -echo"
+				# @pwd=STDIN.gets.chomp
+				# system "stty echo"
+				puts "Logging in..."
+				  @doc_client = GData::Client::DocList.new
+            @doc_client.clientlogin("gradebookluc","gradebookluc2011")
+            
+            #The Spreadsheets Client is used for everything except creation.
+            @sps_client=GData::Client::Spreadsheets.new
+            @sps_client.clientlogin("gradebookluc","gradebookluc2011")
+			@sps_id=self.class.sps_get_course(@doc_client,"Roster")             
 
-					data<<token
-				end
-			else
-				@doc_client.auth_handler=GData::Auth::ClientLogin.new('writely')
-				@doc_client.auth_handler.token=File.open(doc_token_path,'r').read
-
-			end
-
-			
-			unless(File.exists? sps_token_path)
-				File.new(path)
-	            @sps_client.clientlogin(@username,@pwd)
-				File.open(sps_token_path,"a") do |data|
-					token=@sps_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
-					data<<token
-				end
-			else
-				@sps_client.auth_handler=GData::Auth::ClientLogin.new('wise')
-				@sps_client.auth_handler.token=File.open(sps_token_path,'r').read		
-
-			end
-			
-			@sps_id_path=File.expand_path('~/.gb/sps_id')
-			unless(File.exists? sps_id_path)
-				File.new(path)
-				puts "What is the name of the spreadsheet on google docs?"
-				sps_name=STDIN.gets.chomp
-				@sps_id=self.class.sps_get_course(@doc_client,sps_name)        
-				File.open(sps_id_path,"a") do |data|
-					data<<@sps_id
-				end
-			else
-				@sps_id=File.open(sps_id_path,'r').read
-
-			end
-			
-			
+			# @doc_token_path=File.expand_path('~/.gb/doc_token')
+			# 		@sps_token_path=File.expand_path('~/.gb/sps_token')
+			# 		unless((File.exists? doc_token_path) || (File.exists? sps_token_path))
+			# 			puts "Enter Username"
+			# 			@username=STDIN.gets.chomp
+			# 			puts "Enter Password"
+			# 			system "stty -echo"
+			# 			@pwd=STDIN.gets.chomp
+			# 			system "stty echo"
+			# 			puts "Logging in..."
+			# 		end
+			# 		unless(File.exists? doc_token_path)
+			# 			File.new(path)	
+			# 	
+			#             	@doc_client.clientlogin(@username,@pwd)
+			# 			File.open(doc_token_path,"a") do |data|
+			# 				token=@doc_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
+			# 
+			# 				data<<token
+			# 			end
+			# 		else
+			# 			@doc_client.auth_handler=GData::Auth::ClientLogin.new('writely')
+			# 			@doc_client.auth_handler.token=File.open(doc_token_path,'r').read
+			# 			puts "Token doc: #{@doc_client.auth_handler.token}"
+			# 
+			# 		end
+			# 
+			# 		
+			# 		unless(File.exists? sps_token_path)
+			# 			File.new(path)
+			#             @sps_client.clientlogin(@username,@pwd)
+			# 			File.open(sps_token_path,"a") do |data|
+			# 				token=@sps_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
+			# 				data<<token
+			# 			end
+			# 		else
+			# 			@sps_client.auth_handler=GData::Auth::ClientLogin.new('wise')
+			# 			@sps_client.auth_handler.token=File.open(sps_token_path,'r').read		
+			# 
+			# 		end
+			# 		
+			# 		@sps_id_path=File.expand_path('~/.gb/sps_id')
+			# 		if((File.exists? @sps_id_path) && (!File.zero? @sps_id_path))
+			# 			puts "if spsid"
+			# 			puts "FIle size #{File.size(@sps_id_path)}"
+			# 			puts "#{!File.zero? @sps_id_path}"
+			# 			@sps_id=File.open(@sps_id_path,'r').read
+			# 			puts "ifsps #{@sps_id}"
+			# 
+			# 			
+			# 		else
+			# 			File.new(@sps_id_path)
+			# 			puts "No SPSID: What is the name of the spreadsheet on google docs?"
+			# 			sps_name=STDIN.gets.chomp
+			# 			puts @doc_client.inspect
+			# 			puts @sps_client.inspect
+			# 			@sps_id=self.class.sps_get_course(@doc_client,sps_name)        
+			# 			
+			# 			File.open(@sps_id_path,"a") do |data|
+			# 				puts "Data: #{data}\n"
+			# 				data<<@sps_id
+			# 			end
+			# 			puts "else spsid"
+			# 		end
+			# 		
+			# 		
 
            
 		
@@ -148,8 +171,9 @@ module Gradebook
         Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
 =end
             def self.sps_get_course(doc_client,course)
-                cache=Gradebook::Cache.new        
-                @sps_feed=cache.cache_get_request(doc_client,"doc_feed","https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true")
+                # cache=Gradebook::Cache.new        
+                @sps_feed=doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
+
             
     #            @sps_feed=doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
                 #  @sps_feed.elements.each do |e|
@@ -172,27 +196,27 @@ module Gradebook
             end
         
         
-=begin rdoc
-    Returns the document id for the course that is searched for as a param.  Returns nil if no course is found.
-=end
-        def get_course(course)
-            @doc_feed=@doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
-
-            if @doc_feed.elements['openSearch:totalResults'].text!="0"
-                @doc_feed.elements.each('entry') do |entry|
-                    if entry.elements['title'].text!=""
-                        puts 'Title Match:' + entry.elements['title'].text
-                        doc_id=extract_document_id_from_feed("documents",entry)
-                        puts "ID for Match: " + doc_id.to_s
-                    end
-                end
-            else
-                puts "No Document found with that course name"
-                doc_id=nil
-            end
-
-            return doc_id
-        end
+# =begin rdoc
+#     Returns the document id for the course that is searched for as a param.  Returns nil if no course is found.
+# =end
+#         def get_course(course)
+#             @doc_feed=@doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
+# 
+#             if @doc_feed.elements['openSearch:totalResults'].text!="0"
+#                 @doc_feed.elements.each('entry') do |entry|
+#                     if entry.elements['title'].text!=""
+#                         puts 'Title Match:' + entry.elements['title'].text
+#                         doc_id=extract_document_id_from_feed("documents",entry)
+#                         puts "ID for Match: " + doc_id.to_s
+#                     end
+#                 end
+#             else
+#                 puts "No Document found with that course name"
+#                 doc_id=nil
+#             end
+# 
+#             return doc_id
+#         end
 
 =begin rdoc
 	Checks preference in home folder for pref file.
@@ -243,27 +267,27 @@ module Gradebook
            end 
            return rowCount.to_i
         end
-=begin rdoc
-    Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
-=end
-        def sps_get_course(course)
-            @sps_feed=@doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
-#            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
-            if @sps_feed.elements['openSearch:totalResults'].text!="0"
-                @sps_feed.elements.each('entry') do |entry|
-                    if entry.elements['title'].text!=""
-                        puts 'Title Match:' + entry.elements['title'].text
-                        @sps_id=extract_document_id_from_feed("documents",entry)
-                        puts "ID for Match: " + @sps_id.to_s
-                    end
-                end
-            else
-                puts "No Spreadsheet found with that course name"
-                @sps_id=nil
-            end
-
-            return @sps_id
-        end
+# =begin rdoc
+#     Returns the spreadsheet id for the course that is searched for as a param.  Returns nil if no course is found.
+# =end
+#         def sps_get_course(course)
+#             @sps_feed=@doc_client.get("https://documents.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
+# #            @sps_feed=@sps_client.get("https://spreadsheets.google.com/feeds/documents/private/full?q=#{course}&prettyprint=true").to_xml
+#             if @sps_feed.elements['openSearch:totalResults'].text!="0"
+#                 @sps_feed.elements.each('entry') do |entry|
+#                     if entry.elements['title'].text!=""
+#                         puts 'Title Match:' + entry.elements['title'].text
+#                         @sps_id=extract_document_id_from_feed("documents",entry)
+#                         puts "ID for Match: " + @sps_id.to_s
+#                     end
+#                 end
+#             else
+#                 puts "No Spreadsheet found with that course name"
+#                 @sps_id=nil
+#             end
+# 
+#             return @sps_id
+#         end
         
 =begin rdoc
     Returns the spreadsheet that is located by its id.

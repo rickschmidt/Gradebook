@@ -1,7 +1,6 @@
 
 
-require 'gradebook/cache'
-require 'gradebook/utility/base'
+
 
 =begin rdoc
     A class for gathering basic stats 
@@ -87,8 +86,10 @@ module Gradebook
 			#cache=Gradebook::Cache.new
 			
             #rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}")
-			url="https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
+			url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
 
+
+			puts "FUNCTION#SEARHCFORANDRETURNSID: SPSID #{@sps_id}\n"
             rows=@client.sps_client.get(url).to_xml
 			row=Hash.new
             rows.elements.each('entry') do |header|

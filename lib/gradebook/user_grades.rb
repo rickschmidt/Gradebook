@@ -1,15 +1,16 @@
 
-include Gradebook
+
 =begin rdoc
     A class that encapsulates the grading classes
 =end
 module Gradebook
-               class Array; def sum; inject( nil ) { |sum,x| sum ? sum+x : x }; end; end  
+               # class Array; def sum; inject( nil ) { |sum,x| sum ? sum+x : x }; end; end  
     class Usergrades
         
         def initialize
 			@client=Gradebook::Client.new
            @function=Utility::Function.new(@client)
+
            #@headers=Utility.get_columns_headers(@client.sps_client,@sps_id)
         end
 
@@ -78,9 +79,12 @@ module Gradebook
             #category=STDIN.gets.chomp
             #puts "Searching for category... #{category}"
             #column_id=Gradebook::Search.search_for_column_id(category,@headers)
+
             column_id=self.create_or_search_for_category
             #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
+			puts "test"
             list_feed=@function.search_with_sid(sid)
+			puts list_feed
             list_feed.root.elements.each('entry') do |entry| 
                 puts "Enter grade for student #{}"
                 score=STDIN.gets.chomp

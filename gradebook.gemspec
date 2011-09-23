@@ -4,7 +4,7 @@ require 'gdata_gradebook'
 
 Gem::Specification.new do |s|
   s.name = %q{gradebook}
-  s.version = "0.1"
+  s.version = "0.1b"
 
 
   s.authors = ["Rick Schmidt"]
