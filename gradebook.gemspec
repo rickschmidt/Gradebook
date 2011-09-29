@@ -4,7 +4,7 @@ require 'gdata_gradebook'
 
 Gem::Specification.new do |s|
   s.name = %q{gradebook}
-  s.version = "0.1b"
+  s.version = "0.1"
 
 
   s.authors = ["Rick Schmidt"]
@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.summary = %q{This gem provides a command line interface for managing a gradebook on google spreadsheets.}
 
 	s.executables<<'gb'
+	
+	s.add_dependency('gdata')
 
   s.homepage = %q{http://www.github.com/rickschmidt/gradebook}
 	 s.require_path="lib"

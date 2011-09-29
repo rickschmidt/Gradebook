@@ -27,82 +27,83 @@ module Gradebook
 				# system "stty -echo"
 				# @pwd=STDIN.gets.chomp
 				# system "stty echo"
+				# puts "Logging in..."
+							  @doc_client = GData::Client::DocList.new
+				#             @doc_client.clientlogin("gradebookluc","gradebookluc2011")
+				#             
+				#             #The Spreadsheets Client is used for everything except creation.
+				            @sps_client=GData::Client::Spreadsheets.new
+				#             @sps_client.clientlogin("gradebookluc","gradebookluc2011")
+				# 		@sps_id=self.class.sps_get_course(@doc_client,"Roster")             
+
+			@doc_token_path=File.expand_path('~/.gb/doc_token')
+			@sps_token_path=File.expand_path('~/.gb/sps_token')
+			unless((File.exists? doc_token_path) || (File.exists? sps_token_path))
+				puts "Enter Username"
+				@username=STDIN.gets.chomp
+				puts "Enter Password"
+				system "stty -echo"
+				@pwd=STDIN.gets.chomp
+				system "stty echo"
 				puts "Logging in..."
-				  @doc_client = GData::Client::DocList.new
-            @doc_client.clientlogin("gradebookluc","gradebookluc2011")
-            
-            #The Spreadsheets Client is used for everything except creation.
-            @sps_client=GData::Client::Spreadsheets.new
-            @sps_client.clientlogin("gradebookluc","gradebookluc2011")
-			@sps_id=self.class.sps_get_course(@doc_client,"Roster")             
-
-			# @doc_token_path=File.expand_path('~/.gb/doc_token')
-			# 		@sps_token_path=File.expand_path('~/.gb/sps_token')
-			# 		unless((File.exists? doc_token_path) || (File.exists? sps_token_path))
-			# 			puts "Enter Username"
-			# 			@username=STDIN.gets.chomp
-			# 			puts "Enter Password"
-			# 			system "stty -echo"
-			# 			@pwd=STDIN.gets.chomp
-			# 			system "stty echo"
-			# 			puts "Logging in..."
-			# 		end
-			# 		unless(File.exists? doc_token_path)
-			# 			File.new(path)	
-			# 	
-			#             	@doc_client.clientlogin(@username,@pwd)
-			# 			File.open(doc_token_path,"a") do |data|
-			# 				token=@doc_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
-			# 
-			# 				data<<token
-			# 			end
-			# 		else
-			# 			@doc_client.auth_handler=GData::Auth::ClientLogin.new('writely')
-			# 			@doc_client.auth_handler.token=File.open(doc_token_path,'r').read
-			# 			puts "Token doc: #{@doc_client.auth_handler.token}"
-			# 
-			# 		end
-			# 
-			# 		
-			# 		unless(File.exists? sps_token_path)
-			# 			File.new(path)
-			#             @sps_client.clientlogin(@username,@pwd)
-			# 			File.open(sps_token_path,"a") do |data|
-			# 				token=@sps_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
-			# 				data<<token
-			# 			end
-			# 		else
-			# 			@sps_client.auth_handler=GData::Auth::ClientLogin.new('wise')
-			# 			@sps_client.auth_handler.token=File.open(sps_token_path,'r').read		
-			# 
-			# 		end
-			# 		
-			# 		@sps_id_path=File.expand_path('~/.gb/sps_id')
-			# 		if((File.exists? @sps_id_path) && (!File.zero? @sps_id_path))
-			# 			puts "if spsid"
-			# 			puts "FIle size #{File.size(@sps_id_path)}"
-			# 			puts "#{!File.zero? @sps_id_path}"
-			# 			@sps_id=File.open(@sps_id_path,'r').read
-			# 			puts "ifsps #{@sps_id}"
-			# 
-			# 			
-			# 		else
-			# 			File.new(@sps_id_path)
-			# 			puts "No SPSID: What is the name of the spreadsheet on google docs?"
-			# 			sps_name=STDIN.gets.chomp
-			# 			puts @doc_client.inspect
-			# 			puts @sps_client.inspect
-			# 			@sps_id=self.class.sps_get_course(@doc_client,sps_name)        
-			# 			
-			# 			File.open(@sps_id_path,"a") do |data|
-			# 				puts "Data: #{data}\n"
-			# 				data<<@sps_id
-			# 			end
-			# 			puts "else spsid"
-			# 		end
-			# 		
-			# 		
-
+			end
+			unless(File.exists? doc_token_path)
+				#If file doesn't exist make the request, write the token and it to @doc_client
+				File.new(path)	
+				@doc_client.clientlogin(@username,@pwd)
+				File.open(doc_token_path,"a") do |data|
+					token=@doc_client.auth_handler.get_token(@username,@pwd,"gradebookluc") #Third paramter identifies app to gdata (could be anything at this point)	
+					data<<token
+				end
+			else
+				#If file does exist read the token and assign it to @doc_client
+				@doc_client.auth_handler=GData::Auth::ClientLogin.new('writley')
+				@doc_client.auth_handler.token=File.open(doc_token_path,'r').read
+				puts "Token doc: #{@doc_client.auth_handler.token}"
+	
+			end
+	
+			unless(File.exists? sps_token_path)
+				#If file doesn't exist make the request, write the token and it to @doc_client
+				File.new(path)
+	            @sps_client.clientlogin(@username,@pwd)
+				File.open(sps_token_path,"a") do |data|
+					token=@sps_client.auth_handler.get_token(@username,@pwd,"gradebookluc")
+					data<<token
+				end
+			else
+				#If file does exist read the token and assign it to @doc_client
+				@sps_client.auth_handler=GData::Auth::ClientLogin.new('wise')
+				@sps_client.auth_handler.token=File.open(sps_token_path,'r').read		
+	
+			end
+			
+			@sps_id_path=File.expand_path('~/.gb/sps_id')
+			if((File.exists? @sps_id_path) && (!File.zero? @sps_id_path))
+				puts "if spsid"
+				puts "FIle size #{File.size(@sps_id_path)}"
+				puts "#{!File.zero? @sps_id_path}"
+				@sps_id=File.open(@sps_id_path,'r').read
+				puts "ifsps #{@sps_id}"
+	
+				
+			else
+				File.open(@sps_id_path,'w')
+				puts "No SPSID: What is the name of the spreadsheet on google docs?"
+				sps_name=STDIN.gets.chomp
+				puts @doc_client.inspect
+				puts @sps_client.inspect
+				@sps_id=self.class.sps_get_course(@doc_client,sps_name)        
+				
+				File.open(@sps_id_path,"a") do |data|
+					puts "Data: #{data}\n"
+					data<<@sps_id
+				end
+				puts "else spsid"
+			end
+								
+			puts "END"					
+			
            
 		
 		
@@ -248,7 +249,7 @@ module Gradebook
 =end
         def get_colCount 
             colCount=0
-            sps_id=self.sps_get_course("Roster")
+            sps_id=self.sps_get_course(@client.doc_client,"Roster")
             sheet=self.sps_get_sheet(sps_id)
             sheet.elements.each('entry') do |entry|
                 colCount=entry.elements['gs:colCount'].text
@@ -260,7 +261,7 @@ module Gradebook
 =end
         def get_rowCount
            rowCount=0
-           sps_id=self.sps_get_course("Roster")
+           sps_id=self.sps_get_course(@client.doc_client,"Roster")
            sheet=self.sps_get_sheet(sps_id)
            sheet.elements.each('entry') do |entry|
                rowCount=entry.elements['gs:rowCount'].text
@@ -464,7 +465,7 @@ EOF
 =end
     def add_column(num_of_columns)
 
-        sps_id=self.sps_get_course("Roster")
+        sps_id=self.sps_get_course(@client.doc_client,"Roster")
         sheet=self.sps_get_sheet(sps_id)
         col_count=0
         puts "sheet #{sheet}"
@@ -514,7 +515,7 @@ EOF
     Search for a student by name and returns an id number to be used in other commands
 =end
         def search_for_sid(search)
-            sps_id=self.sps_get_course("Roster")
+            sps_id=self.sps_get_course(@client.doc_client,"Roster")
             rows=@sps_client.get("https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}").to_xml
             row=Hash.new
             rows.elements.each('//gsx:*') do |header|

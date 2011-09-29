@@ -56,29 +56,29 @@ module Gradebook
  
 		    end
 
-=begin rdoc
-    Search for a student by name and returns an id number to be used in other commands
-=end
-        def search_for_sid(column,search)
-#            sps_id=self.sps_get_course("Roster")
-#			cache=Gradebook::Cache.new
-#            rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}")
-            url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
-			rows=@client.sps_client.get(url).to_xml
-			row=Hash.new
-            rows.elements.each('//gsx:id') do |header|
-#            rows.elements.each do |header|
-                row[header.name]=header.text
-            end
-
-            #puts "Searching for Student ID...#{search}"
-            #puts "ID for #{row['name']}"
-            row.each do |key,value|
-                #puts "#{key} :#{value} "
-            end
-            return rows
-        end
-        
+# =begin rdoc
+#     Search for a student by name and returns an id number to be used in other commands
+# =end
+#         def search_for_sid(column,search)
+# #            sps_id=self.sps_get_course("Roster")
+# #			cache=Gradebook::Cache.new
+# #            rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}")
+#             url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
+# 			rows=@client.sps_client.get(url).to_xml
+# 			row=Hash.new
+#             rows.elements.each('//gsx:id') do |header|
+# #            rows.elements.each do |header|
+#                 row[header.name]=header.text
+#             end
+# 
+#             #puts "Searching for Student ID...#{search}"
+#             #puts "ID for #{row['name']}"
+#             row.each do |key,value|
+#                 #puts "#{key} :#{value} "
+#             end
+#             return rows
+#         end
+#         
 =begin rdoc
     Search for and return a SID for a student given their name
 =end
@@ -89,7 +89,7 @@ module Gradebook
 			url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
 
 
-			puts "FUNCTION#SEARHCFORANDRETURNSID: SPSID #{@sps_id}\n"
+
             rows=@client.sps_client.get(url).to_xml
 			row=Hash.new
             rows.elements.each('entry') do |header|
@@ -103,11 +103,17 @@ module Gradebook
 =end
         def search_with_sid(search)
 			cache=Gradebook::Cache.new
-            rows=cache.cache_get_request(@client.sps_client,"name_search","https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}")
+            rows=cache.cache_get_request(@client.sps_client,"list_feed_sheet1","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true")
             row=Hash.new
-            rows.elements.each('//gsx:*') do |header|
-                row[header.name]=header.text
-            end
+			rows.root.elements.each('//gsx:id') do |ele|
+				if ele.text=="#{search}"
+					puts "ele.text: #{ele.text}"
+		            rows.root.elements.each('//gsx:*') do |header|
+		                row[header.name]=header.text
+		            end
+				end
+			end
+			
             # row.each do |key,value|
             #                 if value.class==String
             #                     puts "#{key} :#{value}"
@@ -116,7 +122,7 @@ module Gradebook
 
            # f "Student ID #{row['id']}"
             
-            return rows
+            return row
         end
         
 =begin rdoc

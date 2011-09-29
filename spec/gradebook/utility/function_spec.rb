@@ -20,12 +20,12 @@ describe "Function" do
 		end
 		
 		it "should search for a student ID using a name" do
-		  	@function.search_for_sid("john").should_not eql(nil)
+		  	@function.search_for_sid("firstname","john").should_not eql(nil)
 		end
 		
-		it "should search by student ID (SID) and return a hash of matches" do
-		  	@function.search_for_and_return_sid("1111").should_not eql(nil)
-		end
+		# it "should search by student ID (SID) and return a hash of matches" do
+		#   	@function.search_for_and_return_sid("firstanme","1111").should_not eql(nil)
+		# end
 		
 		it "should retrun the grades for a student by searching with their SID" do
 		  	@function.search_with_sid("1111").should_not eql(nil)

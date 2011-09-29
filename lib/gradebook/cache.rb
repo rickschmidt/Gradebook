@@ -74,12 +74,13 @@ module Gradebook
 					end
 				end
 				begin
-				    contents=File.open(file_path,'r')
+					puts "File Path in cache #{file_path}"
+				    contents=File.open(file_path,File::RDWR|File::CREAT)
 					puts "CONTENTS: #{contents}"
 				rescue SystemCallError
 					puts "Error"
 					puts "FP: #{file_path}"
-					contents=File.open(file_path,'r')
+					contents=File.open(file_path,File::RDWR|File::CREAT)
 				ensure
 					xml_doc=REXML::Document.new(contents)
 	#				Gradebook::Utility::Logger.log("#{Time.now}","GET", "#{url}","Response:#{sps_feed.status_code}")					

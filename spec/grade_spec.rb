@@ -7,7 +7,7 @@ describe "Grade" do
        before(:each) do
            @client= Client.new
            @client.setup('','')
-           @sps_id= Search.sps_get_course(@client.doc_client,"Roster")
+           @sps_id=Gradebook::Utility::Search.sps_get_course(@client.doc_client,"Roster")
        end
    
    

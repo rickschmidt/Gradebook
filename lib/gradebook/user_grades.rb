@@ -27,10 +27,11 @@ module Gradebook
             column_id=self.create_or_search_for_category
             list_feed=@function.get_list_feed
             
-
+			puts "Grading Each Student"
             list_feed.root.elements.each('entry') do |entry| 
                   student_name=''
                   score=''
+				puts "SPSID IN USERGRADES//GRADE ALL #{@client.sps_id}"
                   entry.elements.each('gsx:id') do |id|
 
                       puts "Enter grade for student: #{entry.elements['gsx:lastname'].text}, #{entry.elements['gsx:firstname'].text}"
@@ -82,11 +83,11 @@ module Gradebook
 
             column_id=self.create_or_search_for_category
             #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
-			puts "test"
+
             list_feed=@function.search_with_sid(sid)
-			puts list_feed
+
             list_feed.root.elements.each('entry') do |entry| 
-                puts "Enter grade for student #{}"
+				puts "Enter grade for student: #{entry.elements['gsx:lastname'].text}, #{entry.elements['gsx:firstname'].text}"
                 score=STDIN.gets.chomp
                 grade=Gradebook::Grade.new(@client,column_id)
                 grade.enter_grade(entry,score)
@@ -118,6 +119,7 @@ module Gradebook
 =end
         def grade_report_xml(sid)
             list_feed=@function.search_with_sid(sid)
+
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'GradeReport' #root
             root=xmlDoc.root
@@ -164,13 +166,16 @@ module Gradebook
     TODO Separate name to first name and last name.
 =end
          def grade_report_by_name_xml(column,name)
-            list_feed=@function.search_for_sid(column,name)
+
+			list_feed=@function.search_with_sid(name)
+
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'GradeReport' #root
             root=xmlDoc.root
             student=root.add_element('student', {'firstname'=>"#{list_feed.root.elements['entry/gsx:firstname'].text}",
                                             'lastname'=>"#{list_feed.root.elements['entry/gsx:lastname'].text}",
                                             'id'=>"#{list_feed.root.elements['entry/gsx:id'].text}"})
+			puts "Listfeed, usergrade//Gradereport by name xml\n #{list_feed}"
             list_feed.root.elements.each('entry') do |entry|
                 entry.elements.each('gsx:*') do |col|
                     if col.name!='firstname' && col.name!='lastname' && col.name!='id'
@@ -220,7 +225,7 @@ module Gradebook
            #  list_feed.elements.each do |entry|
                 # puts entry
           #   end
-            entry=Utility.new_entry
+            entry=Gradebook::Utility::Structure.new_entry
             id=entry.add_element 'gsx:id'
             hw1=entry.add_element 'gsx:hw1'
             id.text="TestNew"
@@ -285,7 +290,7 @@ module Gradebook
 =end
         def extract_category_weight_from_header
 
-            weights=Utility.get_category_weights(@client.sps_client,@sps_id,2) 
+            weights=Gradebook::Utility::Function.get_category_weights(@client.sps_client,@sps_id,2) 
             cells=Utility.get_cell_feed(@client.sps_client,@sps_id,params='&max-row=1')
             cells.elements.each('entry') do |entry|
                 entry.elements.each('gs:cell') do |cell|
@@ -304,8 +309,8 @@ module Gradebook
             #puts "Enter a category"
            #category=STDIN.gets.chomp
            category="q"  #remove after testing, replace with above
-           prefix=Utility.get_weight_code_for_category(category) 
-           weights=Utility.get_category_weights(@client.sps_client,@sps_id,2)
+           prefix=Gradebook::Utility::Function.get_weight_code_for_category(category) 
+           weights=Gradebook::Utility::Function.get_category_weights(@client.sps_client,@sps_id,2)
            weight=weights.values_at(prefix)
            
            list_feed=Utility.get_list_feed(@client.sps_client,@sps_id,nil,1)
