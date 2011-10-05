@@ -1,3 +1,7 @@
+=begin rdoc
+	This file monkey patches the gdata gem v 1.1.12.  The patche involves accpeting http resonse code 304 as a success.  304 is "IF NOT MODIFIED" which is checked 
+	during caching to improve performance.
+=end
 GData::Client::Base.module_eval do
 	def make_request(method, url, body = '')
         headers = self.prepare_headers

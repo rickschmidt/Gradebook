@@ -1,4 +1,6 @@
-
+=begin rdoc
+	Depracted.  TODO This file needs to be evaluated and discarded.
+=end
 
 
 module Gradebook

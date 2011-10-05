@@ -1,19 +1,122 @@
-
-
-
-
 =begin rdoc
-    A class for gathering basic stats 
+	Author::Rick Schmidt
+	Function extends Base to add methods for performing calculations and searching the data.  More information on instantiating Fucntion can be found in its parent "Utility::Base."
 =end
+
 module Gradebook
 	module Utility
     	class Function < Gradebook::Utility::Base
 	
+
+
+=begin rdoc
+    Search for and return a SID for a student given their name
+=end
+        def search_for_and_return_sid(column,search)
+			##Caching the sid search didn't work. The sid search file would not update for new searchs.  Raw GET request used now.  TODO : could probable just search the xml file
+#			cache=Gradebook::Cache.new			
+#            rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}")
+			rows=@client.sps_client.get("https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}").to_xml
+			row=Hash.new
+            rows.elements.each('entry') do |header|
+                row[header.elements['gsx:id'].text]=header.elements['gsx:firstname'].text+' '+header.elements['gsx:lastname'].text
+            end
+            return row
+        end
+        
+=begin rdoc
+    Search for a student by id and returns the grades for that student
+=end
+		def search_with_sid(search)
+				#cache=Gradebook::Cache.new
+	            # rows=cache.cache_get_request(@client.sps_client,"name_search","https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}")
+				url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=id=#{search}"
+				rows=@client.sps_client.get(url).to_xml
+
+	            row=Hash.new
+	            rows.root.elements.each('//gsx:*') do |header|
+	                row[header.name]=header.text
+	            end
+	            # row.each do |key,value|
+	            #                 if value.class==String
+	            #                     puts "#{key} :#{value}"
+	            #                 end
+	            #             end
+
+	           # f "Student ID #{row['id']}"
+            
+	            return rows
+	        end
+        
+        
+=begin rdoc
+    Search for a student by name and returns an id number to be used in other commands
+=end
+        def search_for_sid(column,search)
+			cache=Gradebook::Cache.new
+            rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}")
+ #           url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
+#			rows=@client.sps_client.get(url).to_xml
+			row=Hash.new
+            rows.elements.each('//gsx:id') do |header|
+            # rows.elements.each do |header|
+                row[header.name]=header.text
+            end
+
+            #puts "Searching for Student ID...#{search}"
+            #puts "ID for #{row['name']}"
+            # row.each do |key,value|
+                #puts "#{key} :#{value} "
+            # end
+            return rows
+        end
+        
+=begin rdoc
+  Search for a column id based on a search phrase and a header row
+=end
+      	def search_for_column_id(search)
+			headers=self.get_columns_headers
+	        column_id=headers.values_at(search)
+	        return column_id
+        end
+
+################################################################################################################################################
+##################################################*UNDER DEVELOPMENT BELOW THIS LINE*###########################################################
+################################################################################################################################################
+=begin rdoc
+ TODO Methods below are under development.
+=end
+=begin rdoc
+    Get column weights
+=end
+        def get_category_weights(worksheetid)
+            weights={}
+            list_feed=self.get_list_feed(2,'&sq=weights%3E0')
+            list_feed.elements.each('entry') do |w|
+                weights["#{w.elements['title'].text}"]="#{w.elements['gsx:weights'].text}"
+            end
+            return weights
+        end
+
+=begin rdoc
+    Get points possible for a category.
+=end
+        def get_possible_points_for_category(category)
+            pts_possible={}
+            list_feed=self.get_list_feed(2,'&sq=pointspossible%3E0')
+            list_feed.elements.each('entry') do |p|
+                if (p.elements['title'].text<=>category)==0
+                    pts_possible["#{p.elements['title'].text}"]="#{p.elements['gsx:pointspossible'].text}"
+                end
+            end
+            return pts_possible
+        end
+
 =begin rdoc
     Get weight code for category.  Example param=="HW-HW1", "HW" is returned.  Another example param=="Q-Q3", "Q" is returned
 =end 
         	def get_weight_code_for_category(category)
-	           return category.gsub(/[-]\w*/,'').downcase
+	            return category.gsub(/[-]\w*/,'').downcase
 	        end
 	
 =begin rdoc
@@ -55,111 +158,6 @@ module Gradebook
 		        return response
  
 		    end
-
-# =begin rdoc
-#     Search for a student by name and returns an id number to be used in other commands
-# =end
-#         def search_for_sid(column,search)
-# #            sps_id=self.sps_get_course("Roster")
-# #			cache=Gradebook::Cache.new
-# #            rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}")
-#             url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
-# 			rows=@client.sps_client.get(url).to_xml
-# 			row=Hash.new
-#             rows.elements.each('//gsx:id') do |header|
-# #            rows.elements.each do |header|
-#                 row[header.name]=header.text
-#             end
-# 
-#             #puts "Searching for Student ID...#{search}"
-#             #puts "ID for #{row['name']}"
-#             row.each do |key,value|
-#                 #puts "#{key} :#{value} "
-#             end
-#             return rows
-#         end
-#         
-=begin rdoc
-    Search for and return a SID for a student given their name
-=end
-        def search_for_and_return_sid(column,search)
-			#cache=Gradebook::Cache.new
-			
-            #rows=cache.cache_get_request(@client.sps_client,"sid_search","https://spreadsheets.google.com/feeds/list/#{sps_id}/od6/private/full?prettyprint=true&sq=name=#{search}")
-			url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true&sq=#{column}=#{search}"
-
-
-
-            rows=@client.sps_client.get(url).to_xml
-			row=Hash.new
-            rows.elements.each('entry') do |header|
-                row[header.elements['gsx:id'].text]=header.elements['gsx:firstname'].text+' '+header.elements['gsx:lastname'].text
-            end
-            return row
-        end
-        
-=begin rdoc
-    Search for a student by id and returns the grades for that student
-=end
-        def search_with_sid(search)
-			cache=Gradebook::Cache.new
-            rows=cache.cache_get_request(@client.sps_client,"list_feed_sheet1","https://spreadsheets.google.com/feeds/list/#{@sps_id}/od6/private/full?prettyprint=true")
-            row=Hash.new
-			rows.root.elements.each('//gsx:id') do |ele|
-				if ele.text=="#{search}"
-					puts "ele.text: #{ele.text}"
-		            rows.root.elements.each('//gsx:*') do |header|
-		                row[header.name]=header.text
-		            end
-				end
-			end
-			
-            # row.each do |key,value|
-            #                 if value.class==String
-            #                     puts "#{key} :#{value}"
-            #                 end
-            #             end
-
-           # f "Student ID #{row['id']}"
-            
-            return row
-        end
-        
-=begin rdoc
-  Search for a column id based on a search phrase and a header row
-=end
-      def search_for_column_id(search)
-		headers=self.get_columns_headers
-        column_id=headers.values_at(search)
-        return column_id
-      end
-
-=begin rdoc
-    Get column weights
-=end
-        def get_category_weights(worksheetid)
-            weights={}
-            list_feed=self.get_list_feed(2,'&sq=weights%3E0')
-            list_feed.elements.each('entry') do |w|
-                weights["#{w.elements['title'].text}"]="#{w.elements['gsx:weights'].text}"
-            end
-            return weights
-        end
-
-=begin rdoc
-    Get points possible for a category.
-=end
-        def get_possible_points_for_category(category)
-            pts_possible={}
-            list_feed=self.get_list_feed(2,'&sq=pointspossible%3E0')
-            list_feed.elements.each('entry') do |p|
-                if (p.elements['title'].text<=>category)==0
-                    pts_possible["#{p.elements['title'].text}"]="#{p.elements['gsx:pointspossible'].text}"
-                end
-            end
-            return pts_possible
-        end
-
 		end
 	end
 end

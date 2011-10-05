@@ -4,7 +4,7 @@ require 'gradebook'
 
 
 describe "Client" do 
-	before(:all) do
+	before(:each) do
 		@client=Gradebook::Client.new
 	end
        
@@ -24,10 +24,7 @@ describe "Client" do
 	
 	
 	it "should be able to clear the credentials" 
-		
 	
 	it "should be able to clear the sps_id" 
-		
 
-     
  end

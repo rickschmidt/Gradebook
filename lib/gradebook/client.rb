@@ -1,12 +1,11 @@
-#Author::Rick Schmidt
-
-
-module Gradebook
 =begin rdoc
+	Author::Rick Schmidt
 	The Client class handles user authentication.  It stores the users tokens in the ~/.gb preference file and also stores the spreadsheet Id for the current course.
 	A working client object is integral to the rest of the program.  It is passed in as a parameter in all base and lower level classes and instantiated in classes
 	represneting user objects.
 =end
+
+module Gradebook
     class Client
     	attr_accessor :doc_client
        	attr_accessor :sps_client
@@ -74,10 +73,21 @@ module Gradebook
 				File.open(@sps_id_path,'w')
 				puts "Enter Course Name:\n"
 				sps_name=STDIN.gets.chomp
-				@sps_id=self.class.sps_get_course(@doc_client,sps_name)        
-				File.open(@sps_id_path,"a") do |data|
-					data<<@sps_id
-				end
+				attempts=0
+				begin        
+					@sps_id=self.class.sps_get_course(@doc_client,sps_name)
+					attempts=attempts.to_i+1
+					File.open(@sps_id_path,"a") do |data|
+						data<<@sps_id
+					end
+				rescue
+					raise "No Spreadsheets with that name found on your google docs account"
+					
+					
+					
+				end 
+				
+
 			end
 			@username=''
 			@pwd=''

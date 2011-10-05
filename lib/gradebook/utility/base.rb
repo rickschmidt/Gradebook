@@ -1,27 +1,25 @@
 
-
-
 =begin rdoc
-    A class for gathering basic stats 
+	Author::Rick Schmidt
+	The Base utility class is the base of core functionality of the application.  For the sake of smaller classes functionality was divided between Function and Structure 
+	which both extend Base.  It goes without explanation that Structure provides functionality for altering the structure of the gradebook (adding and removing columns, categories etc).
+	Function performs calculations on the data including searching.  Base (and subsequently all of its descendants) requires an authenticated client object during initialization.
+	 
 =end
 module Gradebook
     module Utility
         class Base
-        
-        
-           attr_reader :sps_id
-           attr_reader :client
+        	attr_reader :sps_id
+           	attr_reader :client
         
             def initialize(client)
-  #              @client= Client.new
- #               @client.setup('','')
-#                @sps_id=self.class.sps_get_course(@client.doc_client,"Roster")
              	@client=client
 				@sps_id=client.sps_id
-
             end
             
-			#currently not used, this would be ideal
+=begin rdoc
+	make_request would be ideal if this is to be redesigned.
+=end
 			def make_request(client_type,request_type,url,entry=nil)
 				case client_type
 				when :doc_client
@@ -41,10 +39,7 @@ module Gradebook
 					return client.delete(url)
 				else
 		          	raise ArgumentError, "Unsupported HTTP method specified."
-		        end
-					
-				
-				
+		        end	
 			end
 		
         
@@ -54,27 +49,20 @@ module Gradebook
             def get_number_of_columns
                 sheet ||=self.sps_get_sheet
                 colCount=sheet.root.elements['entry[1]/gs:colCount'].text
-               return colCount.to_i
+               	return colCount.to_i
             end
+
 =begin rdoc
         Returns the number of columns in the first row that have are not blank from left to right.  Blank columns should not be used in the middle of the sheet.  
         The number of columns that are not blanked is needed to calculate where to put a new category.
-=end
-           
+=end           
             def get_number_of_used_columns
-
                 rows ||=self.get_list_feed
-                column_headers=[]
-				
+                column_headers=[]				
                 e=rows.root.elements['entry[1]']
                 e.elements.each('gsx:*') do |ele|
                     column_headers<<ele
-                end
-                # rows.elements.each('entry[1]//gsx:*')  do |header| 
-                #     puts "get used header #{header}"
-                #     column_headers<<header
-                # end
-            
+                end            
                 return column_headers.size
             end
         
@@ -83,11 +71,11 @@ module Gradebook
 =end
             def get_number_of_rows
                 sheet ||=self.sps_get_sheet
-               rowCount=0
-               sheet.elements.each('entry') do |entry|
-                   rowCount=entry.elements['gs:rowCount'].text
-               end 
-               return rowCount.to_i
+               	rowCount=0
+               	sheet.elements.each('entry') do |entry|
+                   	rowCount=entry.elements['gs:rowCount'].text
+               	end 
+               	return rowCount.to_i
             end
         
 =begin rdoc
@@ -95,10 +83,6 @@ module Gradebook
 =end
             def get_number_of_used_rows
                 sps_feed||=self.get_list_feed
-                # rowCount=0
-                # sps_feed.elements.each('entry') do |entry|
-                #     rowCount=rowCount+1
-                # end 
                 rowCount=sps_feed.elements.size
                 return rowCount
             end
@@ -107,25 +91,14 @@ module Gradebook
     Returns the etag for authorization headers for the course that is searched for as a param.  Returns nil if no course is found.
 =end
             def sps_get_etag_sheet(sheet_id=1)
-                    sps_feed||=self.get_list_feed
-                   etag=nil
-    #                sps_feed=sps_client.get("https://spreadsheets.google.com/feeds/worksheets/#{id}/private/full?prettyprint=true").to_xml
-
-    #                etag=sps_feed.root.attributes['gd:etag'].to_s
-    #                etag=sps_feed.elements[1,'entry'].attributes['gd:etag'].to_s
-                    # do |entry|
-                    #                     etag=entry.attribute('etag').value
-                    #                 end
-    #                sheet.root.elements['entry[1]/gs:colCount'].text="#{total_columns.to_i}"
-
-                    etag=sps_feed.root.elements["entry[#{sheet_id}]"].attributes['gd:etag'].to_s
-
-
+                sps_feed||=self.get_list_feed
+                etag=nil
+                etag=sps_feed.root.elements["entry[#{sheet_id}]"].attributes['gd:etag'].to_s
                 return etag
               end
 
 =begin rdoc
-    Etag
+    Gets the etag for a list feed. 
 =end
             def get_etag_list_feed
                 list_feed||=self.get_list_feed
@@ -134,33 +107,15 @@ module Gradebook
             end
         
 =begin rdoc
-      Return the list feed ie row by row entries.
-      @params sps_client,
-        sps_id,
-        params:url params:defaults to blank ie '',
-        worksheet_id defaults to 1
+      Return the list feed ie row by row entries. Worksheet id defaults to one, params defaults to none.
   
 =end
           def get_list_feed(worksheet_id='1',params='')
-          		url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}"
-				
-
-		              cache=Gradebook::Cache.new
-					list_feed=cache.cache_get_request(@client.sps_client,"list_feed_sheet#{worksheet_id}",url)
-#          		list_feed=@client.sps_client.get(url).to_xml
-			
-
-             return list_feed
+          	url="https://spreadsheets.google.com/feeds/list/#{@sps_id}/#{worksheet_id}/private/full?prettyprint=true#{params}"
+		    cache=Gradebook::Cache.new
+			list_feed=cache.cache_get_request(@client.sps_client,"list_feed_sheet#{worksheet_id}",url)
+            return list_feed
           end
-     
-# =begin rdoc
-#         Number of rows according to cell feed
-# =end
-#             def num_of_rows_cell_feed
-# 
-#                 response=Gradebook::Cache.cache_get_request(@client.sps_client,'rows')
-#             
-#             end
         
 =begin rdoc
         Get cell feed
@@ -171,65 +126,54 @@ module Gradebook
                 cell_feed=cache.cache_get_request(@client.sps_client,"cell_feed_#{params}",url)
                 return cell_feed
             end
-        
-
-        
-
-        
+                
 =begin rdoc
         Get points possible for a category.
 =end
             def get_possible_points_for_category(category)
                 pts_possible={}
 				pts=nil
-
-					list_feed||=self.get_list_feed("2","")#'&sq=pointspossible%3E0')
-
+				list_feed||=self.get_list_feed("2","")#'&sq=pointspossible%3E0')
                 list_feed.root.elements.each('entry') do |p|
-                    if (p.elements['title'].text<=>category)==0
-                        #pts_possible["#{p.elements['title'].text}"]="#{p.elements['gsx:pointspossible'].text}"
+                	if (p.elements['title'].text<=>category)==0
 						pts="#{p.elements['gsx:pointspossible'].text}"
                     end
                 end
-                #return pts_possible
 				return pts.to_i
             end
-        
-
-
+     
 =begin rdoc
         Returns the first row of a spreadsheet ie its column headers
-        TODO: rows should be refactored to cells
-        TODO: rename to columN (singular) 
 =end
-
             def get_columns_headers
-
 				cache=Gradebook::Cache.new        
-				puts "BASE:GETCOLHEAD SPSID #{@sps_id}"
-
                 rows=cache.cache_get_request(@client.sps_client,"cell_headers2","https://spreadsheets.google.com/feeds/cells/#{@sps_id}/od6/private/full?prettyprint=true&max-row=1")
-    #         rows=get_list_feed(sps_client,sps_id)
-               header_row=Hash.new
-               rows.root.elements.each('entry')do |entry|
-                   entry.elements.each('gs:cell') do |header|
+                header_row=Hash.new
+                rows.root.elements.each('entry')do |entry|
+                    entry.elements.each('gs:cell') do |header|
                        header_row[header.attribute('inputValue').value]=header.attribute('col').value
-                   end
-               end
-
-           
+                    end
+               end           
                return header_row
             end
         
 =begin rdoc
     Returns the spreadsheet that is located by its id.
 =end
-        def sps_get_sheet
-		     cache=Gradebook::Cache.new        
-            sps_feed=cache.cache_get_request(@client.sps_client,"sheet_feed_1","https://spreadsheets.google.com/feeds/worksheets/#{@sps_id}/private/full?prettyprint=true")
-            return sps_feed
-        end
-        
+        	def sps_get_sheet
+		     	cache=Gradebook::Cache.new        
+	            sps_feed=cache.cache_get_request(@client.sps_client,"sheet_feed_1","https://spreadsheets.google.com/feeds/worksheets/#{@sps_id}/private/full?prettyprint=true")
+	            return sps_feed
+	        end        
+	
+=begin rdoc
+	Returns the name of the current spreadsheet. Ie the sps id in .gb/sps_id
+=end
+			def get_name_for_current_spreadsheet
+				sheet_feed=self.sps_get_sheet
+				name=sheet_feed.root.elements['title'].text
+				return name
+			end
         end
     end
 end

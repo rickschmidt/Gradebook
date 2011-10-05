@@ -11,45 +11,39 @@ describe "Usergrades" do
          end
      
          it "should be able to grade all the students" do
-            should fail
+            @user_grades.grade_all
          end
          
          it "should be able to generate an xml report for an individiual student by SID" do
-            ug=Usergrades.new
-            ug.grade_report_xml(7777) 
+
+            @user_grades.grade_report_xml(7777) 
          end
          
         it "should be able to generate an xml report for an individiual student their name" do
-            ug=Usergrades.new
-            ug.grade_report_by_name_xml("firstname","mary") 
+            @user_grades.grade_report_by_name_xml("firstname","mary") 
          end
          
          it "should be able to grade an individual student with the students SID as a paramter" do
-             should fail
+			@user_grades.grade_by_sid(1111)
          end
          
          it "should be able to add a student" do
-            ug=Usergrades.new 
-            ug.add_student
+            @user_grades.add_student
          end
          
          it "should extract the category weight" do
-            ug=Usergrades.new
-            ug.extract_category_weight_from_header 
+            @user_grades.extract_category_weight_from_header 
          end
          
          it "should be able to average a category type per student" do
-             ug=Usergrades.new
-            ug.category_average_for_each_studnet
+            @user_grades.category_average_for_each_studnet
         end
 
 		it "should be able to get the number of students" do
 			@user_grades.number_of_students.should be_a_kind_of(Integer)
-
-			
 		end
         
-
+		it "should be able to get the name for the current sheet" 
 
      end
  end

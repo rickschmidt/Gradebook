@@ -1,14 +1,12 @@
-
-
-
-
 =begin rdoc
-    A class for gathering basic stats 
+	Author::Rick Schmidt
+	Stucture extends Utility::Base to provide several methods for altering the structure of the gradebook.  More detail on how to properly instantiate a Utility class
+	can be found in Utility::Base.
 =end
+
 module Gradebook
-module Utility
-    class Structure < Gradebook::Utility::Base
-        
+	module Utility
+    	class Structure < Gradebook::Utility::Base
 
 =begin rdoc
     Adds  a category to the gradebook.  First the number of categories already present should be calculated using *get_number_of_used_columns*
@@ -17,45 +15,26 @@ module Utility
 			rows||=self.get_list_feed
 			sheet||=self.sps_get_sheet
             used_col_count=self.get_number_of_used_columns
-            total_col_count=self.get_number_of_columns
-            
+            total_col_count=self.get_number_of_columns            
             if used_col_count >=total_col_count
                 self.add_columns(1)
             end
-
             headers=self.get_columns_headers
-
             if headers.has_key?(category_name)
 				puts "Category Exists"
                 return "Category exists"
-
             end
-
-  #              puts rows
-#            entry=rows.root.elements['entry']
-            # entry=self.new_entry
-            # puts entry
-             entry = rows.root.elements['entry'] # first <atom:entry>
-#            entry=REXML::Element.new(arg='entry')
-#           entry.add_namespace('http://www.w3.org/2005/Atom')
- #          entry.add_namespace('gd','http://schemas.google.com/g/2005')
-  #         entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
-   #        entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
- 
+            entry = rows.root.elements['entry'] # first <atom:entry>
             entry.add_namespace('http://www.w3.org/2005/Atom')
             entry.add_namespace('gd','http://schemas.google.com/g/2005')
-          entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
+          	entry.add_namespace('gs','http://schemas.google.com/spreadsheets/2006')
             entry.add_namespace('gsx','http://schemas.google.com/spreadsheets/2006/extended')
-#            rows.elements['gs:cell'].add_attributes({"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"})
-#            el = doc.add_element 'my-tag', {'attr1'=>'val1', 'attr2'=>'val2'}
             entry.add_element 'gs:cell',{"row"=>"1","col"=>"#{used_col_count+1}","inputValue"=>"#{category_name}"}            
-   #                    puts entry
-            tag=self.get_etag_list_feed
-          
+            tag=self.get_etag_list_feed          
             @client.sps_client.headers['If-None-Match']=tag
 			url="https://spreadsheets.google.com/feeds/cells/#{@sps_id}/od6/private/full/R1C#{used_col_count+1}"
             response=@client.sps_client.put(url,entry)             
-			Gradebook::Utility::Logger.log("#{Time.now}", "PUT","#{url}","Response:#{response.status_code}")
+			Gradebook::Utility::Logger.log("Structure","#{Time.now}", "PUT","#{url}","Response:#{response.status_code}")
             return response
         end
         

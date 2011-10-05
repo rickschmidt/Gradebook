@@ -1,44 +1,32 @@
-
-
 =begin rdoc
-    A class that encapsulates the grading classes
+	Author::Rick Schmidt
+	Usergrades wrapes the functionality of Grade and the utility classes.  The design goal of Usergrades is that all user facing actions would be contained in one class.
+	Having all of the User commands wrapped in one class makes the design of the gb interface in bin easier to understand.  /bin/gb can focus on parsing command line args
+	and Usergrades can focus on wrapping the other classes.  Except for errors this class and the authentication in Client are the only ones that should be printing
+	anything to the user.  
 =end
 module Gradebook
-               # class Array; def sum; inject( nil ) { |sum,x| sum ? sum+x : x }; end; end  
-    class Usergrades
-        
+	class Usergrades        
         def initialize
 			@client=Gradebook::Client.new
-           @function=Utility::Function.new(@client)
-
-           #@headers=Utility.get_columns_headers(@client.sps_client,@sps_id)
+            @function=Utility::Function.new(@client)
         end
 
 =begin rdoc
-    Grades each student on the roster by first asking for and a category (column name) on the Gradebook.  Then each students name is presented and 
+    Grades each student on the roster by first asking for a category (column name) on the Gradebook.  Then each students name is presented and 
     waits for a grade to be entered for that student.
 =end
         def grade_all
-  #          puts "Enter search term for grade category"
- #           category=STDIN.gets.chomp
-#            puts "Searching for category... #{category}"
-   #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
-
             column_id=self.create_or_search_for_category
-            list_feed=@function.get_list_feed
-            
+            list_feed=@function.get_list_feed            
 			puts "Grading Each Student"
             list_feed.root.elements.each('entry') do |entry| 
-                  student_name=''
-                  score=''
-				puts "SPSID IN USERGRADES//GRADE ALL #{@client.sps_id}"
-                  entry.elements.each('gsx:id') do |id|
-
-                      puts "Enter grade for student: #{entry.elements['gsx:lastname'].text}, #{entry.elements['gsx:firstname'].text}"
-                      score=STDIN.gets.chomp
-                      
-                  end
-                     
+				student_name=''
+                score=''
+                entry.elements.each('gsx:id') do |id|
+					puts "Enter grade for student: #{entry.elements['gsx:lastname'].text}, #{entry.elements['gsx:firstname'].text}"
+                    score=STDIN.gets.chomp  
+                end     
                 grade=Gradebook::Grade.new(@client,column_id)
                 puts "Student: #{entry.elements['gsx:lastname'].text}, #{entry.elements['gsx:firstname'].text}, Grade: #{score}"
                 grade.enter_grade(entry,score)
@@ -46,51 +34,19 @@ module Gradebook
             end         
         end
         
-    #     def grade_all2
-    #   #          puts "Enter search term for grade category"
-    #  #           category=STDIN.gets.chomp
-    # #            puts "Searching for category... #{category}"
-    #    #         column_id=Gradebook::Search.search_for_column_id(category,@headers)
-    #             column_id=self.create_or_search_for_category
-    #             list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)
-    #             
-    # 
-    #             list_feed.elements.each('entry') do |entry| 
-    #                   student_name=''
-    #                   score=''
-    #                   entry.elements.each('gsx:name') do |name|
-    #                       student_name=name
-    #                       puts "Enter grade for student: #{student_name.text}"
-    #                       score=STDIN.gets.chomp
-    #                       
-    #                   end
-    #                      
-    #                 grade=Gradebook::Grade.new(@client.sps_client,@sps_id,column_id)
-    #                 grade.enter_grade(entry,score)
-    #             end         
-    #         end
-        
 =begin rdoc
     Grades a single student for a single category.  After a category is identified the student is looked up by searhching for the SID (student ID) that is passed as a parameter.
     The name of the student that is found is revealed and the user then enters a grade for that student in the category provided.
 =end
-        
         def grade_by_sid(sid)
-            #puts "Enter search term for grade category"
-            #category=STDIN.gets.chomp
-            #puts "Searching for category... #{category}"
-            #column_id=Gradebook::Search.search_for_column_id(category,@headers)
-
             column_id=self.create_or_search_for_category
-            #list_feed=Utility.get_list_feed(@client.sps_client,@sps_id)            
-
             list_feed=@function.search_with_sid(sid)
-
             list_feed.root.elements.each('entry') do |entry| 
 				puts "Enter grade for student: #{entry.elements['gsx:lastname'].text}, #{entry.elements['gsx:firstname'].text}"
                 score=STDIN.gets.chomp
                 grade=Gradebook::Grade.new(@client,column_id)
                 grade.enter_grade(entry,score)
+				puts "\n"
             end
         end
         
@@ -119,7 +75,6 @@ module Gradebook
 =end
         def grade_report_xml(sid)
             list_feed=@function.search_with_sid(sid)
-
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'GradeReport' #root
             root=xmlDoc.root
@@ -136,10 +91,7 @@ module Gradebook
             end
             out=""
             xmlDoc.write(out, 1)
-
-            puts out
-
-                      
+            puts out 
         end
         
 =begin rdoc
@@ -165,10 +117,9 @@ module Gradebook
      Returns an XML Grade report for a student by searching for their row in the spreadsheet using their name as a parameter.
     TODO Separate name to first name and last name.
 =end
-         def grade_report_by_name_xml(column,name)
-
-			list_feed=@function.search_with_sid(name)
-
+        def grade_report_by_name_xml(column,name)
+			list_feed=@function.search_for_sid(column,name)
+			puts list_feed
             xmlDoc=REXML::Document.new
             xmlDoc.add_element 'GradeReport' #root
             root=xmlDoc.root
@@ -205,7 +156,6 @@ module Gradebook
             else
                 puts "Category exists."
             end
-
             return column_id
         end
         
@@ -276,6 +226,7 @@ module Gradebook
         
 =begin rdoc
     Average a category(column)
+    ##Under Development  TODO
 =end
         def category_average
             puts "Enter a category name."
@@ -287,6 +238,7 @@ module Gradebook
         
 =begin rdoc
     Extract category weight code.
+    ##Under Development  TODO
 =end
         def extract_category_weight_from_header
 
@@ -304,6 +256,7 @@ module Gradebook
         
 =begin rdoc
     Averages a row (student) score for a particular category ie. HW
+    ##Under Development  TODO
 =end
         def category_average_for_each_studnet
             #puts "Enter a category"
@@ -333,10 +286,22 @@ module Gradebook
             end
         end
 
+=begin rdoc
+	Returns the number of students ie rows minus the header row in the gradebook.
+	    ##Under Development  TODO
+=end
 		def number_of_students
 			list_feed=@function.get_list_feed
 			number_of_students=list_feed.root.elements.size
 			return number_of_students
+		end
+		
+=begin rdoc
+		Returns the name of the current spreadsheet. Ie the sps id in .gb/sps_id
+=end
+		def get_name_for_current_spreadsheet
+			name=@function.get_name_for_current_spreadsheet
+			puts "Current Spreadsheet name is: #{name}"
 		end
     end
 end

@@ -32,6 +32,8 @@ opt_parser = OptionParser.new do |opt|
   opt.separator "new_class"
 	opt.separator "To clear credentials"
 	opt.separator "clear_credentials"
+	opt.separator "To see the name of the current spreadsheet/course you are working with"
+	opt.separator "which_course"
   
   opt.on("-c CREATE","--create CREATE ") do |course|
     options[:course] = course
@@ -243,6 +245,10 @@ when "new_class"
 when "clear_credentials"
 	@client=Gradebook::Client.new
 	@client.clear_credentials
+	
+when "which_course"
+	user_grades=Gradebook::Usergrades.new
+	user_grades.get_name_for_current_spreadsheet
 
 when "setup"
 	

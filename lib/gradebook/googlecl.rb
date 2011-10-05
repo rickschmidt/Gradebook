@@ -1,4 +1,7 @@
 
+=begin rdoc
+	Depracted.  TODO This file needs to be evaluated and discarded.
+=end
 
 =begin rdoc
     This module wraps the available google CL Docs tasks in ruby methods.
