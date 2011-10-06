@@ -1,30 +1,30 @@
+gem 'actionmailer', '=3.0.7' 
 require 'action_mailer'
+puts"Enter password\n"
+# pass=STDIN.gets.chomp
+pass="gradebookluc2011"
 
+ActionMailer::Base.raise_delivery_errors = true
 ActionMailer::Base.smtp_settings =
-{:domain  => 'google.com',
-  :user_name=>"gradebookluc@gmail.com",
-       :enable_starttls_auto => true,
-       :address        => 'smtp.gmail.com',
-       :port           => 587,
-
-       :authentication => :plain,
-   :password=>"gradebookluc2011"}
+	{:domain  => 'google.com',
+  		:user_name=>"gradebookluc@gmail.com",
+       	:enable_starttls_auto => true,
+       	:address        => 'smtp.gmail.com',
+       	:port           => 587,
+       	:authentication => :plain,
+   		:password=>pass}
+ActionMailer::Base.view_paths = File.dirname(__FILE__)+"/mailer/"
 module Gradebook
-	class FileMailer < ActionMailer::Base
-	  def file(to, sender, content_type,content)
-		subj="Grades"
-
-	    #standard ActionMailer message setup
-	    recipients  to
-	    from        sender
-	    subject     subj
-	    #setting the body explicitly means we don't have to provide a separate template file
-	    body        content
-
-	    # #set up the attachment
-	    # 	    attachment  :content_type => content_type,
-	    # 	                :body         => "A"
-
+	class Mailer < ActionMailer::Base
+	  def grade_report(to, sender, content_type,content)
+		@content=content
+		mail(:to=>to,
+			:from=>sender,
+			:body=>[@content],
+			:subject=>"Grades") do |format|
+				format.text {render "../mailer/grade_report.html.erb"}
+			end 
 	  end
 	end
 end
+

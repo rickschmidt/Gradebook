@@ -314,7 +314,7 @@ module Gradebook
 				puts "mailing #{entry.elements['gsx:email'].text}"
 				body="this is the body of the email \n
 				nicley formatted"
-				Gradebook::FileMailer.deliver_file("#{entry.elements['gsx:email'].text}", "gradebookluc@gmail.com","text/csv",body)
+				Gradebook::Mailer.grade_report("#{entry.elements['gsx:email'].text}", "gradebookluc@gmail.com","text/csv",body).deliver
 			end
 		end
     end
