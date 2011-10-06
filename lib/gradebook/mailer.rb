@@ -16,13 +16,15 @@ ActionMailer::Base.smtp_settings =
 ActionMailer::Base.view_paths = File.dirname(__FILE__)+"/mailer/"
 module Gradebook
 	class Mailer < ActionMailer::Base
-	  def grade_report(to, sender, content_type,content)
+	  def grade_report(to, sender, content_type,content,name)
 		@content=content
+		@name=name
+		puts @content.inspect
 		mail(:to=>to,
 			:from=>sender,
 			:body=>[@content],
 			:subject=>"Grades") do |format|
-				format.text {render "../mailer/grade_report.html.erb"}
+				format.html {render "../mailer/grade_report.html.erb"}
 			end 
 	  end
 	end
