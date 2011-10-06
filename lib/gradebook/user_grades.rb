@@ -303,5 +303,19 @@ module Gradebook
 			name=@function.get_name_for_current_spreadsheet
 			puts "Current Spreadsheet name is: #{name}"
 		end
+
+=begin rdoc
+	User sends grade report to each student
+=end
+		def email_grades
+			list_feed=@function.get_list_feed
+
+			list_feed.root.elements.each('entry') do |entry|
+				puts "mailing #{entry.elements['gsx:email'].text}"
+				body="this is the body of the email \n
+				nicley formatted"
+				Gradebook::FileMailer.deliver_file("#{entry.elements['gsx:email'].text}", "gradebookluc@gmail.com","text/csv",body)
+			end
+		end
     end
 end

@@ -21,4 +21,6 @@ require 'gradebook/grade'
 require 'gradebook/user_grades'
 require 'gradebook/cache'
 
+require 'gradebook/mailer'
+
 

@@ -254,6 +254,10 @@ when "setup"
 	
 when "quit"
 	exit
+	
+when "mail"
+	user_grades=Gradebook::Usergrades.new
+	user_grades.email_grades
 else
   puts opt_parser
 end
