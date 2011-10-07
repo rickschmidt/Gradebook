@@ -1,21 +1,30 @@
 gem 'actionmailer', '=3.0.7' 
 require 'action_mailer'
-puts"Enter password\n"
-# pass=STDIN.gets.chomp
-pass="gradebookluc2011"
 
-ActionMailer::Base.raise_delivery_errors = true
-ActionMailer::Base.smtp_settings =
-	{:domain  => 'google.com',
-  		:user_name=>"gradebookluc@gmail.com",
-       	:enable_starttls_auto => true,
-       	:address        => 'smtp.gmail.com',
-       	:port           => 587,
-       	:authentication => :plain,
-   		:password=>pass}
-ActionMailer::Base.view_paths = File.dirname(__FILE__)+"/mailer/"
 module Gradebook
 	class Mailer < ActionMailer::Base
+		def setup
+			puts"Enter password\n"
+=begin rdoc
+	TODO remove hard coded password
+=end
+			# pass=STDIN.gets.chomp
+			pass="gradebookluc2011"
+
+			ActionMailer::Base.raise_delivery_errors = true
+			ActionMailer::Base.smtp_settings =
+			{:domain  => 'google.com',
+		  		:user_name=>"gradebookluc@gmail.com",
+		       	:enable_starttls_auto => true,
+		       	:address        => 'smtp.gmail.com',
+		       	:port           => 587,
+		       	:authentication => :plain,
+		   		:password=>pass}
+				puts APP_ROOT+'mailer/*'
+				ActionMailer::Base.view_paths = "#{APP_ROOT}/mailer/"
+	
+		end
+		
 	  def grade_report(to, sender, content_type,content,name)
 		@content=content
 		@name=name

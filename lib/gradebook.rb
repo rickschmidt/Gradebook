@@ -2,6 +2,7 @@ require 'rubygems'
 
 require 'gdata'
 
+require 'gradebook/config'
 
 require 'gradebook/gdata_monkeypatch'
 

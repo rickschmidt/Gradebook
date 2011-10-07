@@ -308,6 +308,8 @@ module Gradebook
 	User sends grade report to each student
 =end
 		def email_grades
+				mailer=Gradebook::Mailer
+				mailer.setup
 			list_feed=@function.get_list_feed
 
 			list_feed.root.elements.each('entry') do |entry|
@@ -324,7 +326,7 @@ module Gradebook
 					end
 				end
 
-				Gradebook::Mailer.grade_report("#{entry.elements['gsx:email'].text}", "gradebookluc@gmail.com","text/csv",hw,name).deliver
+				mailer.grade_report("#{entry.elements['gsx:email'].text}", "gradebookluc@gmail.com","text/csv",hw,name).deliver
 			end
 		end
     end

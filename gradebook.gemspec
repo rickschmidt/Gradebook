@@ -4,7 +4,7 @@ require 'gdata'
 
 Gem::Specification.new do |s|
   s.name = %q{gradebook}
-  s.version = "0.2"
+  s.version = "0.2.1"
 
 
   s.authors = ["Rick Schmidt"]
@@ -21,8 +21,9 @@ Gem::Specification.new do |s|
 	 s.require_path="lib"
 # s.files= `git 	ls-files`.split("\n")
 # s.files= `ls -R | grep *.rb`.split("\n")
-rbfiles = File.join("**", "*.rb")
-	s.files=Dir.glob(rbfiles) 
+	rbfiles = File.join("**", "*.rb")
+	erbfiles=File.join("**", "*.erb")
+	s.files=Dir.glob(rbfiles)+Dir.glob(erbfiles) 
 
 
  
