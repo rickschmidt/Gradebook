@@ -330,6 +330,7 @@ module Gradebook
 				
 				
 				mailer.grade_report("#{entry.elements['gsx:email'].text}",sender,"text/csv",hw,name).deliver
+
 			end
 		end
     end

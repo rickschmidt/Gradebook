@@ -31,7 +31,6 @@ module Gradebook
 		       	:port           => 587,
 		       	:authentication => :plain,
 		   		:password=>pass}
-				puts APP_ROOT+'mailer/*'
 				ActionMailer::Base.view_paths = "#{APP_ROOT}/mailer/"	
 		end
 
@@ -41,7 +40,7 @@ module Gradebook
 	  def grade_report(to,sender, content_type,content,name)
 		@content=content
 		@name=name
-		puts @content.inspect
+
 
 		mail(:to=>to,
 			:from=>sender,
@@ -49,6 +48,7 @@ module Gradebook
 			:subject=>"Grades") do |format|
 				format.html {render "../mailer/grade_report.html.erb"}
 			end 
+		Gradebook::Utility::Logger.log("emails-sent","#{Time.now}",to,name,@content.inspect,"\n")
 	  end
 	end
 end
