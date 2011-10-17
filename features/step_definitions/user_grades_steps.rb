@@ -4,10 +4,10 @@ require 'aruba/cucumber'
 include Gradebook
 
 Before('@slow_process') do
-  @aruba_io_wait_seconds = 10
+  @aruba_io_wait_seconds = 15
 end
 Before do
-  @aruba_timeout_seconds = 10
+  @aruba_timeout_seconds = 20
 
 end
 
@@ -41,6 +41,6 @@ end
 
 
 AfterStep('@slow') do
-  @aruba_io_wait_seconds = 3
+  @aruba_io_wait_seconds = 6
 
 end

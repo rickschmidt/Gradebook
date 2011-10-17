@@ -1,34 +1,48 @@
 gem 'actionmailer', '=3.0.7' 
 require 'action_mailer'
-
+=begin rdoc
+	Mailer uses ActionMailer 3.0.7 to send grade reports to students.  
+=end
 module Gradebook
 	class Mailer < ActionMailer::Base
-		def setup
-			puts"Enter password\n"
-=begin rdoc
-	TODO remove hard coded password
-=end
-			# pass=STDIN.gets.chomp
-			pass="gradebookluc2011"
+		attr_accessor :email_address
+		
 
+
+=begin rdoc
+	Setup Is called to again prompt the user for credentials.  This does not use the token like Client does since actionmailer is not configured that way.
+=end
+		def setup			
+			puts "Enter your full gmail address\n"
+			@email_address=STDIN.gets.chomp
+								puts "@email #{@email_address}"
+			puts"Enter password\n"
+			system "stty -echo"
+			pass=STDIN.gets.chomp
+			
+			system "stty echo"
+			# pass="gradebookluc2011"
 			ActionMailer::Base.raise_delivery_errors = true
 			ActionMailer::Base.smtp_settings =
 			{:domain  => 'google.com',
-		  		:user_name=>"gradebookluc@gmail.com",
+		  		:user_name=>@email_address,
 		       	:enable_starttls_auto => true,
 		       	:address        => 'smtp.gmail.com',
 		       	:port           => 587,
 		       	:authentication => :plain,
 		   		:password=>pass}
 				puts APP_ROOT+'mailer/*'
-				ActionMailer::Base.view_paths = "#{APP_ROOT}/mailer/"
-	
+				ActionMailer::Base.view_paths = "#{APP_ROOT}/mailer/"	
 		end
-		
-	  def grade_report(to, sender, content_type,content,name)
+
+=begin rdoc
+	Sends a grade report.  The method is called from Usergrades.
+=end
+	  def grade_report(to,sender, content_type,content,name)
 		@content=content
 		@name=name
 		puts @content.inspect
+
 		mail(:to=>to,
 			:from=>sender,
 			:body=>[@content],

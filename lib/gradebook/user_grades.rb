@@ -310,8 +310,10 @@ module Gradebook
 		def email_grades
 				mailer=Gradebook::Mailer
 				mailer.setup
+				
 			list_feed=@function.get_list_feed
-
+			puts "Enter your full gmail address\n Multiple Requests will be removed.\n"
+			sender=STDIN.gets.chomp
 			list_feed.root.elements.each('entry') do |entry|
 				puts "mailing #{entry.elements['gsx:email'].text}"
 				body="this is the body of the email \n
@@ -321,12 +323,13 @@ module Gradebook
 				# puts entry
 				name=entry.elements['gsx:firstname'].text+' '+entry.elements['gsx:lastname'].text
 				entry.elements.each('gsx:*') do |ele|
-					if ele.name=~/hw*/
+					# if ele.name=~/hw*/
 						hw[ele.name]=ele.text
-					end
+					# end
 				end
-
-				mailer.grade_report("#{entry.elements['gsx:email'].text}", "gradebookluc@gmail.com","text/csv",hw,name).deliver
+				
+				
+				mailer.grade_report("#{entry.elements['gsx:email'].text}",sender,"text/csv",hw,name).deliver
 			end
 		end
     end

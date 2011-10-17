@@ -19,7 +19,7 @@ require 'aruba/cucumber'
 
 Before('@slow')do
 
-	  @aruba_io_wait_seconds = 4
+	  @aruba_io_wait_seconds = 7
 end
 
 

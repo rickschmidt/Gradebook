@@ -1,38 +1,26 @@
 <html>
 <head>
-<style type="text/css">
-hr {color:blue;}
-p {margin-left:20px;}
-th {background-color:red;}
-</style>
+
 </head>
 <body>
 Hi, <%=h @name %><br>
-Test this is an email
-with a template
-today is <%=h Time.now %>
-Your homework grades are
+Here is your current grade report.
 
 
 
-<div id='th' background-color='#fff'>
+
 <%@headers=@content.keys %>
 <table cellspacing="1" cellpadding="5px" table-layout="fixed">
 
-  <tr >
-		<%@headers.each do |header| %>
-	<th><%=h header %></th>
-		<%end %>
-	</tr>
-<tr >
-	<% @content.each do |key,value| %>
-<td><%=h value %></td>
-</tr>
+
+<% @content.each do |key,value| %>
+<tr><td><%=h key %></td>: <td><%=h value %></td></tr>
+
 
 
 <%end%>
 </table>
 
-</div>
+
 </body>
 </html>
